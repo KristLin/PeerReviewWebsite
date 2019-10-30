@@ -93,15 +93,21 @@ export default {
 
 
 <style scoped>
-.navbar-brand {
+.navbar-light .navbar-brand {
   font-size: 2rem;
 }
+
+brand:focus,
+.navbar-light .navbar-brand:hover {
+  color: #9852f9;
+}
+
 .navbar {
   min-height: 100px;
 }
 
 .navbar-light .navbar-nav .nav-link.active {
-  color: #3c9d9b;
+  color: #9852f9;
 }
 
 .nav-item::after {
@@ -109,7 +115,7 @@ export default {
   display: block;
   width: 0px;
   height: 2px;
-  background: #3c9d9b;
+  background: #9852f9;
   transition: 0.2s;
 }
 .nav-item:hover::after {
@@ -122,7 +128,7 @@ export default {
 }
 
 .navbar-light .navbar-nav .nav-link.active {
-  color: #3c9d9b;
+  color: #9852f9;
 }
 
 .dropdown-menu {
@@ -138,6 +144,6 @@ export default {
 }
 .dropdown-item:focus,
 .dropdown-item:hover {
-  background: #3c9d9b;
+  background: #9852f9;
 }
 </style> 

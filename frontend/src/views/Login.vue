@@ -12,7 +12,7 @@
               <input type="password" class="form-control" name="password" placeholder="Password" />
             </div>
             <div class="form-group">
-              <button class="btn btn-primary form-control" @click="login">Log In</button>
+              <button class="my-btn form-control" @click="login">Log In</button>
             </div>
         </div>
         <div class="card-footer">
@@ -28,11 +28,53 @@ export default {
   name: "login",
   methods: {
       login() {
-          window.console.log("log in request")
+      // raise alert if login form is not complete
+      for (let key in this.loginData) {
+        if (this.loginData[key] === "") {
+          alert("The login form is not complete!");
+          return;
+        }
       }
+      this.$axios
+        .post("/api/users/login", this.loginData)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          if (response.status == 200) {
+            let [userId, userMajor, userName] = response.data.split(" ");
+            let authUserData = {
+              userId: userId,
+              userRole: userMajor,
+              userName: userName
+            };
+            this.$store.commit("login", authUserData);
+            alert("logged in!");
+            this.$router.push({
+              name: "home"
+            });
+          }
+        })
+        .catch(err => {
+          window.console.log(err.response);
+        });
+    }
   }
 };
 </script>
 
 <style scoped>
+.login-form {
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+.my-btn {
+  border: none;
+  background-color: #c299fc;
+  color: white;
+}
+
+.my-btn:hover {
+  border: none;
+  background-color: #9852f9;
+  color: white;
+}
 </style>

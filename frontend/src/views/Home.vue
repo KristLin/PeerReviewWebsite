@@ -69,18 +69,6 @@ export default {
   margin-bottom: 80px;
 }
 
-.my-btn {
-  border: none;
-  background-color: #3c9d9b;
-  color: white;
-}
-
-.my-btn:hover {
-  border: none;
-  background-color: black;
-  color: white;
-}
-
 .features {
   width: 80%;
   margin-top: 5rem;

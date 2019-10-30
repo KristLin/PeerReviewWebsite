@@ -1,9 +1,8 @@
 <template>
   <div id="app">
     <Header />
-    <div class="content-after-navbar">
-      <router-view />
-    </div>
+    <div class="spacer-between-navbar-content"></div>
+    <router-view />
 
     <Footer />
   </div>
@@ -30,7 +29,7 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-.content-after-navbar {
-  margin-top: 100px;
+.spacer-between-navbar-content {
+  height: 100px;
 }
 </style>

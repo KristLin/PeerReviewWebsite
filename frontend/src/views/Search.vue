@@ -1,46 +1,28 @@
 <template>
   <div class="container">
-    <div class="p-4">
-      <form action>
-        <input type="text" class="form-control" placeholder="Keyword" />
-        <button class="btn btn-primary btn-md form-control">Search Project</button>
-      </form>
-    </div>
-    <div class="project-list overflow-auto" style="height: 500px;">
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">Project Title</h5>
-          <p>Project Description</p>
-        </div>
-        <div class="card-footer">
-          <small>Rating: 4.0</small>
-        </div>
+    <SearchInput />
+    <hr />
+    <div class="row">
+      <div class="col-8">
+        <ProjectList />
       </div>
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">Project Title</h5>
-          <p>Project Description</p>
-        </div>
-        <div class="card-footer">
-          <small>Rating: 4.0</small>
-        </div>
-      </div>
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">Project Title</h5>
-          <p>Project Description</p>
-        </div>
-        <div class="card-footer">
-          <small>Rating: 4.0</small>
-        </div>
+      <div class="col-4">
+        project Info
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import SearchInput from "@/components/SearchInput.vue";
+import ProjectList from "@/components/ProjectList.vue";
+
 export default {
-  name: "search"
+  name: "search",
+  components: {
+    SearchInput,
+    ProjectList
+  }
 };
 </script>
 

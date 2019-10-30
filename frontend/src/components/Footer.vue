@@ -9,7 +9,7 @@
               <a href="/" style="color: #fff;">Home Page</a>
             </li>
             <li>
-              <a href="/search" style="color: #fff;">Search House</a>
+              <a href="/search" style="color: #fff;">Search Project</a>
             </li>
             <li>
               <a href="#" style="color: #fff;">Back to top</a>
@@ -57,9 +57,9 @@ export default {
 
 <style scoped>
 footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  background-color: #3c9d9b;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background-color: #9852f9;
   color: white;
 }
 .social-icon {
