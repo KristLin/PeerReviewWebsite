@@ -115,7 +115,7 @@ class DB(object):
             file["_id"] = str(file["_id"])
             all_files.append(file)
         return all_files
-
+    
     def add_file(self, file):
         _id = str(self.files.insert_one(file).inserted_id)
         return _id

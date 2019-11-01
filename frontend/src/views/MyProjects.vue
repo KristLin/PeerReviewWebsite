@@ -1,11 +1,13 @@
 <template>
-  <div class="container my-projects">
+  <div class="container">
     <h1>Your Projects</h1>
     <SearchInput />
+
     <button
       class="my-btn w-50 mx-auto my-4 form-control"
       @click="$router.push({name: 'createProject'})"
     >Create New Project</button>
+
     <div class="row">
       <div class="col-7">
         <ProjectList />
@@ -33,19 +35,4 @@ export default {
 </script>
 
 <style scoped>
-.my-projects {
-  margin-top: 50px;
-  margin-bottom: 100px;
-}
-.my-btn {
-  border: none;
-  background-color: #c299fc;
-  color: white;
-}
-
-.my-btn:hover {
-  border: none;
-  background-color: #9852f9;
-  color: white;
-}
 </style>

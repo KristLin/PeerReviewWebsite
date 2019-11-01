@@ -32,11 +32,19 @@
           </ul>
         </div>
       </div>
-      <a href="https://facebook.com" style="color: #fff;"><i class="social-icon fab fa-facebook-f"></i></a>
-      <a href="https://twitter.com" style="color: #fff;"><i class="social-icon fab fa-twitter"></i></a>
-      <a href="https://instagram.com" style="color: #fff;"><i class="social-icon fab fa-instagram"></i></a>
-      <a href="https://www.unsw.edu.au/" style="color: #fff;"><i class="social-icon fas fa-envelope"></i></a>
-      
+      <a href="https://facebook.com" style="color: #fff;">
+        <i class="social-icon fab fa-facebook-f"></i>
+      </a>
+      <a href="https://twitter.com" style="color: #fff;">
+        <i class="social-icon fab fa-twitter"></i>
+      </a>
+      <a href="https://instagram.com" style="color: #fff;">
+        <i class="social-icon fab fa-instagram"></i>
+      </a>
+      <a href="https://www.unsw.edu.au/" style="color: #fff;">
+        <i class="social-icon fas fa-envelope"></i>
+      </a>
+
       <p>© All right Reversed. 9323 Group 14.</p>
     </div>
   </footer>

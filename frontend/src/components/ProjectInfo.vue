@@ -1,42 +1,53 @@
 <template>
-  <div class="project-info overflow-auto" style="height: 500px;">
-    <div class="card mb-4">
-      <div class="card-header">Project Title</div>
-      <div class="card-body">
-        <p>Project Description</p>
-      </div>
-      <div class="card mx-4 my-4">
-        <div class="card-header">File List:</div>
-        <div class="card-body text-left">
-          <p class="file-name" @click="$router.push({name: 'file'})">file1.txt</p>
-          <p class="file-name" @click="$router.push({name: 'file'})">file1.txt</p>
-          <p class="file-name" @click="$router.push({name: 'file'})">file1.txt</p>
-          <p class="file-name" @click="$router.push({name: 'file'})">file1.txt</p>
-          <p class="file-name" @click="$router.push({name: 'file'})">file1.txt</p>
-          <p class="file-name" @click="$router.push({name: 'file'})">file1.txt</p>
+  <div style="height: 500px;">
+    <!-- project info dispaly -->
+    <div class="project-info overflow-auto" v-if="project.name">
+      <div class="card mb-4">
+        <div class="card-header my-bg">{{ project.name }}</div>
+        <div class="card-body">
+          <p>{{ project.description }}</p>
+        </div>
+        <div class="card mx-4 my-4">
+          <div class="card-header">File List:</div>
+          <div class="card-body text-left">
+            <p
+              class="file-name"
+              @click="clickFile(file)"
+              :key="idx"
+              v-for="(file, idx) in project.files"
+            >{{ file.name }}</p>
+          </div>
+        </div>
+        <div class="card-footer p-1">
+          <small>{{ project.createdTime }}</small>
         </div>
       </div>
-      <div class="card-footer">
-        <star-rating
-          :inline="true"
-          :read-only="true"
-          :rating="4"
-          :show-rating="false"
-          v-bind:increment="0.01"
-          v-bind:star-size="20"
-        ></star-rating>
-      </div>
     </div>
+    <!-- project info dispaly end -->
+
+    <!-- hint -->
+    <div v-if="!project.name">
+      <p style="padding-top: 200px">Click a project to see more.</p>
+    </div>
+    <!-- hint end -->
   </div>
 </template>
 
 <script>
-import StarRating from "vue-star-rating";
-
 export default {
   name: "ProjectList",
-  components: {
-    StarRating
+  props: {
+    project: Object
+  },
+  methods: {
+    clickFile(file) {
+      window.console.log("clicked file in ProjectInfo", file);
+      this.$router.push({
+        name: "file",
+        query: { fileId: file.id },
+        params: { file: file }
+      });
+    }
   }
 };
 </script>

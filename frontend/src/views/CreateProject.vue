@@ -1,51 +1,56 @@
 <template>
-  <div class="container creat-project-form">
-    <div class="card shadow">
-      <div class="card-header">Create a new project</div>
-      <div class="card-body">
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            v-model="projectData.title"
-            placeholder="Project Title"
-          />
-        </div>
-
-        <div class="form-group">
-          <textarea
-            class="form-control"
-            v-model="projectData.description"
-            cols="30"
-            rows="5"
-            placeholder="Project description"
-          ></textarea>
-        </div>
-
-        <!-- input files -->
-        <input
-          type="file"
-          style="display: none"
-          accept=".txt"
-          ref="filesInput"
-          @change="selectFiles"
-          multiple
-        />
-        <button class="my-btn form-control" @click="$refs.filesInput.click()">Select Files</button>
-        <!-- input files end -->
-
-        <div class="card my-4">
-          <div class="card-header">Project Files</div>
-          <div class="card-body">
-            <p
-              class="card-text text-left"
-              :key="idx"
-              v-for="(fileName, idx) in displayData.fileNameList"
-            >{{ fileName }}</p>
+  <div class="container">
+    <div class="creat-project-form">
+      <div class="card shadow">
+        <div class="card-header">Create a new project</div>
+        <div class="card-body">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              v-model="projectData.title"
+              placeholder="Project Title"
+            />
           </div>
-        </div>
-        <div class="form-group">
-          <button class="my-btn form-control" @click="createProject">Create</button>
+
+          <div class="form-group">
+            <textarea
+              class="form-control"
+              v-model="projectData.description"
+              cols="30"
+              rows="5"
+              placeholder="Project description"
+            ></textarea>
+          </div>
+
+          <!-- input files -->
+          <input
+            type="file"
+            style="display: none"
+            accept=".txt"
+            ref="filesInput"
+            @change="selectFiles"
+            multiple
+          />
+          <button class="my-btn form-control" @click="$refs.filesInput.click()">Select Files</button>
+          <!-- input files end -->
+
+          <!-- files display -->
+          <div class="card my-4">
+            <div class="card-header">Project Files</div>
+            <div class="card-body">
+              <p
+                class="card-text text-left"
+                :key="idx"
+                v-for="(fileName, idx) in displayData.fileNameList"
+              >{{ fileName }}</p>
+            </div>
+          </div>
+          <!-- files display end -->
+
+          <div class="form-group">
+            <button class="my-btn form-control" @click="createProject">Create</button>
+          </div>
         </div>
       </div>
     </div>
@@ -64,7 +69,7 @@ export default {
         description: "",
         files: [],
         rating: "0",
-        rating_num: "0"
+        ratingNum: "0"
       },
       displayData: {
         fileNameList: []
@@ -103,19 +108,5 @@ export default {
 <style scoped>
 .creat-project-form {
   width: 400px;
-  margin-top: 50px;
-  margin-bottom: 100px;
-}
-
-.my-btn {
-  border: none;
-  background-color: #c299fc;
-  color: white;
-}
-
-.my-btn:hover {
-  border: none;
-  background-color: #9852f9;
-  color: white;
 }
 </style>

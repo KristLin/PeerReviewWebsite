@@ -1,11 +1,12 @@
 <template>
   <div>
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <div>
-      image + learnmore button
-    </div>
-    <hr>
-    <!-- 2. more on homepage -->
+    <!-- carousel part -->
+    <div>image + learnmore button</div>
+    <!-- carousel part end -->
+
+    <hr />
+
+    <!-- features part -->
     <div class="features mx-auto">
       <div class="text-center">
         <h2 class="font-weight-bold my-4">Why is it so great?</h2>
@@ -19,6 +20,7 @@
         </div>
       </div>
     </div>
+    <!-- features part end -->
   </div>
 </template>
 
@@ -34,7 +36,6 @@ export default {
   props: {},
   data() {
     return {
-      
       featureItems: [
         {
           title: "Search Engine",
@@ -60,13 +61,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  padding-top: 2rem;
-  min-height: 500px;
-  margin-top: 100px;
-  margin-bottom: 80px;
-}
-
 .features {
   width: 80%;
   margin-top: 5rem;

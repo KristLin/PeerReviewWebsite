@@ -4,12 +4,20 @@
       <i class="fas fa-user-circle fa-6x card-img-top mx-auto mt-4"></i>
       <div class="card-body">
         <h5 class="card-title">Singup</h5>
+
         <div class="form-group">
-          <input type="email" class="form-control" v-model="userData.email" placeholder="Email Address" />
+          <input
+            type="email"
+            class="form-control"
+            v-model="userData.email"
+            placeholder="Email Address"
+          />
         </div>
+
         <div class="form-group">
           <input type="text" class="form-control" v-model="userData.name" placeholder="Your Name" />
         </div>
+
         <div class="form-group">
           <select v-model="userData.major" class="form-control">
             <option value="Your Major">Your Major</option>
@@ -19,12 +27,25 @@
             <option value="Literature">Literature</option>
           </select>
         </div>
+
         <div class="form-group">
-          <input type="password" class="form-control" v-model="userData.password" placeholder="Password" />
+          <input
+            type="password"
+            class="form-control"
+            v-model="userData.password"
+            placeholder="Password"
+          />
         </div>
+
         <div class="form-group">
-          <input type="password" class="form-control" v-model="checkedData.password2" placeholder="Password Confirm" />
+          <input
+            type="password"
+            class="form-control"
+            v-model="checkedData.password2"
+            placeholder="Password Confirm"
+          />
         </div>
+
         <div class="form-group">
           <button class="my-btn form-control" @click="signup">Sign up</button>
         </div>
@@ -45,7 +66,7 @@ export default {
         major: "Your Major"
       },
       checkedData: {
-        password2: "",
+        password2: ""
       }
     };
   },
@@ -60,7 +81,7 @@ export default {
       }
 
       if (this.userData.major === "Your Major") {
-        alert("You didn't choose a major!")
+        alert("You didn't choose a major!");
         return;
       }
 
@@ -103,19 +124,5 @@ export default {
 <style scoped>
 .singup-form {
   width: 400px;
-  margin-top: 50px;
-  margin-bottom: 100px;
-}
-
-.my-btn {
-  border: none;
-  background-color: #c299fc;
-  color: white;
-}
-
-.my-btn:hover {
-  border: none;
-  background-color: #9852f9;
-  color: white;
 }
 </style>

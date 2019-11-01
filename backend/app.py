@@ -1,9 +1,10 @@
 from flask import Flask, request
 from flask_restplus import Resource, Api, fields
 from flask_cors import CORS
+import requests
 
 import os
-import requests
+from datetime import datetime
 
 from database import DB
 import utils
@@ -26,6 +27,7 @@ api.namespaces.clear()
 users = api.namespace("users", description="User APIs")
 projects = api.namespace("projects", description="Project APIs")
 files = api.namespace("files", description="File APIs")
+test = api.namespace("test", description="Test APIs")
 # =============== app setting part end ===============
 
 # =============== data model part start ===============
@@ -43,8 +45,6 @@ user_model = api.model(
         "password": fields.String,
         "phone": fields.String,
         "major": fields.String,
-        "projects": fields.List(fields.String),
-        "liked_num": fields.String,
         "score": fields.String,
     },
 )
@@ -70,7 +70,6 @@ project_model = api.model(
         "major": fields.String,
         "title": fields.String,
         "description": fields.String,
-        "files": fields.List(fields.String),
         "rating": fields.String,
         "rating_num": fields.String,
     },
@@ -81,7 +80,7 @@ file_model = api.model(
     "file",
     {
         "project": fields.String,
-        "title": fields.String,
+        "name": fields.String,
         "content": fields.String,
     },
 )
@@ -126,11 +125,21 @@ class Login(Resource):
     def post(self):
         user_login_data = request.json
         login_user = db.find_user_by_email(user_login_data["email"])
-        if utils.check_logged_in(active_users, user_login_data["email"]):
-            print(user_login_data["email"] + " has Already logged in")
-            return login_user["_id"] + " " + login_user["role"] + " " + login_user["name"], 200
+
         if login_user == None:
             return "The user email does not exist", 400
+
+        if utils.check_logged_in(active_users, user_login_data["email"]):
+            print(user_login_data["email"] + " has Already logged in")
+            return login_user["_id"] + " " + login_user["major"] + " " + login_user["name"], 200
+
+        if user_login_data["password"] == login_user["password"]:
+            # store active user info
+            active_users[login_user["_id"]] = login_user
+            # return user id
+            return login_user["_id"] + " " + login_user["major"] + " " + login_user["name"], 200
+        else:
+            return "Password is wrong", 400
 
 
 @users.route("/logout/<string:user_id>")
@@ -236,9 +245,20 @@ class File(Resource):
             return f"File with id {file_id} is not in the database!", 400
 # ============ file API part end ============
 
+# ============ test API part start ============
+@test.route("/")
+class Test(Resource):
+    def get(self):
+        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        data = {"num": 5, "float": 3.35, "time": now}
+        return data, 200
+    def post(self):
+        postData = request.json
+        print(postData)
+        return "OK", 200
+
 # run the app
 if __name__ == "__main__":
     # store active users
     active_users = {}
-    app.run(debug=True)
-
+    app.run(host="localhost", port=8000, debug=True)

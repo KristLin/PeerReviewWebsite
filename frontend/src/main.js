@@ -5,10 +5,9 @@ import router from './router'
 
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import axios from 'axios'
 
 Vue.config.productionTip = false
-
-import axios from 'axios'
 Vue.prototype.$axios = axios
 
 new Vue({

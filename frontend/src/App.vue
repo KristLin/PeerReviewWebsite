@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <div class="spacer-between-navbar-content"></div>
-    <router-view />
-
+    <div class="content-div">
+      <router-view />
+    </div>
     <Footer />
   </div>
 </template>
@@ -29,7 +29,26 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-.spacer-between-navbar-content {
-  height: 100px;
+
+.content-div {
+  margin-top: 150px;
+  margin-bottom: 100px;
+}
+
+.form-control.my-btn {
+  border: none;
+  background-color: #c299fc;
+  color: white;
+}
+
+.form-control.my-btn:hover {
+  border: none;
+  background-color: #9852f9;
+  color: white;
+}
+
+.my-bg {
+  background-color: #c299fc !important;
+  color: white;
 }
 </style>
