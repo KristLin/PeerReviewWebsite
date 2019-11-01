@@ -6,7 +6,14 @@
         <p>Project Description</p>
       </div>
       <div class="card-footer">
-        <small>Rating: 4.0</small>
+        <star-rating
+          :inline="true"
+          :read-only="true"
+          :rating="4"
+          :show-rating="false"
+          v-bind:increment="0.01"
+          v-bind:star-size="20"
+        ></star-rating>
       </div>
     </div>
     <div class="card mb-4">
@@ -15,7 +22,14 @@
         <p>Project Description</p>
       </div>
       <div class="card-footer">
-        <small>Rating: 4.0</small>
+        <star-rating
+          :inline="true"
+          :read-only="true"
+          :rating="4"
+          :show-rating="false"
+          v-bind:increment="0.01"
+          v-bind:star-size="20"
+        ></star-rating>
       </div>
     </div>
     <div class="card mb-4">
@@ -24,15 +38,27 @@
         <p>Project Description</p>
       </div>
       <div class="card-footer">
-        <small>Rating: 4.0</small>
+        <star-rating
+          :inline="true"
+          :read-only="true"
+          :rating="4"
+          :show-rating="false"
+          v-bind:increment="0.01"
+          v-bind:star-size="20"
+        ></star-rating>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import StarRating from "vue-star-rating";
+
 export default {
-  name: "ProjectList"
+  name: "ProjectList",
+  components: {
+    StarRating
+  }
 };
 </script>
 

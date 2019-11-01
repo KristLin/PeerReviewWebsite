@@ -9,9 +9,6 @@
               <a href="/" style="color: #fff;">Home Page</a>
             </li>
             <li>
-              <a href="/search" style="color: #fff;">Search Project</a>
-            </li>
-            <li>
               <a href="#" style="color: #fff;">Back to top</a>
             </li>
           </ul>
@@ -25,9 +22,6 @@
             <li>
               <a href="https://getbootstrap.com/" style="color: #fff;">Bootstrap</a>
             </li>
-            <li>
-              <a href="https://udemy.com" style="color: #fff;">Udemy</a>
-            </li>
           </ul>
         </div>
         <div class="col-lg-4 col-md-4">
@@ -35,7 +29,6 @@
           <ul class="list-unstyled">
             <li>TEL: +61 123456</li>
             <li>Email: unsw@mail.com</li>
-            <li>Address: UNSW, Kensington</li>
           </ul>
         </div>
       </div>
@@ -59,7 +52,7 @@ export default {
 footer {
   padding-top: 2rem;
   padding-bottom: 2rem;
-  background-color: #9852f9;
+  background-color: #a579e2;
   color: white;
 }
 .social-icon {

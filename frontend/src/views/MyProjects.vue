@@ -1,8 +1,11 @@
 <template>
-  <div class="container search-page">
-    <h1>Your Major: {{ $store.getters.getUserMajor }}</h1>
+  <div class="container my-projects">
+    <h1>Your Projects</h1>
     <SearchInput />
-    <hr />
+    <button
+      class="my-btn w-50 mx-auto my-4 form-control"
+      @click="$router.push({name: 'createProject'})"
+    >Create New Project</button>
     <div class="row">
       <div class="col-7">
         <ProjectList />
@@ -20,7 +23,7 @@ import ProjectList from "@/components/ProjectList.vue";
 import ProjectInfo from "@/components/ProjectInfo.vue";
 
 export default {
-  name: "search",
+  name: "myProjects",
   components: {
     SearchInput,
     ProjectList,
@@ -30,8 +33,19 @@ export default {
 </script>
 
 <style scoped>
-.search-page {
+.my-projects {
   margin-top: 50px;
   margin-bottom: 100px;
+}
+.my-btn {
+  border: none;
+  background-color: #c299fc;
+  color: white;
+}
+
+.my-btn:hover {
+  border: none;
+  background-color: #9852f9;
+  color: white;
 }
 </style>

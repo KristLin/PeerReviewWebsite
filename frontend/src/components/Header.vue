@@ -20,21 +20,24 @@
             <router-link class="nav-link" to="/" active-class="active" exact>Home</router-link>
           </li>
           <li class="nav-item">
+            <router-link class="nav-link" to="/news" active-class="active" exact>News</router-link>
+          </li>
+          <li class="nav-item">
             <router-link class="nav-link" to="/search" active-class="active" exact>Search</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/about" active-class="active" exact>About us</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="!$store.getters.isLoggedIn">
             <router-link class="nav-link" to="/login" active-class="active" exact>Log in</router-link>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" v-if="$store.getters.isLoggedIn">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown">
               <i class="fas fa-user mr-2"></i>
-              Hi, krist
+              Hi, {{ this.$store.getters.getUserName }}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <span class="dropdown-item" @click="goToMyAccount">My Account</span>
+              <span class="dropdown-item" @click="goToMyProjects">My Projects</span>
               <div class="dropdown-divider"></div>
               <span class="dropdown-item" @click="logout">Log out</span>
             </div>
@@ -77,9 +80,9 @@ export default {
         alert("You are not logged in!");
       }
     },
-    goToMyAccount() {
-      if (this.$router.currentRoute.name !== "myAccount") {
-        this.$router.push({ name: "myAccount" });
+    goToMyProjects() {
+      if (this.$router.currentRoute.name !== "myProjects") {
+        this.$router.push({ name: "myProjects" });
       }
     }
   },

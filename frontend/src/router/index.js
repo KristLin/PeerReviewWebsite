@@ -33,6 +33,26 @@ const routes = [
     name: 'search',
     component: () => import(/* webpackChunkName: "search" */ '../views/Search.vue')
   },
+  {
+    path: '/myProjects',
+    name: 'myProjects',
+    component: () => import(/* webpackChunkName: "myProjects" */ '../views/MyProjects.vue')
+  },
+  {
+    path: '/createProject',
+    name: 'createProject',
+    component: () => import(/* webpackChunkName: "createProject" */ '../views/CreateProject.vue')
+  },
+  {
+    path: '/file',
+    name: 'file',
+    component: () => import(/* webpackChunkName: "file" */ '../views/File.vue')
+  },
+  {
+    path: '/news',
+    name: 'news',
+    component: () => import(/* webpackChunkName: "news" */ '../views/News.vue')
+  },
 ]
 
 const router = new VueRouter({
