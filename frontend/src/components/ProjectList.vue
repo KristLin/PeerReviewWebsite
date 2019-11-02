@@ -1,7 +1,7 @@
 <template>
   <div class="project-list overflow-auto" style="height: 500px;">
     <div
-      class="card mb-4"
+      class="card mb-4 shadow-sm"
       @click="clickProject(project)"
       :key="idx"
       v-for="(project, idx) in projects"

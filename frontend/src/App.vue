@@ -51,4 +51,10 @@ export default {
   background-color: #c299fc !important;
   color: white;
 }
+
+.my-hr {
+  border: dotted #9852f9 5px;
+  border-bottom: none;
+  width: 20%;
+}
 </style>

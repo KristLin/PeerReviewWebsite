@@ -11,10 +11,10 @@
     <hr />
 
     <div class="row">
-      <div class="col-7">
+      <div class="col-lg-7 col-md-12 md-4">
         <ProjectList :projects="projects" @clickProject="clickProject" />
       </div>
-      <div class="col-5">
+      <div class="col-lg-5 col-md-12 md-4">
         <ProjectInfo :project="chosenProject" />
       </div>
     </div>

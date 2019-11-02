@@ -4,10 +4,10 @@
     <SearchInput :searchData="searchData" @searchRequest="searchProject" />
 
     <div class="row">
-      <div class="col-7">
+      <div class="col-lg-7 col-md-12 md-4">
         <ProjectList :projects="projects" @clickProject="clickProject" />
       </div>
-      <div class="col-5">
+      <div class="col-lg-5 col-md-12 md-4">
         <ProjectInfo :project="chosenProject" />
       </div>
     </div>
@@ -51,6 +51,78 @@ export default {
               name: "index.css",
               content: "h1{\n\tcolor: blue;\n}",
               mark: 3.5
+            },
+            {
+              id: "1",
+              name: "index.html",
+              content: "<h1>Hello World</h1>\n<h1>Bye World</h1>",
+              mark: 3.8
+            },
+            {
+              id: "2",
+              name: "index.css",
+              content: "h1{\n\tcolor: blue;\n}",
+              mark: 3.5
+            },
+            {
+              id: "1",
+              name: "index.html",
+              content: "<h1>Hello World</h1>\n<h1>Bye World</h1>",
+              mark: 3.8
+            },
+            {
+              id: "2",
+              name: "index.css",
+              content: "h1{\n\tcolor: blue;\n}",
+              mark: 3.5
+            },
+            {
+              id: "1",
+              name: "index.html",
+              content: "<h1>Hello World</h1>\n<h1>Bye World</h1>",
+              mark: 3.8
+            },
+            {
+              id: "2",
+              name: "index.css",
+              content: "h1{\n\tcolor: blue;\n}",
+              mark: 3.5
+            },
+            {
+              id: "1",
+              name: "index.html",
+              content: "<h1>Hello World</h1>\n<h1>Bye World</h1>",
+              mark: 3.8
+            },
+            {
+              id: "2",
+              name: "index.css",
+              content: "h1{\n\tcolor: blue;\n}",
+              mark: 3.5
+            },
+            {
+              id: "1",
+              name: "index.html",
+              content: "<h1>Hello World</h1>\n<h1>Bye World</h1>",
+              mark: 3.8
+            },
+            {
+              id: "2",
+              name: "index.css",
+              content: "h1{\n\tcolor: blue;\n}",
+              mark: 3.5
+            },
+            {
+              id: "1",
+              name: "index.html",
+              content: "<h1>Hello World</h1>\n<h1>Bye World</h1>",
+              mark: 3.8
+            },
+            {
+              id: "2",
+              name: "index.css",
+              content: "h1{\n\tcolor: blue;\n}",
+              mark: 3.5
             }
           ]
         },
@@ -71,14 +143,14 @@ export default {
               id: "4",
               name: "database.py",
               content: 'print("hello!!")\nprint("bye!!")',
-              mark: 4.7
+              mark: 0
             }
           ]
         },
         {
           id: "3",
-          name: "Project 3",
-          description: "description of project 3",
+          name: "My sad story",
+          description: "A sad story...",
           major: "Literature",
           createdTime: "2019-11-01 12:00:00",
           files: [

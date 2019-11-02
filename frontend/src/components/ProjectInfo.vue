@@ -1,21 +1,38 @@
 <template>
   <div style="height: 500px;">
     <!-- project info dispaly -->
-    <div class="project-info overflow-auto" v-if="project.name">
-      <div class="card mb-4">
+    <div class="overflow-auto shadow-sm h-100" v-if="project.name">
+      <div class="card h-100">
         <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
         <div class="card-body">
           <p>{{ project.description }}</p>
         </div>
-        <div class="card mx-4 my-4">
+        <div class="card mx-4 my-4 h-50">
           <div class="card-header">File List:</div>
-          <div class="card-body text-left">
-            <p
-              class="file-name"
-              @click="clickFile(file)"
-              :key="idx"
-              v-for="(file, idx) in project.files"
-            >{{ file.name }}</p>
+          <div class="card-body text-left overflow-auto">
+            <div @click="clickFile(file)" :key="idx" v-for="(file, idx) in project.files">
+              <div class="row">
+                <div class="col-6">
+                  <span class="file-name mr-4">{{ file.name }}</span>
+                </div>
+                <div class="col-6">
+                  <div class="has-mark" v-if="file.mark>0">
+                    <star-rating
+                      :inline="true"
+                      :read-only="true"
+                      :rating="file.mark"
+                      :show-rating="false"
+                      v-bind:increment="0.01"
+                      v-bind:star-size="15"
+                    ></star-rating>
+                    <small class="ml-2">{{file.mark}}</small>
+                  </div>
+                  <div class="no-mark" v-if="file.mark===0">
+                    <small>No mark yet...</small>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="card-footer p-1">
@@ -26,18 +43,25 @@
     <!-- project info dispaly end -->
 
     <!-- hint -->
-    <div v-if="!project.name">
-      <p style="padding-top: 200px">Click a project to see more.</p>
+    <div class="card h-100 shadow-sm" v-if="!project.name">
+      <div class="card-body h-100">
+        <p class="mt-4">Click a project to see more.</p>
+      </div>
     </div>
     <!-- hint end -->
   </div>
 </template>
 
 <script>
+import StarRating from "vue-star-rating";
+
 export default {
   name: "ProjectInfo",
   props: {
     project: Object
+  },
+  components: {
+    StarRating
   },
   methods: {
     clickFile(file) {

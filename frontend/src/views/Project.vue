@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <ProjectInfo :project="project" />
+    <div class="w-50 mx-auto">
+      <ProjectInfo :project="project" />
+    </div>
   </div>
 </template>
 
@@ -13,13 +15,17 @@ export default {
   data() {
     return {
       projectId: this.$route.query.projectId,
-      project: this.$route.params.project,
+      project: this.$route.params.project
     };
   },
   created() {
-    window.console.log("received query and param in project vue:", this.projectId, this.project)
+    window.console.log(
+      "received query and param in project vue:",
+      this.projectId,
+      this.project
+    );
     if (Object.keys(this.$route.params).length === 0) {
-      window.console.log("lost route params")
+      window.console.log("lost route params");
       this.project = {
         id: "1",
         name: "Peer Review Frontend",

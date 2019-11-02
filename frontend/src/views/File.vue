@@ -2,11 +2,11 @@
   <div class="container">
     <div class="row">
       <!-- file info display -->
-      <div class="col-lg-6 col-md-12 mb-4" style="height:500px">
-        <div class="card h-100">
+      <div class="col-lg-6 col-md-12 mb-4" style="height:550px">
+        <div class="card h-100 shadow">
           <div class="card-header my-bg font-weight-bold">{{ file.name }}</div>
           <div class="card-body overflow-auto">
-            <highlight-code class="text-left" :lang="getFileLang(file.name)">{{ file.content }}</highlight-code>
+            <highlight-code class="text-left" :lang="getLang(file.name)">{{ file.content }}</highlight-code>
           </div>
           <div class="card-footer">
             <star-rating
@@ -25,23 +25,13 @@
       <!-- file info display end -->
 
       <!-- comments -->
-      <div class="col-lg-6 col-md-12 mb-4" style="height:500px">
-        <div class="overflow-auto h-100">
-          <div class="card mb-4" :key="idx" v-for="(comment, idx) in comments">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-4">
-                  <p>{{ comment.user }}</p>
-                </div>
-                <div class="col-8">
-                  <p>{{ comment.content }}</p>
-                </div>
-              </div>
-            </div>
-            <div class="card-footer p-1">
-              <small>{{ comment.postTime }}</small>
-            </div>
-          </div>
+      <div class="col-lg-6 col-md-12 mb-4">
+        <div style="height:472px">
+          <Comments :comments="comments" />
+        </div>
+        <hr />
+        <div style="height:45px">
+          <button class="my-btn form-control shadow">Leave a review</button>
         </div>
       </div>
       <!-- comments end -->
@@ -51,11 +41,13 @@
 
 <script>
 import StarRating from "vue-star-rating";
+import Comments from "@/components/Comments.vue";
 
 export default {
-  name: "login",
+  name: "file",
   components: {
-    StarRating
+    StarRating,
+    Comments
   },
   props: {},
   data() {
@@ -65,20 +57,57 @@ export default {
         {
           id: "1",
           user: "krist",
-          content: "Not bad",
-          postTime: "2019-11-01 16:03:35"
+          content:
+            "Not bad Not bad Not bad Not bad Not bad Not bad Not bad Not bad Not bad Not bad Not bad",
+          postTime: "2019-11-01 16:03:35",
+          likedNum: 3,
+          hasLiked: true
         },
         {
           id: "2",
           user: "jack",
           content: "Good Job",
-          postTime: "2019-11-02 12:19:20"
+          postTime: "2019-11-02 12:19:20",
+          likedNum: 50,
+          hasLiked: false
+        },
+        {
+          id: "3",
+          user: "krist",
+          content: "Ahhhhhhhhhh",
+          postTime: "2019-11-01 15:05:35",
+          likedNum: 11,
+          hasLiked: true
+        },
+        {
+          id: "4",
+          user: "jack",
+          content: "Just a test test test test test",
+          postTime: "2019-11-02 11:00:30",
+          likedNum: 23,
+          hasLiked: true
+        },
+        {
+          id: "5",
+          user: "krist",
+          content: "I don't like it",
+          postTime: "2019-11-02 18:03:35",
+          likedNum: 0,
+          hasLiked: false
+        },
+        {
+          id: "6",
+          user: "jack",
+          content: "Looks good tho",
+          postTime: "2019-10-30 12:01:00",
+          likedNum: 1,
+          hasLiked: false
         }
       ]
     };
   },
   methods: {
-    getFileLang(fileName) {
+    getLang(fileName) {
       let fileLang = fileName.split(".").pop();
       switch (fileLang) {
         case "py":
@@ -117,8 +146,4 @@ export default {
 </script>
 
 <style scoped>
-.hljs {
-  height: 100%;
-  display: table;
-}
 </style>
