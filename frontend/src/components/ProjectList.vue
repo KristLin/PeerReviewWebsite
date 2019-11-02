@@ -6,7 +6,7 @@
       :key="idx"
       v-for="(project, idx) in projects"
     >
-      <div class="card-header my-bg">{{ project.name }}</div>
+      <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
       <div class="card-body">
         <p>{{ project.description }}</p>
       </div>

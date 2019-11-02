@@ -1,6 +1,6 @@
 <template>
-  <div class="container singup-form">
-    <div class="card shadow">
+  <div class="container">
+    <div class="card mx-auto shadow singup-form">
       <i class="fas fa-user-circle fa-6x card-img-top mx-auto mt-4"></i>
       <div class="card-body">
         <h5 class="card-title">Singup</h5>

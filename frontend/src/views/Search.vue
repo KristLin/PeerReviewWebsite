@@ -1,11 +1,7 @@
 <template>
-  <div>
+  <div class="container">
     <h1>Your Major: {{ $store.getters.getUserMajor }}</h1>
     <SearchInput :searchData="searchData" @searchRequest="searchProject" />
-
-    <span>Search Keyword: {{ searchData.keyword }} || Order Type: {{ searchData.orderType }}</span>
-
-    <hr />
 
     <div class="row">
       <div class="col-7">
@@ -68,13 +64,13 @@ export default {
             {
               id: "3",
               name: "app.py",
-              content: `print("hello world")\nprint("bye world")`,
+              content: 'print("hello world")\nprint("bye world")',
               mark: 4.0
             },
             {
               id: "4",
               name: "database.py",
-              content: `print("hello!!")\nprint("bye!!")`,
+              content: 'print("hello!!")\nprint("bye!!")',
               mark: 4.7
             }
           ]
@@ -96,7 +92,7 @@ export default {
               id: "6",
               name: "part2.txt",
               content:
-                "He was working on a peer review website...\nAnd then he went crazy...",
+                "He was warking on a web project...\nAnd he went crazy...",
               mark: 2.9
             }
           ]
@@ -110,7 +106,7 @@ export default {
       window.console.log(this.searchData);
     },
     clickProject(project) {
-      window.console.log("received clicked project from ProjectList", project)
+      window.console.log("received clicked project from ProjectList", project);
       this.chosenProject = project;
     }
   },

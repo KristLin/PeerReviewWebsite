@@ -2,40 +2,44 @@
   <div class="container">
     <div class="row">
       <!-- file info display -->
-      <div class="col-5">
-        <div class="card" style="height: 400px;">
-          <div class="card-header">{{ file.name }}</div>
-          <div class="card-body">
-            <pre><code class="text-left">{{ file.content }}</code></pre>
+      <div class="col-lg-6 col-md-12 mb-4" style="height:500px">
+        <div class="card h-100">
+          <div class="card-header my-bg font-weight-bold">{{ file.name }}</div>
+          <div class="card-body overflow-auto">
+            <highlight-code class="text-left" :lang="getFileLang(file.name)">{{ file.content }}</highlight-code>
           </div>
           <div class="card-footer">
             <star-rating
               :inline="true"
               :read-only="true"
               :rating="file.mark"
-              :show-rating="false"
+              :show-rating="true"
               v-bind:increment="0.01"
               v-bind:star-size="20"
+              v-if="file.mark>0"
             ></star-rating>
+            <small v-if="file.mark===0">This file hasn't received any mark yet...</small>
           </div>
         </div>
       </div>
       <!-- file info display end -->
 
       <!-- comments -->
-      <div class="col-7">
-        <div class="overflow-auto" style="height: 400px;">
-          <div class="card mb-4">
-            <div class="card-header">Comments</div>
-            <div class="card-body" :key="idx" v-for="(comment, idx) in comments">
+      <div class="col-lg-6 col-md-12 mb-4" style="height:500px">
+        <div class="overflow-auto h-100">
+          <div class="card mb-4" :key="idx" v-for="(comment, idx) in comments">
+            <div class="card-body">
               <div class="row">
                 <div class="col-4">
-                  <p class="form-control">{{ comment.user }}</p>
+                  <p>{{ comment.user }}</p>
                 </div>
                 <div class="col-8">
-                  <p class="form-control">{{ comment.content }}</p>
+                  <p>{{ comment.content }}</p>
                 </div>
               </div>
+            </div>
+            <div class="card-footer p-1">
+              <small>{{ comment.postTime }}</small>
             </div>
           </div>
         </div>
@@ -73,18 +77,39 @@ export default {
       ]
     };
   },
-  methods: {},
+  methods: {
+    getFileLang(fileName) {
+      let fileLang = fileName.split(".").pop();
+      switch (fileLang) {
+        case "py":
+          return "python";
+        case "js":
+          return "javascript";
+        case "java":
+          return "java";
+        case "txt":
+          return "plaintext";
+        case "html":
+          return "html";
+        case "css":
+          return "css";
+        case "php":
+          return "php";
+        default:
+          return "plaintext";
+      }
+    }
+  },
   created() {
     if (Object.keys(this.$route.params).length === 0) {
       window.console.log(
         "lost params(file data), sending request to backend.."
       );
       this.file = {
-        id: "6",
-        name: "part2.txt",
-        content:
-          "He was working on a peer review website...\nAnd then he went crazy...",
-        mark: 2.9
+        id: "1",
+        name: "index.html",
+        content: "<h1>Hello World</h1>\n<h1>Bye World</h1>",
+        mark: 3.8
       };
     }
   }
@@ -92,4 +117,8 @@ export default {
 </script>
 
 <style scoped>
+.hljs {
+  height: 100%;
+  display: table;
+}
 </style>

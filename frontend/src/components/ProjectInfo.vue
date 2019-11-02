@@ -3,7 +3,7 @@
     <!-- project info dispaly -->
     <div class="project-info overflow-auto" v-if="project.name">
       <div class="card mb-4">
-        <div class="card-header my-bg">{{ project.name }}</div>
+        <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
         <div class="card-body">
           <p>{{ project.description }}</p>
         </div>
@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: "ProjectList",
+  name: "ProjectInfo",
   props: {
     project: Object
   },

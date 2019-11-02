@@ -1,56 +1,54 @@
 <template>
   <div class="container">
-    <div class="creat-project-form">
-      <div class="card shadow">
-        <div class="card-header">Create a new project</div>
-        <div class="card-body">
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-control"
-              v-model="projectData.title"
-              placeholder="Project Title"
-            />
-          </div>
-
-          <div class="form-group">
-            <textarea
-              class="form-control"
-              v-model="projectData.description"
-              cols="30"
-              rows="5"
-              placeholder="Project description"
-            ></textarea>
-          </div>
-
-          <!-- input files -->
+    <div class="card mx-auto shadow creat-project-form">
+      <div class="card-header">Create a new project</div>
+      <div class="card-body">
+        <div class="form-group">
           <input
-            type="file"
-            style="display: none"
-            accept=".txt"
-            ref="filesInput"
-            @change="selectFiles"
-            multiple
+            type="text"
+            class="form-control"
+            v-model="projectData.name"
+            placeholder="Project Title"
           />
-          <button class="my-btn form-control" @click="$refs.filesInput.click()">Select Files</button>
-          <!-- input files end -->
+        </div>
 
-          <!-- files display -->
-          <div class="card my-4">
-            <div class="card-header">Project Files</div>
-            <div class="card-body">
-              <p
-                class="card-text text-left"
-                :key="idx"
-                v-for="(fileName, idx) in displayData.fileNameList"
-              >{{ fileName }}</p>
-            </div>
-          </div>
-          <!-- files display end -->
+        <div class="form-group">
+          <textarea
+            class="form-control"
+            v-model="projectData.description"
+            cols="30"
+            rows="5"
+            placeholder="Project description"
+          ></textarea>
+        </div>
 
-          <div class="form-group">
-            <button class="my-btn form-control" @click="createProject">Create</button>
+        <!-- input files -->
+        <input
+          type="file"
+          style="display: none"
+          accept=".txt"
+          ref="filesInput"
+          @change="selectFiles"
+          multiple
+        />
+        <button class="my-btn form-control" @click="$refs.filesInput.click()">Select Files</button>
+        <!-- input files end -->
+
+        <!-- files display -->
+        <div class="card my-4">
+          <div class="card-header">Project Files</div>
+          <div class="card-body">
+            <p
+              class="card-text text-left"
+              :key="idx"
+              v-for="(file, idx) in projectData.files"
+            >{{ file.name }}</p>
           </div>
+        </div>
+        <!-- files display end -->
+
+        <div class="form-group">
+          <button class="my-btn form-control" @click="createProject">Create</button>
         </div>
       </div>
     </div>
@@ -63,40 +61,57 @@ export default {
   data() {
     return {
       projectData: {
-        owner: this.$store.getters.getUserId,
+        user: this.$store.getters.getUserId,
         major: this.$store.getters.getUserMajor,
-        title: "",
+        name: "",
         description: "",
         files: [],
-        rating: "0",
-        ratingNum: "0"
+        createdTime: ""
       },
-      displayData: {
-        fileNameList: []
-      }
     };
   },
   components: {},
   methods: {
     createProject() {
-      window.console.log(this.projectData);
-    },
-    selectFiles(event) {
-      let fileArray = Array.from(event.target.files);
-      if (fileArray) {
-        var reader = new FileReader();
+      // get local time in the format: "dd/mm/yyyy, hh:mm:ss"
+      this.projectData.createdTime = new Date().toLocaleString("en-GB");
 
-        for (let key in fileArray) {
-          let fileName = fileArray[key].name;
+      // compare two time
+      // let newTime = '02/11/2019, 17:30:57'
+      // window.console.log(newtime > this.projectData.createdTime)
+
+      window.console.log(this.projectData);
+      this.$router.push({
+        name: "project",
+        query: { projectId: "1" },
+        params: { project: this.projectData }
+      });
+    },
+
+    // read file text content
+    getFileContent(file, callback) {
+      var reader = new FileReader();
+
+      reader.onload = function(event) {
+        callback(event.target.result);
+      };
+      reader.readAsText(file, "UTF-8");
+    },
+
+    // handle select files
+    selectFiles(event) {
+      let fileList = Array.from(event.target.files);
+      if (fileList) {
+        for (let key in fileList) {
+          let fileName = fileList[key].name;
           window.console.log("file name:", fileName);
-          reader.readAsText(fileArray[key], "UTF-8");
-          this.displayData.fileNameList.push(fileName);
-          reader.onload = function() {
-            window.console.log("file content:", reader.result);
-          };
-          this.projectData.files.push({
-            name: fileName,
-            content: reader.result
+
+          this.getFileContent(fileList[key], fileContent => {
+            this.projectData.files.push({
+              name: fileName,
+              content: fileContent,
+              mark: 0
+            });
           });
         }
       }
