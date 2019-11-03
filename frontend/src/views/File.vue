@@ -151,7 +151,7 @@ export default {
         text:
           "Mark: " +
           this.commentData.mark +
-          "Content: " +
+          " Content: " +
           this.commentData.content,
         type: "success"
       });

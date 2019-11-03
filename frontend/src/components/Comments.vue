@@ -1,5 +1,6 @@
 <template>
-  <div class="overflow-auto h-100">
+<div class="h-100 w-100">
+  <div class="overflow-auto h-100 w-100 border-top border-bottom" v-if="comments.length > 0">
     <div class="card comment-card mb-4 shadow-sm" :key="idx" v-for="(comment, idx) in comments">
       <div class="card-body pb-0">
         <!-- user name & comment content -->
@@ -37,6 +38,13 @@
       </div>
     </div>
   </div>
+
+  <div class="card border h-100 w-100" v-if="comments.length === 0">
+    <h5 style="margin-top:100px">This file has no comment yet...</h5>
+  </div>
+</div>
+
+
 </template>
 
 <script>

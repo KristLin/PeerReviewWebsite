@@ -1,19 +1,24 @@
 <template>
-  <div class="project-list overflow-auto h-100 w-100">
-    <div
-      class="card project-card mb-4 mx-auto"
-      @click="clickProject(project)"
-      :key="idx"
-      v-for="(project, idx) in projects"
-    >
-      <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
-      <div class="card-body">
-        <p>{{ handleDescription(project.description) }}</p>
-        <!-- <div class="reveal bg-warning p-2">Click to see more!</div> -->
+  <div class="h-100 w-100">
+    <div class="project-list overflow-auto h-100 w-100 border-top border-bottom" v-if="projects.length > 0">
+      <div
+        class="card project-card mb-4 mx-auto"
+        @click="clickProject(project)"
+        :key="idx"
+        v-for="(project, idx) in projects"
+      >
+        <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
+        <div class="card-body">
+          <p>{{ handleDescription(project.description) }}</p>
+          <!-- <div class="reveal bg-warning p-2">Click to see more!</div> -->
+        </div>
+        <div class="card-footer p-1">
+          <small>{{ project.createdTime }}</small>
+        </div>
       </div>
-      <div class="card-footer p-1">
-        <small>{{ project.createdTime }}</small>
-      </div>
+    </div>
+    <div class="project-list border h-100 w-100" v-if="projects.length === 0">
+      <h4 style="margin-top:100px">Sorry, there is no result...</h4>
     </div>
   </div>
 </template>
@@ -30,7 +35,9 @@ export default {
       this.$emit("clickProject", project);
     },
     handleDescription(description) {
-      return description.substring(0, 50) + (description.length > 50 ? "..." : "")
+      return (
+        description.substring(0, 50) + (description.length > 50 ? "..." : "")
+      );
     }
   }
 };
@@ -55,9 +62,9 @@ export default {
   background-color: #b281f8;
 }
 .project-card:hover .card-body {
-  background-color: rgba(0, 0, 0, .01)
+  background-color: rgba(0, 0, 0, 0.01);
 }
 .project-card:hover .card-footer {
-  background-color: rgba(0, 0, 0, .045)
+  background-color: rgba(0, 0, 0, 0.045);
 }
 </style> 
