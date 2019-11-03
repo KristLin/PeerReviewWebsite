@@ -30,7 +30,8 @@
       </div>
       <!-- comments end -->
 
-      <div class="card mx-auto mt-4" style="width:550px">
+      <!-- leave review -->
+      <div class="card mx-auto shadow-sm mt-4" style="width:550px">
         <div class="card-header p-2">
           <span class="text-muted mr-2">Your Mark:</span>
           <star-rating
@@ -42,15 +43,11 @@
           ></star-rating>
         </div>
         <div class="card-body">
-          <textarea
-            class="form-control mb-2"
-            v-model="commentData.content"
-            cols="30"
-            rows="5"
-          ></textarea>
+          <textarea class="form-control mb-2" v-model="commentData.content" cols="30" rows="5"></textarea>
           <button class="my-btn form-control" @click="leaveReview">Leave a review</button>
         </div>
       </div>
+      <!-- leave review end -->
     </div>
   </div>
 </template>

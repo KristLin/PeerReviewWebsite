@@ -13,7 +13,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 
 import 'vue-highlight.js/lib/allLanguages'
-import './assets/vs.css';
+import './assets/my-vs.css';
 Vue.use(VueHighlightJS);
 
 import VueSweetalert2 from 'vue-sweetalert2';

@@ -4,9 +4,11 @@ const path = require('path')
 // const proxy = require('express-http-proxy'); 
 const history = require('connect-history-api-fallback');
 
+const app = express()
+
 //add this middleware
 app.use(history());  
-const app = express()
+
 // app.use('/api', proxy('https://krist-9900-backend.herokuapp.com'))
 app.use('/', serveStatic(path.join(__dirname, '/dist')))
 
