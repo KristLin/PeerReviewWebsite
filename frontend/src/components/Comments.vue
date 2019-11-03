@@ -1,44 +1,38 @@
 <template>
-  <div class="card h-100">
-    <div class="shadow overflow-auto h-100">
-      <div class="card mb-4 shadow-sm" :key="idx" v-for="(comment, idx) in comments">
-        <div class="card-body pb-0">
-          <!-- user name & comment content -->
-          <div class="row">
-            <div class="col-3">
-              <div class="circle mx-auto">{{ comment.user }}</div>
-            </div>
-            <div class="col-9">
-              <p class="text-left border p-2" style="height:100px">{{ comment.content }}</p>
-            </div>
+  <div class="overflow-auto h-100">
+    <div class="card mb-4 shadow-sm" :key="idx" v-for="(comment, idx) in comments">
+      <div class="card-body pb-0">
+        <!-- user name & comment content -->
+        <div class="row">
+          <div class="col-3">
+            <div class="circle mx-auto">{{ comment.user }}</div>
           </div>
-          <!-- user name & comment content end -->
+          <div class="col-9">
+            <p class="text-left border p-2" style="height:100px">{{ comment.content }}</p>
+          </div>
         </div>
-        <div class="card-footer">
-          <div class="row">
-            <div class="col-8 text-left">
-              <small>{{ comment.postTime }}</small>
-            </div>
+        <!-- user name & comment content end -->
+      </div>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col-8 text-left">
+            <small>{{ comment.postTime }}</small>
+          </div>
 
-            <!-- like button & like num -->
-            <div class="col-2 text-right">
-              <i
-                class="far fa-thumbs-up unliked-icon"
-                @click="like(comment)"
-                v-if="!comment.hasLiked"
-              ></i>
-              <i
-                class="fas fa-thumbs-up liked-icon"
-                @click="unLike(comment)"
-                v-if="comment.hasLiked"
-              ></i>
-            </div>
-            <div class="col-2 text-left">
-              <small class="text-muted font-weight-bold">{{ comment.likedNum }}</small>
-            </div>
+          <!-- like button & like num -->
+          <div class="col-2 text-right">
+            <i
+              class="far fa-thumbs-up unliked-icon"
+              @click="like(comment)"
+              v-if="!comment.hasLiked"
+            ></i>
+            <i class="fas fa-thumbs-up liked-icon" @click="unLike(comment)" v-if="comment.hasLiked"></i>
           </div>
-          <!-- like button & like num end -->
+          <div class="col-2 text-left">
+            <small class="text-muted font-weight-bold">{{ comment.likedNum }}</small>
+          </div>
         </div>
+        <!-- like button & like num end -->
       </div>
     </div>
   </div>

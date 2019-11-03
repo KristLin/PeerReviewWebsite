@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <h1>Your Major: {{ $store.getters.getUserMajor }}</h1>
-    <div>
-      <SearchInput :searchData="searchData" @searchRequest="searchProject" />
+    <div class="w-50 my-4 mx-auto">
+      <input type="text" class="form-control" placeholder="Keyword" v-model="searchData.keyword" />
     </div>
 
     <div class="row">
       <div class="col-lg-7 col-md-12 md-4" style="height:500px">
-        <ProjectList :projects="projects" @clickProject="clickProject" />
+        <ProjectList :projects="filterProjects(projects)" @clickProject="clickProject" />
       </div>
       <div class="col-lg-5 col-md-12 md-4" style="height:500px">
         <ProjectInfo :project="chosenProject" />
@@ -17,14 +17,12 @@
 </template>
 
 <script>
-import SearchInput from "@/components/SearchInput.vue";
 import ProjectList from "@/components/ProjectList.vue";
 import ProjectInfo from "@/components/ProjectInfo.vue";
 
 export default {
   name: "search",
   components: {
-    SearchInput,
     ProjectList,
     ProjectInfo
   },
@@ -43,18 +41,6 @@ export default {
           major: "CSE",
           createdTime: "2019-10-29 16:00:00",
           files: [
-            {
-              id: "1",
-              name: "index.html",
-              content: "<h1>Hello World</h1>\n<h1>Bye World</h1>",
-              mark: 3.8
-            },
-            {
-              id: "2",
-              name: "index.css",
-              content: "h1{\n\tcolor: blue;\n}",
-              mark: 3.5
-            },
             {
               id: "1",
               name: "index.html",
@@ -177,14 +163,22 @@ export default {
     };
   },
   methods: {
-    searchProject() {
-      window.console.log(this.searchData);
-    },
     clickProject(project) {
       window.console.log("received clicked project from ProjectList", project);
       this.chosenProject = project;
+    },
+    filterProjects(projects) {
+      let keyword = this.searchData.keyword.toLowerCase();
+      var filteredProjects = projects.filter(function(project) {
+        return (
+          project.name.toLowerCase().includes(keyword) ||
+          project.description.toLowerCase().includes(keyword)
+        );
+      });
+      return filteredProjects;
     }
   },
+
   created() {
     // test get request to the backend
     // this.$axios

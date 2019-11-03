@@ -1,7 +1,7 @@
 <template>
-  <div class="project-list overflow-auto shadow h-100 w-100">
+  <div class="project-list overflow-auto h-100 w-100">
     <div
-      class="card project-card mb-4"
+      class="card project-card mb-4 mx-auto"
       @click="clickProject(project)"
       :key="idx"
       v-for="(project, idx) in projects"

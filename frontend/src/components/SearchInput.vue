@@ -1,11 +1,8 @@
 <template>
-  <div>
-    <div class="search-input w-50 mx-auto">
-      <input type="text" class="form-control" placeholder="Keyword" v-model="searchData.keyword" />
-      <button class="my-btn form-control" @click="clickSearch">Search Project</button>
-    </div>
-    <!-- <span>Search Keyword: {{ searchData.keyword }} || Order Type: {{ searchData.orderType }}</span> -->
+  <div class="w-50 mx-auto">
+    <input type="text" class="form-control" placeholder="Keyword" v-model="searchData.keyword" />
   </div>
+  <!-- <span>Search Keyword: {{ searchData.keyword }} || Order Type: {{ searchData.orderType }}</span> -->
 </template>
 
 <script>
@@ -17,18 +14,9 @@ export default {
       orderType: ""
     }
   },
-  methods: {
-    clickSearch() {
-      window.console.log("search request in SearchInput");
-      this.$emit("searchRequest");
-    }
-  }
+  methods: {}
 };
 </script>
 
 <style scoped>
-.search-input {
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
 </style> 

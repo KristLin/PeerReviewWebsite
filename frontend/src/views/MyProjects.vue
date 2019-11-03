@@ -2,7 +2,9 @@
   <div class="container">
     <h1>My Projects</h1>
     <p class="text-right">Rest Top Times: 10</p>
-    <!-- <SearchInput :searchData="searchData" @searchRequest="searchProject" /> -->
+    <div class="w-50 my-2 mx-auto">
+      <input type="text" class="form-control" placeholder="Keyword" v-model="searchData.keyword" />
+    </div>
 
     <button
       class="my-btn w-50 mx-auto my-4 form-control"
@@ -33,14 +35,12 @@
 </template>
 
 <script>
-// import SearchInput from "@/components/SearchInput.vue";
 import ProjectList from "@/components/ProjectList.vue";
 import ProjectInfo from "@/components/ProjectInfo.vue";
 
 export default {
   name: "myProjects",
   components: {
-    // SearchInput,
     ProjectList,
     ProjectInfo
   },
@@ -120,9 +120,6 @@ export default {
     };
   },
   methods: {
-    searchProject() {
-      window.console.log(this.searchData);
-    },
     clickProject(project) {
       window.console.log("received clicked project from ProjectList", project);
       this.chosenProject = project;
