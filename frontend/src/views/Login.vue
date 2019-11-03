@@ -60,7 +60,12 @@ export default {
         userName: "krist"
       };
       this.$store.commit("login", authUserData);
-      alert("logged in!");
+      this.$swal({
+        type: "success",
+        title: "Welcome Back!",
+        text: "You are logged in!"
+        // footer: "<a href>Why do I have this issue?</a>"
+      });
       this.$router.push({
         name: "home"
       });

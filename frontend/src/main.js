@@ -16,6 +16,10 @@ import 'vue-highlight.js/lib/allLanguages'
 import './assets/vs.css';
 Vue.use(VueHighlightJS);
 
+import VueSweetalert2 from 'vue-sweetalert2';
+Vue.use(VueSweetalert2);
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 new Vue({
   store,
   router,

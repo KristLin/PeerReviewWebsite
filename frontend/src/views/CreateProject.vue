@@ -67,7 +67,7 @@ export default {
         description: "",
         files: [],
         createdTime: ""
-      },
+      }
     };
   },
   components: {},
@@ -81,6 +81,7 @@ export default {
       // window.console.log(newtime > this.projectData.createdTime)
 
       window.console.log(this.projectData);
+      this.$swal("Success", "You has created a new project!", "success");
       this.$router.push({
         name: "project",
         query: { projectId: "1" },

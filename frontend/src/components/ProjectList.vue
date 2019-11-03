@@ -1,14 +1,15 @@
 <template>
   <div class="project-list overflow-auto" style="height: 500px;">
     <div
-      class="card mb-4 shadow-sm"
+      class="card project-card shadow-sm mb-4"
       @click="clickProject(project)"
       :key="idx"
       v-for="(project, idx) in projects"
     >
       <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
       <div class="card-body">
-        <p>{{ project.description }}</p>
+        <p>{{ handleDescription(project.description) }}</p>
+        <div class="reveal bg-warning p-2">Click to learn more!</div>
       </div>
       <div class="card-footer p-1">
         <small>{{ project.createdTime }}</small>
@@ -25,12 +26,28 @@ export default {
   },
   methods: {
     clickProject(project) {
-      window.console.log("clicked project in ProjectList", project)
+      window.console.log("clicked project in ProjectList", project);
       this.$emit("clickProject", project);
+    },
+    handleDescription(description) {
+      return description.substring(0, 50) + (description.length > 50 ? "..." : "")
     }
   }
 };
 </script>
 
 <style scoped>
+.project-card .reveal {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  padding: 0;
+}
+
+.project-card:hover .reveal {
+  height: auto;
+  visibility: visible;
+  opacity: 10;
+  transition: opacity 0.5s ease;
+}
 </style> 

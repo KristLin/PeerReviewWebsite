@@ -31,7 +31,7 @@
         </div>
         <hr />
         <div style="height:45px">
-          <button class="my-btn form-control shadow">Leave a review</button>
+          <button class="my-btn form-control shadow" @click="leaveReview">Leave a review</button>
         </div>
       </div>
       <!-- comments end -->
@@ -127,7 +127,8 @@ export default {
         default:
           return "plaintext";
       }
-    }
+    },
+    leaveReview() {}
   },
   created() {
     if (Object.keys(this.$route.params).length === 0) {

@@ -36,7 +36,7 @@ export default {
         {
           id: "1",
           name: "Peer Review Frontend",
-          description: "A simple frontend of peer review website",
+          description: "A simple frontend of peer review website. A simple frontend of peer review website. A simple frontend of peer review website.",
           major: "CSE",
           createdTime: "2019-10-29 16:00:00",
           files: [

@@ -148,7 +148,8 @@ class Logout(Resource):
     def get(self, user_id):
         if user_id in active_users:
             del active_users[user_id]
-        print("User is not in the active list, maybe the server has restarted.")
+        else:
+            print("User is not in the active list, maybe the server has restarted.")
         return "Log out successfully", 200
 
 
