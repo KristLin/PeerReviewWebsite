@@ -9,7 +9,7 @@
       <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
       <div class="card-body">
         <p>{{ handleDescription(project.description) }}</p>
-        <div class="reveal bg-warning p-2">Click to see more!</div>
+        <!-- <div class="reveal bg-warning p-2">Click to see more!</div> -->
       </div>
       <div class="card-footer p-1">
         <small>{{ project.createdTime }}</small>
@@ -49,5 +49,15 @@ export default {
   visibility: visible;
   opacity: 10;
   transition: opacity 0.5s ease;
+}
+
+.project-card:hover .card-header {
+  background-color: #b281f8;
+}
+.project-card:hover .card-body {
+  background-color: rgba(0, 0, 0, .01)
+}
+.project-card:hover .card-footer {
+  background-color: rgba(0, 0, 0, .045)
 }
 </style> 

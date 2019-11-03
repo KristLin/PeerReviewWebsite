@@ -171,6 +171,6 @@ brand:focus,
 }
 .dropdown-item:focus,
 .dropdown-item:hover {
-  background: #9852f9;
+  background: #c299fc;
 }
 </style> 

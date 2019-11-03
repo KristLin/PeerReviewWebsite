@@ -47,18 +47,12 @@ export default {
   color: white;
 }
 
-.my-bg {
-  background-color: #c299fc !important;
+.my-bg.card-header {
+  background-color: #c299fc;
   color: white;
 }
 
-.my-hr {
-  border: dotted #9852f9 5px;
-  border-bottom: none;
-  width: 20%;
-}
-
-.my-border {
-  border: solid black 2px;
+.zoom:hover {
+  transform: scale(1.3);
 }
 </style>

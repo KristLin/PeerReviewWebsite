@@ -11,7 +11,7 @@
           <div class="card-header">Project Files:</div>
           <div class="card-body text-left overflow-auto">
             <div @click="clickFile(file)" :key="idx" v-for="(file, idx) in project.files">
-              <div class="row">
+              <div class="row file-row">
                 <div class="col-6">
                   <span class="file-name mr-4">{{ file.name }}</span>
                 </div>
@@ -77,7 +77,11 @@ export default {
 </script>
 
 <style scoped>
-.file-name:hover {
+/* .file-name:hover {
   color: #9852f9;
+} */
+
+.file-row:hover {
+  background-color: rgba(0, 0, 0, .03)
 }
 </style> 
