@@ -123,6 +123,6 @@ export default {
 
 <style scoped>
 .creat-project-form {
-  width: 400px;
+  width: 500px;
 }
 </style>

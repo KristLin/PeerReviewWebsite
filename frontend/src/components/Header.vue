@@ -67,23 +67,32 @@ export default {
           confirmButtonText: "Log out"
         }).then(result => {
           if (result.value) {
-            this.$axios
-              .get("/api/users/logout/" + this.$store.getters.getUserId)
-              .then(res => {
-                if (res.status == 200) {
-                  this.$store.commit("logout");
-                  window.console.log("user logged out");
-                  if (this.$router.currentRoute.name !== "home") {
-                    this.$router.push({ name: "home" });
-                  }
-                  this.$swal("Success", "You are logged out!", "success").then(
-                    () => {
-                      window.location.reload(true);
-                    }
-                  );
-                }
-              })
-              .catch(err => window.console.log(err));
+            window.console.log("confirm result", result);
+            this.$store.commit("logout");
+            window.console.log("user logged out");
+            if (this.$router.currentRoute.name !== "home") {
+              this.$router.push({ name: "home" });
+            }
+            this.$swal("Success", "You are logged out!", "success").then(() => {
+              window.location.reload(true);
+            });
+            // this.$axios
+            //   .get("/api/users/logout/" + this.$store.getters.getUserId)
+            //   .then(res => {
+            //     if (res.status == 200) {
+            //       this.$store.commit("logout");
+            //       window.console.log("user logged out");
+            //       if (this.$router.currentRoute.name !== "home") {
+            //         this.$router.push({ name: "home" });
+            //       }
+            //       this.$swal("Success", "You are logged out!", "success").then(
+            //         () => {
+            //           window.location.reload(true);
+            //         }
+            //       );
+            //     }
+            //   })
+            //   .catch(err => window.console.log(err));
           }
         });
       } else {

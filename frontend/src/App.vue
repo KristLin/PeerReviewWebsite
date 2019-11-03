@@ -57,4 +57,8 @@ export default {
   border-bottom: none;
   width: 20%;
 }
+
+.my-border {
+  border: solid black 2px;
+}
 </style>

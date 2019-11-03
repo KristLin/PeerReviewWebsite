@@ -1,21 +1,25 @@
 <template>
-  <div class="overflow-auto h-100">
+  <div class="card shadow overflow-auto h-100">
     <div class="card mb-4 shadow-sm" :key="idx" v-for="(comment, idx) in comments">
-      <div class="card-body">
+      <div class="card-body p-2">
         <!-- user name & comment content -->
         <div class="row">
-          <div class="col-4">
-            <p>{{ comment.user }}</p>
+          <div class="col-3 p-0">
+            <div class="circle mx-auto">{{ comment.user }}</div>
           </div>
-          <div class="col-8">
-            <p class="text-left">{{ comment.content }}</p>
+          <div class="col-9 p-0">
+            <p class="text-left border p-2 mb-0 mr-4" style="height:100px">{{ comment.content }}</p>
           </div>
         </div>
         <!-- user name & comment content end -->
+      </div>
+      <div class="card-footer p-1">
+        <div class="row m-0 p-0">
+          <div class="col-8 text-left">
+            <small>{{ comment.postTime }}</small>
+          </div>
 
-        <!-- like button & like num -->
-        <div class="row">
-          <div class="col-8"></div>
+          <!-- like button & like num -->
           <div class="col-2 text-right">
             <i
               class="far fa-thumbs-up unliked-icon"
@@ -25,13 +29,10 @@
             <i class="fas fa-thumbs-up liked-icon" @click="unLike(comment)" v-if="comment.hasLiked"></i>
           </div>
           <div class="col-2 text-left">
-            <small class="font-weight-bold">{{ comment.likedNum }}</small>
+            <small class="text-muted font-weight-bold">{{ comment.likedNum }}</small>
           </div>
         </div>
         <!-- like button & like num end -->
-      </div>
-      <div class="card-footer p-1">
-        <small>{{ comment.postTime }}</small>
       </div>
     </div>
   </div>
@@ -57,8 +58,23 @@ export default {
 </script>
 
 <style scoped>
+.circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  color: #fff;
+  line-height: 80px;
+  text-align: center;
+  background: lightgray;
+  margin-top: 10px;
+}
+
 .liked-icon {
   color: #f0134d;
+}
+
+.unliked-icon {
+  color: grey;
 }
 
 .unliked-icon:hover {

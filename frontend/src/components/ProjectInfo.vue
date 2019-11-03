@@ -1,14 +1,14 @@
 <template>
-  <div style="height: 500px;">
+  <div class="card overflow-auto shadow h-100 w-100">
     <!-- project info dispaly -->
-    <div class="overflow-auto shadow-sm h-100" v-if="project.name">
-      <div class="card h-100">
+    <div v-if="project.name">
+      <div class="card">
         <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
         <div class="card-body">
           <p>{{ project.description }}</p>
         </div>
-        <div class="card mx-4 my-4 h-50">
-          <div class="card-header">File List:</div>
+        <div class="card mx-4 my-4" style="height:300px">
+          <div class="card-header">Project Files:</div>
           <div class="card-body text-left overflow-auto">
             <div @click="clickFile(file)" :key="idx" v-for="(file, idx) in project.files">
               <div class="row">

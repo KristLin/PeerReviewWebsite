@@ -1,7 +1,7 @@
 <template>
-  <div class="project-list overflow-auto" style="height: 500px;">
+  <div class="project-list overflow-auto shadow h-100 w-100">
     <div
-      class="card project-card shadow-sm mb-4"
+      class="card project-card mb-4"
       @click="clickProject(project)"
       :key="idx"
       v-for="(project, idx) in projects"
@@ -9,7 +9,7 @@
       <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
       <div class="card-body">
         <p>{{ handleDescription(project.description) }}</p>
-        <div class="reveal bg-warning p-2">Click to learn more!</div>
+        <div class="reveal bg-warning p-2">Click to see more!</div>
       </div>
       <div class="card-footer p-1">
         <small>{{ project.createdTime }}</small>

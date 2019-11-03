@@ -67,7 +67,7 @@ export default {
         // footer: "<a href>Why do I have this issue?</a>"
       });
       this.$router.push({
-        name: "home"
+        name: "myProjects"
       });
 
       // this.$axios
@@ -84,7 +84,7 @@ export default {
       //       this.$store.commit("login", authUserData);
       //       alert("logged in!");
       //       this.$router.push({
-      //         name: "home"
+      //         name: "myProjects"
       //       });
       //     }
       //   })
@@ -98,6 +98,6 @@ export default {
 
 <style scoped>
 .login-form {
-  width: 300px;
+  width: 350px;
 }
 </style>

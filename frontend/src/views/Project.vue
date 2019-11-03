@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="w-50 mx-auto">
+    <div class="mx-auto w-50" style="height:500px; min-width:450px">
       <ProjectInfo :project="project" />
     </div>
   </div>

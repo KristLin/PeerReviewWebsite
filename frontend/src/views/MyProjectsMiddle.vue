@@ -1,48 +1,32 @@
 <template>
   <div class="container">
-    <h1>My Projects</h1>
     <p class="text-right">Rest Top Times: 10</p>
-    <!-- <SearchInput :searchData="searchData" @searchRequest="searchProject" /> -->
+
+    <h1>My Major: {{ $store.getters.getUserMajor }}</h1>
+    <SearchInput :searchData="searchData" @searchRequest="searchProject" />
 
     <button
-      class="my-btn w-50 mx-auto my-4 form-control"
+      class="btn btn-warning w-50 mx-auto my-4 form-control"
       @click="$router.push({name: 'createProject'})"
     >Create New Project</button>
     <hr />
 
-    <div class="row">
-      <!-- project list -->
-      <div class="col-lg-7 col-md-12 md-4" style="height:500px">
-        <ProjectList :projects="projects" @clickProject="clickProject" />
-      </div>
-      <!-- project list end -->
-
-      <!-- top up button & project info -->
-      <div class="col-lg-5 col-md-12 md-4">
-        <div class="row" style="height:50px">
-          <button class="form-control btn btn-warning" v-if="chosenProject.name">Top Up!</button>
-          <p class="form-control" v-if="!chosenProject.name">Top Up!</p>
-        </div>
-        <div class="row" style="height:450px">
-          <ProjectInfo :project="chosenProject" />
-        </div>
-      </div>
-      <!-- top up button & project info end -->
+    <h2>My Projects</h2>
+    <div class="mx-auto" style="height:500px;width:600px">
+      <ProjectList :projects="projects" @clickProject="clickProject" />
     </div>
   </div>
 </template>
 
 <script>
-// import SearchInput from "@/components/SearchInput.vue";
+import SearchInput from "@/components/SearchInput.vue";
 import ProjectList from "@/components/ProjectList.vue";
-import ProjectInfo from "@/components/ProjectInfo.vue";
 
 export default {
   name: "myProjects",
   components: {
-    // SearchInput,
-    ProjectList,
-    ProjectInfo
+    SearchInput,
+    ProjectList
   },
   data() {
     return {
@@ -124,8 +108,11 @@ export default {
       window.console.log(this.searchData);
     },
     clickProject(project) {
-      window.console.log("received clicked project from ProjectList", project);
-      this.chosenProject = project;
+      this.$router.push({
+        name: "project",
+        query: { projectId: project.id },
+        params: { project: project }
+      });
     }
   }
 };

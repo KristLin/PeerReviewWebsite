@@ -25,16 +25,32 @@
       <!-- file info display end -->
 
       <!-- comments -->
-      <div class="col-lg-6 col-md-12 mb-4">
-        <div style="height:472px">
-          <Comments :comments="comments" />
-        </div>
-        <hr />
-        <div style="height:45px">
-          <button class="my-btn form-control shadow" @click="leaveReview">Leave a review</button>
-        </div>
+      <div class="col-lg-6 col-md-12 mb-4" style="height:550px">
+        <Comments :comments="comments" />
       </div>
       <!-- comments end -->
+
+      <div class="card mx-auto mt-4" style="width:550px">
+        <div class="card-header p-2">
+          <span class="text-muted mr-2">Your Mark:</span>
+          <star-rating
+            :inline="true"
+            text-class="rating-text"
+            v-bind:increment="1"
+            v-bind:star-size="20"
+            v-model="commentData.mark"
+          ></star-rating>
+        </div>
+        <div class="card-body">
+          <textarea
+            class="form-control mb-2"
+            v-model="commentData.content"
+            cols="30"
+            rows="5"
+          ></textarea>
+          <button class="my-btn form-control" @click="leaveReview">Leave a review</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -103,7 +119,11 @@ export default {
           likedNum: 1,
           hasLiked: false
         }
-      ]
+      ],
+      commentData: {
+        mark: 0,
+        content: ""
+      }
     };
   },
   methods: {
@@ -128,7 +148,17 @@ export default {
           return "plaintext";
       }
     },
-    leaveReview() {}
+    leaveReview() {
+      this.$swal({
+        title: "Success",
+        text:
+          "Mark: " +
+          this.commentData.mark +
+          "Content: " +
+          this.commentData.content,
+        type: "success"
+      });
+    }
   },
   created() {
     if (Object.keys(this.$route.params).length === 0) {

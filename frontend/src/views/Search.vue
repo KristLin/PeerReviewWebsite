@@ -1,13 +1,15 @@
 <template>
   <div class="container">
     <h1>Your Major: {{ $store.getters.getUserMajor }}</h1>
-    <SearchInput :searchData="searchData" @searchRequest="searchProject" />
+    <div>
+      <SearchInput :searchData="searchData" @searchRequest="searchProject" />
+    </div>
 
     <div class="row">
-      <div class="col-lg-7 col-md-12 md-4">
+      <div class="col-lg-7 col-md-12 md-4" style="height:500px">
         <ProjectList :projects="projects" @clickProject="clickProject" />
       </div>
-      <div class="col-lg-5 col-md-12 md-4">
+      <div class="col-lg-5 col-md-12 md-4" style="height:500px">
         <ProjectInfo :project="chosenProject" />
       </div>
     </div>
@@ -36,7 +38,8 @@ export default {
         {
           id: "1",
           name: "Peer Review Frontend",
-          description: "A simple frontend of peer review website. A simple frontend of peer review website. A simple frontend of peer review website.",
+          description:
+            "A simple frontend of peer review website. A simple frontend of peer review website. A simple frontend of peer review website.",
           major: "CSE",
           createdTime: "2019-10-29 16:00:00",
           files: [
@@ -164,7 +167,7 @@ export default {
               id: "6",
               name: "part2.txt",
               content:
-                "He was warking on a web project...\nAnd he went crazy...",
+                "He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...He was warking on a web project...\nAnd he went crazy...",
               mark: 2.9
             }
           ]

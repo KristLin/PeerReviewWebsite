@@ -4,8 +4,7 @@
       <input type="text" class="form-control" placeholder="Keyword" v-model="searchData.keyword" />
       <button class="my-btn form-control" @click="clickSearch">Search Project</button>
     </div>
-    <span>Search Keyword: {{ searchData.keyword }} || Order Type: {{ searchData.orderType }}</span>
-    <hr>
+    <!-- <span>Search Keyword: {{ searchData.keyword }} || Order Type: {{ searchData.orderType }}</span> -->
   </div>
 </template>
 
