@@ -89,48 +89,40 @@ export default {
       if (this.userData.password !== this.checkedData.password2) {
         alert("Passwords are not matched!");
       } else {
-        let authUserData = {
-          userId: 1,
-          userMajor: "CSE",
-          userName: "Krist"
-        };
-        this.$store.commit("login", authUserData);
+        this.$axios
+          .post("/api/users/", this.userData)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            if (response.status == 200) {
+              let [userId, userMajor, userName] = response.data.split(" ");
+              let authUserData = {
+                userId: userId,
+                userMajor: userMajor,
+                userName: userName
+              };
+              this.$store.commit("login", authUserData);
 
-        window.console.log("user rigistered!");
-        this.$swal({
-          title: "Success",
-          text: "You are registered!",
-          type: "success"
-        });
-        this.$router.push({
-          name: "myProjects"
-        });
-        // this.$axios
-        //   .post("/api/users/", this.userData)
-        //   .then(response => {
-        //     // JSON responses are automatically parsed.
-        //     if (response.status == 200) {
-        //       let [userId, userMajor, userName] = response.data.split(" ");
-        //       let authUserData = {
-        //         userId: userId,
-        //         userMajor: userMajor,
-        //         userName: userName
-        //       };
-        //       this.$store.commit("login", authUserData);
-
-        //       window.console.log("user rigistered!");
-        //       window.console.log("user id: " + userId);
-        //       window.console.log("user major: " + userMajor);
-        //       alert("rigistered!");
-        //       this.$router.push({
-        //         name: "search"
-        //       });
-        //     }
-        //   })
-        //   .catch(err => {
-        //     window.console.log(err.response);
-        //     alert(err.response.data);
-        //   });
+              window.console.log("user rigistered!");
+              window.console.log("user id: " + userId);
+              window.console.log("user major: " + userMajor);
+              this.$swal({
+                title: "Success",
+                text: "You are registered!",
+                type: "success"
+              });
+              this.$router.push({
+                name: "myProjects"
+              });
+            }
+          })
+          .catch(err => {
+            window.console.log(err.response);
+            this.$swal({
+                title: "Oops..",
+                text: err.response.data,
+                type: "error"
+              });
+          });
       }
     }
   }

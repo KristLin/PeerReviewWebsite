@@ -54,43 +54,32 @@ export default {
           return;
         }
       }
-      let authUserData = {
-        userId: 1,
-        userMajor: "CSE",
-        userName: "krist"
-      };
-      this.$store.commit("login", authUserData);
-      this.$swal({
-        type: "success",
-        title: "Welcome Back!",
-        text: "You are logged in!"
-        // footer: "<a href>Why do I have this issue?</a>"
-      });
-      this.$router.push({
-        name: "myProjects"
-      });
 
-      // this.$axios
-      //   .post("/api/users/login", this.loginData)
-      //   .then(response => {
-      //     // JSON responses are automatically parsed.
-      //     if (response.status == 200) {
-      //       let [userId, userMajor, userName] = response.data.split(" ");
-      //       let authUserData = {
-      //         userId: userId,
-      //         userMajor: userMajor,
-      //         userName: userName
-      //       };
-      //       this.$store.commit("login", authUserData);
-      //       alert("logged in!");
-      //       this.$router.push({
-      //         name: "myProjects"
-      //       });
-      //     }
-      //   })
-      //   .catch(err => {
-      //     window.console.log(err.response);
-      //   });
+      this.$axios
+        .post("/api/users/login", this.loginData)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          if (response.status == 200) {
+            let [userId, userMajor, userName] = response.data.split(" ");
+            let authUserData = {
+              userId: userId,
+              userMajor: userMajor,
+              userName: userName
+            };
+            this.$store.commit("login", authUserData);
+            this.$swal({
+              title: "Success",
+              text: "You are logged in!",
+              type: "success"
+            });
+            this.$router.push({
+              name: "myProjects"
+            });
+          }
+        })
+        .catch(err => {
+          window.console.log(err.response);
+        });
     }
   }
 };
