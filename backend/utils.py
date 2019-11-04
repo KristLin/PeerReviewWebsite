@@ -1,3 +1,5 @@
+from datetime import datetime
+
 # extract valid data used for updating to avoid overwriting info with empty data
 def get_valid_update_info(data_object):
     update_info = {}
@@ -12,3 +14,9 @@ def check_logged_in(active_users, email):
         if active_users[user_id]["email"] == email:
             return True
     return False
+
+def datetime_to_str(datetime_object):
+    return datetime_object.strftime('%d/%m/%Y, %H:%M:%S')
+
+def str_to_datetime(time_str):
+    return datetime.strptime(time_str, '%d/%m/%Y, %H:%M:%S')

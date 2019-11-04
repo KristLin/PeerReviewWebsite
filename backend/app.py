@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_restplus import Resource, Api, fields
 from flask_cors import CORS
 import requests
+from flask_sqlalchemy import SQLAlchemy
 
 import os
 from datetime import datetime
@@ -10,6 +11,15 @@ from database import DB
 import utils
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = '9011ee99-7669-4da4-9d71-18e3ea930e6f'
+app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc://Tony:Miteli34548121@@tony9323.database.windows.net:1433/Tony-9323?driver=SQL+Server"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+app.config['Format_Parse_DateTime'] = "%Y-%m-%d %H:%M:%S"
+app.config['Point_Cost_for_Top'] = "10"
+db_sqlalchemy = SQLAlchemy(app)
+
 CORS(app)
 db = DB()
 
@@ -41,11 +51,8 @@ user_model = api.model(
             help="Email cannot be blank.",
         ),
         "name": fields.String,
-        "profile": fields.String,
         "password": fields.String,
-        "phone": fields.String,
         "major": fields.String,
-        "score": fields.String,
     },
 )
 
@@ -66,12 +73,12 @@ login_model = api.model(
 project_model = api.model(
     "project",
     {
-        "owner": fields.String,
+        "createdByUser": fields.String,
         "major": fields.String,
-        "title": fields.String,
+        "projectName": fields.String,
         "description": fields.String,
-        "rating": fields.String,
-        "rating_num": fields.String,
+        "createdTime": fields.String,
+        "isOnTop": fields.Boolean,
     },
 )
 
@@ -79,9 +86,11 @@ project_model = api.model(
 file_model = api.model(
     "file",
     {
-        "project": fields.String,
-        "name": fields.String,
-        "content": fields.String,
+        "inProject": fields.String,
+        "uploadedByUser": fields.String,
+        "uploadedTime": fields.String,
+        "fileName": fields.String,
+        "fileContent": fields.String,
     },
 )
 
@@ -89,10 +98,11 @@ file_model = api.model(
 comment_model = api.model(
     "comment",
     {
-        "file": fields.String,
-        "user": fields.String,
-        "content": fields.String,
-        "like_num": fields.String
+        "onFile": fields.String,
+        "postByUser": fields.String,
+        "commentContent": fields.String,
+        "postTime": fields.String,
+        "mark": fields.Integer,
     },
 )
 
