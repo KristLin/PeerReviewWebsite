@@ -127,7 +127,8 @@ class User(db_sqlalchemy.Model):
             'likedTimes': self.likedTimes,
             'topTimes': self.topTimes,
             'points': self.points,
-            'major': self.major
+            'major': self.major,
+            'password_hash': self.password_hash
         }
 
 
@@ -404,10 +405,10 @@ class DB(object):
     @staticmethod
     def find_user_by_email(email):
         m_user = User.query.filter_by(email=email).first()  # return None or just one user objects
-        if len(m_user) is 0:
-            return None
-        else:
+        if m_user:
             return m_user.get_dict()
+        else:
+            return None
 
     @staticmethod
     def find_all_users():
@@ -1002,12 +1003,13 @@ class UsersAPI(Resource):
     def post(self):
         user_data = request.json
         if db.find_user_by_email(user_data["email"]):
-            return "The email already exists.", 400
+            return "The email already exists!", 400
         else:
             if db.add_user(user_data):
                 user_data = db.find_user_by_email(user_data["email"])
                 active_users[user_data["email"]] = user_data
-                return user_data["id"] + " " + user_data["major"] + " " + user_data["name"], 200
+                print(user_data)
+                return str(user_data["id"]) + " " + user_data["major"] + " " + user_data["name"], 200
             else:
                 return "Error", 400
 
@@ -1027,16 +1029,16 @@ class LoginAPI(Resource):
         if user_login_data["email"] in active_users:
             user_data = active_users[user_login_data["email"]]
             print(user_data["email"] + " has Already logged in")
-            return user_data["id"] + " " + user_data["major"] + " " + user_data["name"], 200
+            return str(user_data["id"]) + " " + user_data["major"] + " " + user_data["name"], 200
         
         login_user = db.find_user_by_email(user_login_data["email"])
         if login_user == None:
             return "The user email does not exist", 400
         
-        if check_password_hash(login_user["password"], user_login_data["password"]):
+        if check_password_hash(login_user["password_hash"], user_login_data["password"]):
             # store active user info
             active_users[login_user["email"]] = login_user
-            return login_user["id"] + " " + login_user["major"] + " " + login_user["name"], 200
+            return str(login_user["id"]) + " " + login_user["major"] + " " + login_user["name"], 200
         else:
             return "Password is wrong", 400
 
