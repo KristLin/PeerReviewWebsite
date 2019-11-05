@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="padding-top:50px">
     <div class="card mx-auto shadow creat-project-form">
       <div class="card-header">Create a new project</div>
       <div class="card-body">

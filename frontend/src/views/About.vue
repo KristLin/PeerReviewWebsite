@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="padding-top:50px">
     <h1>This is an about page</h1>
   </div>
 </template>

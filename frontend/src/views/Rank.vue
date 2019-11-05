@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
-    <ul class="list-group mx-auto border" style="width:350px;min-height:500px">
+  <div class="container" style="padding-top:50px">
+    <ul class="list-group mx-auto border" style="width:400px;min-height:500px">
       <li class="list-group-item active my-bg">
-        <p>User Points Ranking</p>
+        <h4 class="my-4">User Points Ranking</h4>
         <div class="row">
-          <small class="col-4">Name</small>
-          <small class="col-4">Major</small>
-          <small class="col-4">Points</small>
+          <p class="col-4 m-0">Name</p>
+          <p class="col-4 m-0">Major</p>
+          <p class="col-4 m-0">Points</p>
         </div>
       </li>
       <li class="list-group-item list-group-item-action" :key="idx" v-for="(user, idx) in top10">
@@ -63,6 +63,6 @@ export default {
 
 .user-major-icon {
   color: #6bafa3;
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 </style>

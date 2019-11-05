@@ -21,9 +21,9 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Nunito&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
 #app {
-  font-family: "Nunito", Helvetica, Arial, sans-serif;
+  font-family: 'Varela Round', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -31,7 +31,7 @@ export default {
 }
 
 .content-div {
-  padding-top: 150px;
+  padding-top: 100px;
   padding-bottom: 100px;
 }
 
@@ -59,5 +59,9 @@ export default {
 
 .zoom:hover {
   transform: scale(1.3);
+}
+
+.swal2-popup {
+  font-size: 0.7rem !important;
 }
 </style>

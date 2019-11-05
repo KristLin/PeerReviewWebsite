@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="padding-top:50px">
     <!-- <h1>Your Major: {{ $store.getters.getUserMajor }}</h1> -->
     <div>
       <i class="fas fa-laptop-code major-icon" v-if="$store.getters.getUserMajor === 'CSE'"></i>

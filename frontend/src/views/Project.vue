@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="padding-top:50px">
     <div class="mx-auto w-50" style="height:500px; min-width:450px">
       <ProjectInfo :project="project" />
     </div>

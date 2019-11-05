@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="padding-top:50px">
     <div class="row">
       <!-- file info display -->
       <div class="col-lg-6 col-md-12 mb-4" style="height:550px">

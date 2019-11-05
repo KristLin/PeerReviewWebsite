@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="padding-top:50px">
     <div class="card mx-auto shadow singup-form">
       <i class="fas fa-user-circle fa-6x card-img-top mx-auto mt-4"></i>
       <div class="card-body">

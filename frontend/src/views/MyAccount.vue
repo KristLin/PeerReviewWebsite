@@ -1,10 +1,10 @@
 <template>
-  <div class="container">
+  <div class="container" style="padding-top:50px">
     <div class="row">
       <!-- user data display -->
       <div class="col-lg-6 col-md-12 col-sm-12 mx-auto">
         <div class="card">
-          <div class="card-header">My Info</div>
+          <div class="card-header my-bg">My Info</div>
           <div class="card-body">
             <ul class="list-group">
               <li class="list-group-item list-group-item-action">Name: {{ userData.name }}</li>
