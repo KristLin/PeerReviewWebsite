@@ -6,7 +6,7 @@
         <!-- user name & comment content -->
         <div class="row">
           <div class="col-3">
-            <div class="circle mx-auto">{{ comment.user }}</div>
+            <div class="circle mx-auto">{{ comment.userName }}</div>
           </div>
           <div class="col-9">
             <p class="text-left comment-content border p-2" style="height:100px">{{ comment.content }}</p>
@@ -17,7 +17,7 @@
       <div class="card-footer">
         <div class="row">
           <div class="col-8 text-left">
-            <small>{{ comment.postTime }}</small>
+            <small>{{ comment.createdTime }}</small>
           </div>
 
           <!-- like button & like num -->

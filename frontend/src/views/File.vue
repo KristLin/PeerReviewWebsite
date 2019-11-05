@@ -69,7 +69,7 @@ export default {
       file: this.$route.params.file,
       comments: [],
       commentData: {
-        rating: 0,
+        rating: 5,
         content: ""
       }
     };
@@ -97,15 +97,64 @@ export default {
       }
     },
     leaveReview() {
-      this.$swal({
-        title: "Success",
-        text:
-          "Rating: " +
-          this.commentData.rating +
-          " Content: " +
-          this.commentData.content,
-        type: "success"
-      });
+      if (!this.$store.getters.isLoggedIn) {
+        this.$swal("Warning", "Log in required!", "warning");
+        this.$router.push({ name: "login" });
+        return;
+      }
+      if (this.commentData.content === "") {
+        this.$$swal("Warnning", "You didn't input any content!", "warning");
+        return;
+      }
+
+      this.commentData.user = this.$store.getters.getUserId;
+      this.commentData.userName = this.$store.getters.getUserName;
+      this.commentData.file = this.file._id;
+      this.$axios
+        .post("/api/comments/", this.commentData)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          if (response.status == 200) {
+            this.commentData.createdTime = new Date().toLocaleString("en-GB");
+            this.commentData.hasLiked = false;
+            this.commentData.likedNum = 0;
+            this.comments.push(this.commentData);
+
+            this.commentData = {
+              rating: 5,
+              content: ""
+            };
+
+            this.$swal({
+              title: "Success",
+              text: "You have post a review!",
+              type: "success"
+            });
+
+            // get updated comments
+            // window.console.log("Requesting updated comments...");
+            // this.$axios
+            //   .get("/api/comments/file/" + this.file["_id"], {
+            //     params: { user_id: this.$store.getter.getUserId }
+            //   })
+            //   .then(response => {
+            //     // JSON responses are automatically parsed.
+            //     if (response.status == 200) {
+            //       window.console.log(
+            //         "Received updated comments...",
+            //         response.data
+            //       );
+            //       this.comments = response.data;
+            //     }
+            //   })
+            //   .catch(err => {
+            //     window.console.log(err.response);
+            //   });
+          }
+        })
+        .catch(err => {
+          window.console.log(err.response);
+        });
     }
   },
   created() {
@@ -119,10 +168,33 @@ export default {
           // JSON responses are automatically parsed.
           if (response.status == 200) {
             this.file = response.data;
+            this.$axios
+              .get("/api/comments/file/" + this.file._id)
+              .then(response => {
+                // JSON responses are automatically parsed.
+                if (response.status == 200) {
+                  this.comments = response.data;
+                  this.$forceUpdate();
+                }
+              })
+              .catch(err => {
+                window.console.log(err.response);
+              });
           }
         })
         .catch(err => {
           window.console.log(err.response);
+          this.$axios
+            .get("/api/comments/file/" + this.file._id)
+            .then(response => {
+              // JSON responses are automatically parsed.
+              if (response.status == 200) {
+                this.comments = response.data;
+              }
+            })
+            .catch(err => {
+              window.console.log(err.response);
+            });
         });
     }
   }

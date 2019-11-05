@@ -74,7 +74,7 @@ export default {
           window.console.log(err.response);
         });
     } else {
-      window.console.log("user is not logged in, back to home page.");
+      window.console.log("user is not logged in");
       this.$swal("Error", "Log in required!", "error");
       this.$router.push({ name: "login" });
     }
