@@ -118,24 +118,24 @@ class DB(object):
             found_file["_id"] = str(found_file["_id"])
         return found_file
 
-    def update_file_rating(self, file_id, rating):
-        found_file = self.files.find_one({"_id": ObjectId(file_id)})
-
-        file_total_rating = found_file["rating"] * found_file["ratingNum"]
-
-        new_rating_num = found_file["ratingNum"] + 1
-        new_rating = round((file_total_rating + rating) / (new_rating_num), 2)
-
-        query = {"_id": ObjectId(file_id)}
-        return self.projects.update_one(query, {"$set": {"ratingNum": new_rating_num, "rating": new_rating}})
-
     # =========== comments data manipulation ===========
     def add_comment(self, comment):
         self.comments.insert_one(comment)
         found_user = self.users.find_one({"_id": ObjectId(comment["user"])})
         # update user commentNum & points
+        print(comment["user"])
         query = {"_id": ObjectId(comment["user"])}
-        self.comments.update_one(query, {"$set": {"commentNum": found_user["commentNum"] + 1, "points": found_user["points"] + 2}})
+        self.users.update_one(query, {"$set": {"commentNum": found_user["commentNum"] + 1, "points": found_user["points"] + 2}})
+        
+        # update file rating
+        found_file = self.files.find_one({"_id": ObjectId(comment["file"])})
+        file_total_rating = found_file["rating"] * found_file["ratingNum"]
+
+        new_rating_num = found_file["ratingNum"] + 1
+        new_rating = round((file_total_rating + comment["rating"]) / (new_rating_num), 2)
+        query = {"_id": ObjectId(comment["file"])}
+        return self.files.update_one(query, {"$set": {"ratingNum": new_rating_num, "rating": new_rating}})
+        
 
     def find_comment_by_id(self, comment_id):
         found_comment = self.files.find_one({"_id": ObjectId(comment_id)})
@@ -166,10 +166,10 @@ class DB(object):
         # update user likedNum & points
         found_user = self.users.find_one({"_id": ObjectId(user_id)})
         query = {"_id": ObjectId(user_id)}
-        self.comments.update_one(query, {"$set": {"likedNum": found_user["likedNum"] + 1, "points": found_user["points"] + 1}})
+        self.users.update_one(query, {"$set": {"likedNum": found_user["likedNum"] + 1, "points": found_user["points"] + 1}})
     
     def user_has_liked_comment(self, user_id, comment_id):
-        found_like = self.likes.find_one({"user": ObjectId(user_id), "comment": comment_id})
+        found_like = self.likes.find_one({"user": user_id, "comment": comment_id})
         if found_like:
             return True
         else:

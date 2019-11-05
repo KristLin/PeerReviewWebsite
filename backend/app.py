@@ -331,6 +331,7 @@ class CommentsAPI(Resource):
         comment["likedNum"] = 0
 
         db.add_comment(comment)
+        return "Comment uploaded", 200
 
 @comments.route("/file/<string:file_id>")
 class CommentsOfFileAPI(Resource):
@@ -342,17 +343,22 @@ class CommentsOfFileAPI(Resource):
         if user_id:
             for comment in file_comments:
                 comment["hasLiked"] = db.user_has_liked_comment(user_id, comment["_id"])
+            return file_comments, 200
         else:
-            return file_comments
+            return file_comments, 200
 # ============ comment API part end ============
 
 # ============ like API part start ============
 @likes.route("/")
 class LikesAPI(Resource):
-    @api.doc(description="upload a like")
-    def post(self):
-        like = request.json
-        db.add_like(like)
+    @api.doc(description="like a comment")
+    @api.param("user_id", "user's id", required=True)
+    @api.param("comment_id", "comment's id", required=True)
+    def get(self):
+        user_id = request.args.get("user_id")
+        comment_id = request.args.get("comment_id")
+        db.add_like(user_id, comment_id)
+        return "liked successfully", 200
 # ============ like API part end ============
 
 # ============ test API part start ============
