@@ -220,6 +220,13 @@ class BuyTopUPAPI(Resource):
         else:
             return "Insufficent points!", 400
 
+@users.route("/top10")
+class Top10UsersAPI(Resource):
+    @api.doc(description="Get top10 users with highest points")
+    def get(self):
+        all_users = db.find_all_users()
+        return utils.get_top10_users(all_users), 200
+
     # @api.doc(description="Delete a user by its ID")
     # def delete(self, user_id):
     #     delete_user = db.find_user_by_id(user_id)

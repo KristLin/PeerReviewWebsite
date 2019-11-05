@@ -14,3 +14,8 @@ def order_projects(projects):
     untopped_projects.sort(key=lambda project: str_to_datetime(project['createdTime']))
 
     return topped_projects + untopped_projects
+
+
+def get_top10_users(users):
+    users.sort(key=lambda user: user["points"], reverse=True)
+    return users[:10]
