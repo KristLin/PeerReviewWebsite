@@ -23,6 +23,9 @@
             <router-link class="nav-link" to="/news" active-class="active" exact>News</router-link>
           </li>
           <li class="nav-item">
+            <router-link class="nav-link" to="/rank" active-class="active" exact>Ranking</router-link>
+          </li>
+          <li class="nav-item">
             <router-link class="nav-link" to="/search" active-class="active" exact>Search</router-link>
           </li>
           <li class="nav-item">
