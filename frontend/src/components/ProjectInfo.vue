@@ -1,9 +1,9 @@
 <template>
   <div class="card overflow-auto shadow h-100 w-100">
     <!-- project info dispaly -->
-    <div v-if="project.name">
+    <div v-if="project.title">
       <div class="card">
-        <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
+        <div class="card-header my-bg font-weight-bold">{{ project.title }}</div>
         <div class="card-body">
           <p>{{ project.description }}</p>
         </div>
@@ -13,10 +13,10 @@
             <div @click="clickFile(file)" :key="idx" v-for="(file, idx) in project.files">
               <div class="row file-row">
                 <div class="col-6">
-                  <span class="file-name mr-4">{{ file.name }}</span>
+                  <span class="file-name mr">{{ handleFileName(file.name) }}</span>
                 </div>
                 <div class="col-6">
-                  <div class="has-mark" v-if="file.mark>0">
+                  <div class="has-mark" v-if="file.rating">
                     <star-rating
                       :inline="true"
                       :read-only="true"
@@ -25,9 +25,9 @@
                       v-bind:increment="0.01"
                       v-bind:star-size="15"
                     ></star-rating>
-                    <small class="ml-2">{{file.mark}}</small>
+                    <small class="ml-2">{{file.rating}}</small>
                   </div>
-                  <div class="no-mark" v-if="file.mark===0">
+                  <div class="no-mark" v-if="!file.rating">
                     <small>No mark yet...</small>
                   </div>
                 </div>
@@ -43,7 +43,7 @@
     <!-- project info dispaly end -->
 
     <!-- hint -->
-    <div class="card h-100 shadow-sm" v-if="!project.name">
+    <div class="card h-100 shadow-sm" v-if="!project.title">
       <div class="card-body h-100">
         <p class="mt-4">Click a project to see more.</p>
       </div>
@@ -71,8 +71,11 @@ export default {
         query: { fileId: file.id },
         params: { file: file }
       });
+    },
+    handleFileName(fileName) {
+      return fileName.substring(0, 18) + (fileName.length > 18 ? "..." : "")
     }
-  }
+  },
 };
 </script>
 

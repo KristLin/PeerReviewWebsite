@@ -102,9 +102,6 @@ export default {
               };
               this.$store.commit("login", authUserData);
 
-              window.console.log("user rigistered!");
-              window.console.log("user id: " + userId);
-              window.console.log("user major: " + userMajor);
               this.$swal({
                 title: "Success",
                 text: "You are registered!",

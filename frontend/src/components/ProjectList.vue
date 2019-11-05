@@ -1,13 +1,13 @@
 <template>
   <div class="h-100 w-100">
-    <div class="project-list overflow-auto h-100 w-100 border-top border-bottom" v-if="projects.length > 0">
+    <div class="project-list overflow-auto h-100 w-100 border-top border-bottom" v-if="projects.length">
       <div
         class="card project-card mb-4 mx-auto"
         @click="clickProject(project)"
         :key="idx"
         v-for="(project, idx) in projects"
       >
-        <div class="card-header my-bg font-weight-bold">{{ project.name }}</div>
+        <div class="card-header my-bg font-weight-bold">{{ project.title }}</div>
         <div class="card-body">
           <p>{{ handleDescription(project.description) }}</p>
           <!-- <div class="reveal bg-warning p-2">Click to see more!</div> -->
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="project-list border h-100 w-100" v-if="projects.length === 0">
+    <div class="project-list border h-100 w-100" v-if="!projects.length">
       <h4 style="margin-top:100px">Sorry, there is no result...</h4>
     </div>
   </div>

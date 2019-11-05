@@ -7,7 +7,7 @@
           <input
             type="text"
             class="form-control"
-            v-model="projectData.name"
+            v-model="projectData.title"
             placeholder="Project Title"
           />
         </div>
@@ -61,32 +61,50 @@ export default {
   data() {
     return {
       projectData: {
-        user: this.$store.getters.getUserId,
-        major: this.$store.getters.getUserMajor,
-        name: "",
+        title: "",
         description: "",
-        files: [],
-        createdTime: ""
-      }
+        files: []
+      },
+      
     };
   },
   components: {},
   methods: {
     createProject() {
       // get local time in the format: "dd/mm/yyyy, hh:mm:ss"
-      this.projectData.createdTime = new Date().toLocaleString("en-GB");
+      // this.projectData.createdTime = new Date().toLocaleString("en-GB");
 
       // compare two time
       // let newTime = '02/11/2019, 17:30:57'
       // window.console.log(newtime > this.projectData.createdTime)
+      for (let key in this.projectData) {
+        if (this.projectData[key].length === 0) {
+          this.$swal("Warning", "The project upload form is not complete! (" + key + ")", "warning");
+          return;
+        }
+      }
+      this.projectData.user = this.$store.getters.getUserId;
+      this.projectData.major = this.$store.getters.getUserMajor;
 
-      window.console.log(this.projectData);
-      this.$swal("Success", "You has created a new project!", "success");
-      this.$router.push({
-        name: "project",
-        query: { projectId: "1" },
-        params: { project: this.projectData }
-      });
+      window.console.log("project data before upload:", this.projectData);
+      this.$axios
+        .post("/api/projects/", this.projectData)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          if (response.status == 200) {
+            this.$swal("Success", "You has created a new project!", "success");
+            this.$router.push({
+              name: "myProjects"
+            });
+          }
+        })
+        .catch(err => {
+          window.console.log(err.response);
+          this.$swal("Oops", "Something is wrong, please try again later...", "error");
+          this.$router.push({
+            name: "myProject"
+          });
+        });
     },
 
     // read file text content
@@ -116,6 +134,13 @@ export default {
           });
         }
       }
+    }
+  },
+  created() {
+    if (!this.$store.getters.isLoggedIn) {
+      window.console.log("need user login");
+      this.$swal("Error", "Log in required!", "error");
+      this.$router.push({ name: "login" });
     }
   }
 };
