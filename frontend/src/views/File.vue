@@ -184,6 +184,8 @@ export default {
           // JSON responses are automatically parsed.
           if (response.status == 200) {
             this.file = response.data;
+
+            // get comments data
             this.$axios
               .get("/api/comments/file/" + this.file._id, {
                 params: { user_id: this.$store.getters.getUserId }
@@ -213,6 +215,22 @@ export default {
             .catch(err => {
               window.console.log(err.response);
             });
+        });
+    } else {
+      // get comments data
+      this.$axios
+        .get("/api/comments/file/" + this.file._id, {
+          params: { user_id: this.$store.getters.getUserId }
+        })
+        .then(response => {
+          // JSON responses are automatically parsed.
+          if (response.status == 200) {
+            this.comments = response.data;
+            this.$forceUpdate();
+          }
+        })
+        .catch(err => {
+          window.console.log(err.response);
         });
     }
   }

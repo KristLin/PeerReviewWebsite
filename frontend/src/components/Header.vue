@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <router-link class="navbar-brand" to="/">Peer Review</router-link>
+      <router-link class="navbar-brand" to="/">Peer Review 📚</router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -120,7 +120,7 @@ export default {
 
 brand:focus,
 .navbar-light .navbar-brand:hover {
-  color: #9852f9;
+  color: #6bafa3;
 }
 
 .navbar {
@@ -128,7 +128,7 @@ brand:focus,
 }
 
 .navbar-light .navbar-nav .nav-link.active {
-  color: #9852f9;
+  color: #6bafa3;
 }
 
 .nav-item::after {
@@ -136,7 +136,7 @@ brand:focus,
   display: block;
   width: 0px;
   height: 2px;
-  background: #9852f9;
+  background: #6bafa3;
   transition: 0.2s;
 }
 .nav-item:hover::after {
@@ -149,7 +149,7 @@ brand:focus,
 }
 
 .navbar-light .navbar-nav .nav-link.active {
-  color: #9852f9;
+  color: #6bafa3;
 }
 
 .dropdown-menu {
@@ -165,6 +165,6 @@ brand:focus,
 }
 .dropdown-item:focus,
 .dropdown-item:hover {
-  background: #c299fc;
+  background: #7ecfc0;
 }
 </style> 

@@ -22,8 +22,8 @@
           <select v-model="userData.major" class="form-control">
             <option value="Your Major">Your Major</option>
             <option value="CSE">Computer Science & Engineering</option>
+            <option value="Business">Business</option>
             <option value="Medical">Medical</option>
-            <option value="Finance">Finance</option>
             <option value="Literature">Literature</option>
           </select>
         </div>
@@ -92,35 +92,47 @@ export default {
       // raise alert if two password are not matched
       if (this.userData.password !== this.checkedData.password2) {
         this.$swal("Warning", "Two passwords are not matched", "warning");
-      } else {
-        this.$axios
-          .post("/api/users/", this.userData)
-          .then(response => {
-            // JSON responses are automatically parsed.
-            if (response.status == 200) {
-              let [userId, userMajor, userName] = response.data.split(" ");
-              let authUserData = {
-                userId: userId,
-                userMajor: userMajor,
-                userName: userName
-              };
-              this.$store.commit("login", authUserData);
-
-              this.$swal({
-                title: "Success",
-                text: "You are registered!",
-                type: "success"
-              });
-              this.$router.push({
-                name: "myProjects"
-              });
-            }
-          })
-          .catch(err => {
-            this.$swal("Oops", err.response.data, "error");
-            window.console.log(err.response);
-          });
+        return;
       }
+
+      // raise alert if email is not a valid @edu email
+      if (this.userData.email.includes("@")) {
+        if (!this.userData.email.split("@")[1].includes("edu")) {
+          this.$swal("Warning", "Email is not a edu email.", "warning");
+          return;
+        }
+      } else {
+        this.$swal("Warning", "Invliad email format.", "warning");
+        return;
+      }
+
+      this.$axios
+        .post("/api/users/", this.userData)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          if (response.status == 200) {
+            let [userId, userMajor, userName] = response.data.split(" ");
+            let authUserData = {
+              userId: userId,
+              userMajor: userMajor,
+              userName: userName
+            };
+            this.$store.commit("login", authUserData);
+
+            this.$swal({
+              title: "Success",
+              text: "You are registered!",
+              type: "success"
+            });
+            this.$router.push({
+              name: "myProjects"
+            });
+          }
+        })
+        .catch(err => {
+          this.$swal("Oops", err.response.data, "error");
+          window.console.log(err.response);
+        });
     }
   }
 };
@@ -128,6 +140,6 @@ export default {
 
 <style scoped>
 .singup-form {
-  width: 400px;
+  width: 350px;
 }
 </style>

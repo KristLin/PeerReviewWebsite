@@ -46,23 +46,20 @@ export default {
 </script>
 
 <style scoped>
-.project-card .reveal {
+/* .project-card .reveal {
   visibility: hidden;
   opacity: 0;
   height: 0;
   padding: 0;
-}
+} */
 
-.project-card:hover .reveal {
+/* .project-card:hover .reveal {
   height: auto;
   visibility: visible;
   opacity: 10;
   transition: opacity 0.5s ease;
-}
+} */
 
-.project-card:hover .card-header {
-  background-color: #b281f8;
-}
 .project-card:hover .card-body {
   background-color: rgba(0, 0, 0, 0.01);
 }

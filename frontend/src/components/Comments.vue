@@ -75,13 +75,13 @@ export default {
   color: #fff;
   line-height: 80px;
   text-align: center;
-  background: rgba(0, 0, 0, .25);
+  background: #a4d1c8;
   font-weight: bold;
   margin-top: 10px;
 }
 
-.comment-card:hover .card-header {
-  background-color: #b281f8;
+.comment-card:hover .circle {
+  background-color: #8fc7bc;
 }
 .comment-card:hover .card-body {
   background-color: rgba(0, 0, 0, .01)
@@ -89,16 +89,14 @@ export default {
 .comment-card:hover .card-footer {
   background-color: rgba(0, 0, 0, .045)
 }
-.comment-card:hover .circle {
-  background-color: rgba(0, 0, 0, .4)
-}
+
 
 .comment-content {
   font-size: 14px;
 }
 
 .liked-icon {
-  color: #e0245e;
+  color: #e06563;
 }
 
 .unliked-icon {
@@ -106,11 +104,11 @@ export default {
 }
 
 .unliked-icon:hover {
-  color: #e0245e;
+  color: #e06563;
 }
 
 .liked-num {
-  color: #e0245e;
+  color: #e06563;
   font-weight: bold;
 }
 

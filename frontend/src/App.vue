@@ -31,24 +31,29 @@ export default {
 }
 
 .content-div {
-  margin-top: 150px;
-  margin-bottom: 100px;
+  padding-top: 150px;
+  padding-bottom: 100px;
 }
 
 .form-control.my-btn {
   border: none;
-  background-color: #c299fc;
+  background-color: #7ecfc0;
   color: white;
 }
 
 .form-control.my-btn:hover {
   border: none;
-  background-color: #9852f9;
+  background-color: #6bafa3;
   color: white;
 }
 
 .my-bg.card-header {
-  background-color: #c299fc;
+  background-color: #7ecfc0;
+  color: white;
+}
+
+.card:hover .my-bg.card-header {
+  background-color: #6bafa3;
   color: white;
 }
 

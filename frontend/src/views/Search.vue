@@ -1,6 +1,13 @@
 <template>
   <div class="container">
-    <h1>Your Major: {{ $store.getters.getUserMajor }}</h1>
+    <!-- <h1>Your Major: {{ $store.getters.getUserMajor }}</h1> -->
+    <div>
+      <i class="fas fa-laptop-code major-icon" v-if="$store.getters.getUserMajor === 'CSE'"></i>
+      <i class="fas fa-user-tie major-icon" v-if="$store.getters.getUserMajor === 'Business'"></i>
+      <i class="fas fa-user-md major-icon" v-if="$store.getters.getUserMajor === 'Medical'"></i>
+      <i class="fas fa-book major-icon" v-if="$store.getters.getUserMajor === 'Literature'"></i>
+    </div>
+
     <div class="w-50 my-4 mx-auto">
       <input type="text" class="form-control" placeholder="Keyword" v-model="searchData.keyword" />
     </div>
@@ -74,4 +81,19 @@ export default {
 </script>
 
 <style scoped>
+.major-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  color: #7ecfc0;
+  line-height: 100px;
+  text-align: center;
+  background: rgba(180, 175, 175, 0.25);
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+
+.major-icon:hover {
+  color: #6bafa3;
+}
 </style>
