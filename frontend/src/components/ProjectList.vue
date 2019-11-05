@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="project-list border h-100 w-100" v-if="!projects.length">
-      <h4 style="margin-top:100px">Sorry, there is no result...</h4>
+      <h4 style="margin-top:100px">Oops! There is no result...</h4>
     </div>
   </div>
 </template>

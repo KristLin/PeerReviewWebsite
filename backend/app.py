@@ -245,7 +245,17 @@ class ProjectsAPI(Resource):
         project_data["isOnTop"] = False
         project_data["isOnTopTime"] = ""
 
-        if db.add_project(project_data):
+        project_files = project_data["files"]
+        del project_data["files"]
+        project_id = db.add_project(project_data)
+        if project_id:
+            for file in project_files:
+                file["project"] = project_id
+                file["user"] = project_data["user"]
+                file["rating"] = 0.0
+                file["ratingNum"] = 0
+                file["createdTime"] = utils.datetime_to_str(datetime.now())
+                db.add_file(file)
             return "Project is uploaded", 200
         else:
             return "Error", 400
@@ -256,6 +266,9 @@ class ProjectsAPI(Resource):
         major = request.args.get("major")
         # all_projects = db.find_all_projects(user_major)
         all_projects = db.find_all_projects(major)
+        # attach files to project
+        for project in all_projects:
+            project["files"] = db.find_project_files(project["_id"])
         return all_projects, 200
 
 @projects.route("/<string:project_id>")
@@ -273,22 +286,22 @@ class ProjectsOfUserAPI(Resource):
     @api.doc(description="Get projects of user")
     def get(self, user_id):
         projects_of_user = db.find_user_projects(user_id)
+        # attach files to project
+        for project in projects_of_user:
+            project["files"] = db.find_project_files(project["_id"])
         return projects_of_user, 200
 # ============ project API part end ============
 
 # ============ file API part start ============
 @files.route("/")
 class FilesAPI(Resource):
-    @api.doc(description="Upload a file list")
+    @api.doc(description="Create a file")
+    @api.expect(file_model, validate=True)
     def post(self):
-        files = request.json["files"]
-        for file in fields:
-            file["createdTime"] = utils.datetime_to_str(datetime.now())
-            file["rating"] = 0.0
-            file["ratingNum"] = 0
-
-        db.add_files(files)
-        return "Files are uploaded", 200
+        if db.add_files(files):
+            return "Files are uploaded", 200
+        else:
+            return "Error", 400
 
 @files.route("/project/<string:project_id>")
 class FilesOfProjectAPI(Resource):

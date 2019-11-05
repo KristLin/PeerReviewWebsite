@@ -75,19 +75,23 @@ export default {
       // raise alert if user info is not complete
       for (let key in this.userData) {
         if (this.userData[key] === "") {
-          alert("The register form is not complete!");
+          this.$swal(
+            "Warning",
+            "The register form is not complete (" + key + ")!",
+            "warning"
+          );
           return;
         }
       }
 
       if (this.userData.major === "Your Major") {
-        alert("You didn't choose a major!");
+        this.$swal("Warning", "You didn't choose a major!", "warning");
         return;
       }
 
       // raise alert if two password are not matched
       if (this.userData.password !== this.checkedData.password2) {
-        alert("Passwords are not matched!");
+        this.$swal("Warning", "Two passwords are not matched", "warning");
       } else {
         this.$axios
           .post("/api/users/", this.userData)
@@ -115,10 +119,10 @@ export default {
           .catch(err => {
             window.console.log(err.response);
             this.$swal({
-                title: "Oops..",
-                text: err.response.data,
-                type: "error"
-              });
+              title: "Oops..",
+              text: err.response.data,
+              type: "error"
+            });
           });
       }
     }

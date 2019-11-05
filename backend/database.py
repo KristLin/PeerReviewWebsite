@@ -99,9 +99,8 @@ class DB(object):
             self.delete_project(project_id)
 
     # =========== file data manipulation ===========
-    def add_files(self, files):
-        for file in files:
-            self.files.insert_one(file)
+    def add_file(self, file):
+        self.files.insert_one(file)
 
     def find_project_files(self, project_id):
         cursor = self.files.find()
