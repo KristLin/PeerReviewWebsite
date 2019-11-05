@@ -107,6 +107,7 @@ comment_model = api.model(
     {
         "file": fields.String,
         "user": fields.String,
+        "userName": fields.String,
         "content": fields.String,
         "rating": fields.Integer,
 
@@ -307,7 +308,7 @@ class FilesAPI(Resource):
 class FilesOfProjectAPI(Resource):
     @api.doc(description="Get all files of a project")
     def get(self, project_id):
-        files = db.find_roject_files(project_id)
+        files = db.find_project_files(project_id)
         return files, 200    
 
 @files.route("/<string:file_id>")
@@ -335,8 +336,8 @@ class CommentsAPI(Resource):
 class CommentsOfFileAPI(Resource):
     @api.doc(description="get file's comments")
     @api.param("user_id", "used for checking if user has liked the comment")
-    def get(self):
-        file_comments = db.find_file_comments
+    def get(self, file_id):
+        file_comments = db.find_file_comments(file_id)
         user_id = request.args.get("user_id")
         if user_id:
             for comment in file_comments:

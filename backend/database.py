@@ -145,7 +145,7 @@ class DB(object):
         return found_comment
 
     def find_file_comments(self, file_id):
-        cursor = self.files.find()
+        cursor = self.comments.find()
         file_comments = []
         for comment in cursor:
             if comment["file"] == file_id:
