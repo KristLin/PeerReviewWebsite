@@ -50,7 +50,7 @@ export default {
       // raise alert if login form is not complete
       for (let key in this.loginData) {
         if (this.loginData[key] === "") {
-          alert("The login form is not complete!");
+          this.$swal("Warning", "The login form is not complete!", "warning");
           return;
         }
       }
@@ -78,7 +78,8 @@ export default {
           }
         })
         .catch(err => {
-          window.console.log(err.response);
+          window.console.log(err.response.data);
+          this.$swal("Error", err.response.data, "error");
         });
     }
   }

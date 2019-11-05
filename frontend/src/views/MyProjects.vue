@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <h1>My Projects</h1>
-    <p class="text-right">Rest Top Times: 10</p>
     <div class="w-50 my-2 mx-auto">
       <input type="text" class="form-control" placeholder="Keyword" v-model="searchData.keyword" />
     </div>
@@ -70,14 +69,18 @@ export default {
     },
     topUpProject() {
       window.console.log("Top up request: ", this.chosenProject);
-      this.chosenProject.isOnTop = true;
-      this.chosenProject.isOnTopTime = new Date().toLocaleString("en-GB");
-
       this.$axios
-        .patch("/api/projects/" + this.chosenProject._id, this.chosenProject)
+        .get("/api/projects/topup", {
+          params: {
+            project_id: this.chosenProject._id,
+            user_id: this.$store.getters.getUserId
+          }
+        })
         .then(response => {
           // JSON responses are automatically parsed.
           if (response.status == 200) {
+            this.chosenProject.isOnTop = true;
+            this.chosenProject.isOnTopTime = new Date().toLocaleString("en-GB");
             this.$axios
               .get("/api/projects/user/" + this.$store.getters.getUserId)
               .then(response => {
@@ -94,18 +97,24 @@ export default {
         })
         .catch(err => {
           window.console.log(err.response);
+          this.$swal("Error", err.response.data, "error");
         });
     },
     cancelTopUp() {
       window.console.log("cancel top up request", this.chosenProject);
-      this.chosenProject.isOnTop = false;
-      this.chosenProject.isOnTopTime = "";
 
       this.$axios
-        .patch("/api/projects/" + this.chosenProject._id, this.chosenProject)
+        .get("/api/projects/cancel_topup", {
+          params: {
+            project_id: this.chosenProject._id,
+            user_id: this.$store.getters.getUserId
+          }
+        })
         .then(response => {
           // JSON responses are automatically parsed.
           if (response.status == 200) {
+            this.chosenProject.isOnTop = false;
+            this.chosenProject.isOnTopTime = "";
             this.$axios
               .get("/api/projects/user/" + this.$store.getters.getUserId)
               .then(response => {
