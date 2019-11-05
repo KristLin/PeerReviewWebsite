@@ -81,7 +81,7 @@ class DB(object):
     def add_project(self, project):
         _id = str(self.projects.insert_one(project).inserted_id)
         return _id
-
+    
     def update_project(self, project_id, update_info):
         query = {"_id": ObjectId(project_id)}
         return self.projects.update_one(query, {"$set": update_info})

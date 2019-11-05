@@ -203,6 +203,23 @@ class UserAPI(Resource):
         else:
             return f"User with id {user_id} is not in the database!", 400
 
+@users.route("/buy_topup")
+class BuyTopUPAPI(Resource):
+    @api.doc(description="Buy top up number using points")
+    @api.param("user_id", "user's id", required=True)
+    @api.param("buyTopNum", "top up number user want to buy", required=True, type=int)
+    def get(self):
+        buyTopNum = int(request.args.get("buyTopNum"))
+        user_id = request.args.get("user_id")
+        cost = buyTopNum * 10
+        found_user = db.find_user_by_id(user_id)
+        print(type(cost))
+        if found_user["points"] > cost:
+            db.update_user(user_id, {"points": found_user["points"]-cost})
+            return "Purchase is successful", 200
+        else:
+            return "Insufficent points!", 400
+
     # @api.doc(description="Delete a user by its ID")
     # def delete(self, user_id):
     #     delete_user = db.find_user_by_id(user_id)
@@ -281,6 +298,42 @@ class ProjectAPI(Resource):
             return project_data, 200
         else:
             return f"Project with id {project_id} is not in the database!", 400
+    
+    # @api.doc(description="Update a project")
+    # def patch(self, project_id):
+    #     project_data = request.json
+    #     if "_id" in project_data:
+    #         del project_data["_id"]
+    #     db.update_project(project_id, project_data)
+    #     return "Project is updated", 200
+
+@projects.route("/topup")
+class TopUpAPI(Resource):
+    @api.doc(description="Top up a project", required=True)
+    @api.param("user_id", "user's id", required=True)
+    @api.param("project_id", "project's id")
+    def get(self):
+        user_id = request.args.get("user_id")
+        project_id = request.args.get("project_id")
+        found_user = db.find_user_by_id(user_id)
+        if found_user["topNum"] >= 1:
+            db.update_user(user_id, {"topNum": found_user["topNum"]-1})
+            db.update_project(project_id, {"isOnTop": True, "isOnTopTime": utils.datetime_to_str(datetime.now())})
+            return "Project is topped up", 200
+        else:
+            return "Insufficient top up number!", 400
+
+@projects.route("/cancel_topup")
+class CancelTopUpAPI(Resource):
+    @api.doc(description="Cancel topping up a project", required=True)
+    @api.param("user_id", "user's id", required=True)
+    @api.param("project_id", "project's id")
+    def get(self):
+        user_id = request.args.get("user_id")
+        project_id = request.args.get("project_id")
+
+        db.update_project(project_id, {"isOnTop": False, "isOnTopTime": ""})
+        return "Project is not topped up now", 200
 
 @projects.route("/user/<string:user_id>")
 class ProjectsOfUserAPI(Resource):
