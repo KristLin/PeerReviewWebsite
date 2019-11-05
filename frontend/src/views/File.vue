@@ -27,7 +27,7 @@
 
       <!-- comments -->
       <div class="col-lg-6 col-md-12 mb-4" style="height:550px">
-        <Comments :comments="comments" />
+        <Comments :comments="comments" @likeComment="likeComment" />
       </div>
       <!-- comments end -->
 
@@ -120,6 +120,12 @@ export default {
             // this.commentData.hasLiked = false;
             // this.commentData.likedNum = 0;
             // this.comments.push(this.commentData);
+            let total_rating = this.file.rating * this.file.ratingNum;
+            this.file.rating =
+              (total_rating + this.commentData.rating) /
+              (this.file.ratingNum + 1);
+            this.file.rating = parseFloat(this.file.rating.toFixed(2));
+            this.file.ratingNum += 1;
 
             this.commentData = {
               rating: 5,
@@ -149,6 +155,22 @@ export default {
         .catch(err => {
           window.console.log(err.response);
         });
+    },
+    likeComment(comment) {
+      window.console.log("like comment event:", comment);
+      this.$axios
+        .get("/api/likes/", {
+          params: { user_id: comment.user, comment_id: comment._id }
+        })
+        .then(response => {
+          // JSON responses are automatically parsed.
+          if (response.status == 200) {
+            window.console.log("liked successfully");
+          }
+        })
+        .catch(err => {
+          window.console.log(err.response);
+        });
     }
   },
   created() {
@@ -163,7 +185,9 @@ export default {
           if (response.status == 200) {
             this.file = response.data;
             this.$axios
-              .get("/api/comments/file/" + this.file._id)
+              .get("/api/comments/file/" + this.file._id, {
+                params: { user_id: this.$store.getters.getUserId }
+              })
               .then(response => {
                 // JSON responses are automatically parsed.
                 if (response.status == 200) {

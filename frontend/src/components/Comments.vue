@@ -27,7 +27,7 @@
               @click="like(comment)"
               v-if="!comment.hasLiked"
             ></i>
-            <i class="fas fa-thumbs-up liked-icon zoom" @click="unLike(comment)" v-if="comment.hasLiked"></i>
+            <i class="fas fa-thumbs-up liked-icon zoom" v-if="comment.hasLiked"></i>
           </div>
           <div class="col-2 text-left">
             <small class="unliked-num"  v-if="!comment.hasLiked">{{ comment.likedNum }}</small>
@@ -57,6 +57,7 @@ export default {
     like(comment) {
       comment.hasLiked = true;
       comment.likedNum += 1;
+      this.$emit("likeComment", comment)
     },
     unLike(comment) {
       comment.hasLiked = false;
