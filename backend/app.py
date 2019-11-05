@@ -270,7 +270,7 @@ class ProjectsAPI(Resource):
         # attach files to project
         for project in all_projects:
             project["files"] = db.find_project_files(project["_id"])
-        return all_projects, 200
+        return utils.order_projects(all_projects), 200
 
 @projects.route("/<string:project_id>")
 class ProjectAPI(Resource):
@@ -290,7 +290,7 @@ class ProjectsOfUserAPI(Resource):
         # attach files to project
         for project in projects_of_user:
             project["files"] = db.find_project_files(project["_id"])
-        return projects_of_user, 200
+        return utils.order_projects(projects_of_user), 200
 # ============ project API part end ============
 
 # ============ file API part start ============
