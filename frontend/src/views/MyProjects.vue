@@ -19,8 +19,17 @@
       <!-- top up button & project info -->
       <div class="col-lg-5 col-md-12 md-4">
         <div class="row" style="height:50px">
-          <button class="form-control btn btn-warning" v-if="chosenProject.name">Top Up!</button>
-          <p class="form-control" v-if="!chosenProject.name">Top Up!</p>
+          <button
+            class="form-control btn btn-warning"
+            v-if="chosenProject.title && !chosenProject.isOnTop"
+            @click="topUpProject"
+          >Top Up!</button>
+          <button
+            class="form-control btn btn-danger"
+            v-if="chosenProject.title && chosenProject.isOnTop"
+            @click="cancelTopUp"
+          >Cancel Top Up</button>
+          <p class="form-control" v-if="!chosenProject.title">Top Up!</p>
         </div>
         <div class="row" style="height:450px">
           <ProjectInfo :project="chosenProject" />
@@ -58,6 +67,62 @@ export default {
     },
     createProject() {
       this.$router.push({ name: "createProject" });
+    },
+    topUpProject() {
+      window.console.log("Top up request: ", this.chosenProject);
+      this.chosenProject.isOnTop = true;
+      this.chosenProject.isOnTopTime = new Date().toLocaleString("en-GB");
+
+      this.$axios
+        .patch("/api/projects/" + this.chosenProject._id, this.chosenProject)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          if (response.status == 200) {
+            this.$axios
+              .get("/api/projects/user/" + this.$store.getters.getUserId)
+              .then(response => {
+                // JSON responses are automatically parsed.
+                if (response.status == 200) {
+                  this.projects = response.data;
+                }
+              })
+              .catch(err => {
+                window.console.log(err.response);
+              });
+            this.$swal("Success", "Project is topped up!", "success");
+          }
+        })
+        .catch(err => {
+          window.console.log(err.response);
+        });
+    },
+    cancelTopUp() {
+      window.console.log("cancel top up request", this.chosenProject);
+      this.chosenProject.isOnTop = false;
+      this.chosenProject.isOnTopTime = "";
+
+      this.$axios
+        .patch("/api/projects/" + this.chosenProject._id, this.chosenProject)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          if (response.status == 200) {
+            this.$axios
+              .get("/api/projects/user/" + this.$store.getters.getUserId)
+              .then(response => {
+                // JSON responses are automatically parsed.
+                if (response.status == 200) {
+                  this.projects = response.data;
+                }
+              })
+              .catch(err => {
+                window.console.log(err.response);
+              });
+            this.$swal("Success", "Project is not topped up now.", "success");
+          }
+        })
+        .catch(err => {
+          window.console.log(err.response);
+        });
     }
   },
   created() {
