@@ -96,8 +96,8 @@ export default {
           }
         })
         .catch(err => {
-          window.console.log(err.response);
           this.$swal("Error", err.response.data, "error");
+          window.console.log(err.response);
         });
     },
     cancelTopUp() {
@@ -111,7 +111,6 @@ export default {
           }
         })
         .then(response => {
-          // JSON responses are automatically parsed.
           if (response.status == 200) {
             this.chosenProject.isOnTop = false;
             this.chosenProject.isOnTopTime = "";
@@ -130,6 +129,7 @@ export default {
           }
         })
         .catch(err => {
+          this.$swal("Error", err.response.data, "error");
           window.console.log(err.response);
         });
     }

@@ -64,8 +64,7 @@ export default {
         title: "",
         description: "",
         files: []
-      },
-      
+      }
     };
   },
   components: {},
@@ -79,7 +78,11 @@ export default {
       // window.console.log(newtime > this.projectData.createdTime)
       for (let key in this.projectData) {
         if (this.projectData[key].length === 0) {
-          this.$swal("Warning", "The project upload form is not complete! (" + key + ")", "warning");
+          this.$swal(
+            "Warning",
+            "The project upload form is not complete! (" + key + ")",
+            "warning"
+          );
           return;
         }
       }
@@ -100,7 +103,11 @@ export default {
         })
         .catch(err => {
           window.console.log(err.response);
-          this.$swal("Oops", "Something is wrong, please try again later...", "error");
+          this.$swal(
+            "Oops",
+            "Something is wrong, please try again later...",
+            "error"
+          );
           this.$router.push({
             name: "myProject"
           });
@@ -138,8 +145,8 @@ export default {
   },
   created() {
     if (!this.$store.getters.isLoggedIn) {
-      window.console.log("need user login");
       this.$swal("Error", "Log in required!", "error");
+      window.console.log("need user login");
       this.$router.push({ name: "login" });
     }
   }

@@ -78,8 +78,8 @@ export default {
           }
         })
         .catch(err => {
+          this.$swal("Oops", err.response.data, "error");
           window.console.log(err.response.data);
-          this.$swal("Error", err.response.data, "error");
         });
     }
   }

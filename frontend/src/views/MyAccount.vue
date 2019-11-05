@@ -21,7 +21,6 @@
                 Rest Top up Number: {{ userData.topNum }}
                 <i
                   class="fas fa-plus-circle float-right mt-1"
-                  type="button"
                   style="color:#f45905"
                   data-toggle="collapse"
                   data-target="#collapseExample"
@@ -94,7 +93,7 @@ export default {
           }
         })
         .catch(err => {
-          this.$swal("Error", err.response.data, "error");
+          this.$swal("Oops", err.response.data, "error");
         });
     }
   },

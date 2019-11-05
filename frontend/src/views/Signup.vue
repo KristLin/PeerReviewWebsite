@@ -117,12 +117,8 @@ export default {
             }
           })
           .catch(err => {
+            this.$swal("Oops", err.response.data, "error");
             window.console.log(err.response);
-            this.$swal({
-              title: "Oops..",
-              text: err.response.data,
-              type: "error"
-            });
           });
       }
     }
