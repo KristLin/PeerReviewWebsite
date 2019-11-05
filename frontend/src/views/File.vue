@@ -3,7 +3,8 @@
     <div class="row">
       <!-- file info display -->
       <div class="col-lg-6 col-md-12 mb-4" style="height:550px">
-        <div class="card h-100 shadow">
+        <div class="card h-100 shadow" v-if="!file"></div>
+        <div class="card h-100 shadow" v-if="file">
           <div class="card-header my-bg font-weight-bold">{{ file.name }}</div>
           <div class="card-body overflow-auto">
             <highlight-code class="text-left" :lang="getLang(file.name)">{{ file.content }}</highlight-code>
@@ -12,13 +13,13 @@
             <star-rating
               :inline="true"
               :read-only="true"
-              :rating="file.mark"
+              :rating="file.rating"
               :show-rating="true"
               v-bind:increment="0.01"
               v-bind:star-size="20"
-              v-if="file.mark>0"
+              v-if="file.rating>0"
             ></star-rating>
-            <small v-if="file.mark===0">This file hasn't received any mark yet...</small>
+            <small v-if="file.rating===0">This file hasn't received any rating yet...</small>
           </div>
         </div>
       </div>
@@ -33,13 +34,13 @@
       <!-- leave review -->
       <div class="card mx-auto shadow-sm mt-4" style="width:550px">
         <div class="card-header p-2">
-          <span class="text-muted mr-2">Your Mark:</span>
+          <span class="text-muted mr-2">Your Rating:</span>
           <star-rating
             :inline="true"
             text-class="rating-text"
             v-bind:increment="1"
             v-bind:star-size="20"
-            v-model="commentData.mark"
+            v-model="commentData.rating"
           ></star-rating>
         </div>
         <div class="card-body">
@@ -66,59 +67,9 @@ export default {
   data() {
     return {
       file: this.$route.params.file,
-      comments: [
-        {
-          id: "1",
-          user: "krist",
-          content:
-            "Not bad Not bad Not bad Not bad Not bad Not bad Not bad Not bad Not bad Not bad Not bad",
-          postTime: "2019-11-01 16:03:35",
-          likedNum: 3,
-          hasLiked: true
-        },
-        {
-          id: "2",
-          user: "jack",
-          content: "Good Job",
-          postTime: "2019-11-02 12:19:20",
-          likedNum: 50,
-          hasLiked: false
-        },
-        {
-          id: "3",
-          user: "krist",
-          content: "Ahhhhhhhhhh",
-          postTime: "2019-11-01 15:05:35",
-          likedNum: 11,
-          hasLiked: true
-        },
-        {
-          id: "4",
-          user: "jack",
-          content: "Just a test test test test test",
-          postTime: "2019-11-02 11:00:30",
-          likedNum: 23,
-          hasLiked: true
-        },
-        {
-          id: "5",
-          user: "krist",
-          content: "I don't like it",
-          postTime: "2019-11-02 18:03:35",
-          likedNum: 0,
-          hasLiked: false
-        },
-        {
-          id: "6",
-          user: "jack",
-          content: "Looks good tho",
-          postTime: "2019-10-30 12:01:00",
-          likedNum: 1,
-          hasLiked: false
-        }
-      ],
+      comments: [],
       commentData: {
-        mark: 0,
+        rating: 0,
         content: ""
       }
     };
@@ -149,8 +100,8 @@ export default {
       this.$swal({
         title: "Success",
         text:
-          "Mark: " +
-          this.commentData.mark +
+          "Rating: " +
+          this.commentData.rating +
           " Content: " +
           this.commentData.content,
         type: "success"
@@ -162,12 +113,17 @@ export default {
       window.console.log(
         "lost params(file data), sending request to backend.."
       );
-      this.file = {
-        id: "1",
-        name: "index.html",
-        content: "<h1>Hello World</h1>\n<h1>Bye World</h1>",
-        mark: 3.8
-      };
+      this.$axios
+        .get("/api/files/" + this.$route.query.fileId)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          if (response.status == 200) {
+            this.file = response.data;
+          }
+        })
+        .catch(err => {
+          window.console.log(err.response);
+        });
     }
   }
 };

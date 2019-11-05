@@ -37,13 +37,13 @@ export default {
             id: "1",
             name: "index.html",
             content: "<h1>Hello World</h1>\n<h1>Bye World</h1>",
-            mark: 3.8
+            rating: 3.8
           },
           {
             id: "2",
             name: "index.css",
             content: "h1{\n\tcolor: blue;\n}",
-            mark: 3.5
+            rating: 3.5
           }
         ]
       };

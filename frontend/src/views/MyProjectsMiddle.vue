@@ -110,7 +110,7 @@ export default {
     clickProject(project) {
       this.$router.push({
         name: "project",
-        query: { projectId: project.id },
+        query: { projectId: project._id },
         params: { project: project }
       });
     }

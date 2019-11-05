@@ -16,19 +16,19 @@
                   <span class="file-name mr">{{ handleFileName(file.name) }}</span>
                 </div>
                 <div class="col-6">
-                  <div class="has-mark" v-if="file.rating">
+                  <div v-if="file.rating">
                     <star-rating
                       :inline="true"
                       :read-only="true"
-                      :rating="file.mark"
+                      :rating="file.rating"
                       :show-rating="false"
                       v-bind:increment="0.01"
                       v-bind:star-size="15"
                     ></star-rating>
                     <small class="ml-2">{{file.rating}}</small>
                   </div>
-                  <div class="no-mark" v-if="!file.rating">
-                    <small>No mark yet...</small>
+                  <div v-if="!file.rating">
+                    <small>No rating yet...</small>
                   </div>
                 </div>
               </div>
@@ -68,7 +68,7 @@ export default {
       window.console.log("clicked file in ProjectInfo", file);
       this.$router.push({
         name: "file",
-        query: { fileId: file.id },
+        query: { fileId: file._id },
         params: { file: file }
       });
     },
