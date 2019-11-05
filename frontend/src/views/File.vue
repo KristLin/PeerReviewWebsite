@@ -110,46 +110,40 @@ export default {
       this.commentData.user = this.$store.getters.getUserId;
       this.commentData.userName = this.$store.getters.getUserName;
       this.commentData.file = this.file._id;
+
       this.$axios
         .post("/api/comments/", this.commentData)
         .then(response => {
           // JSON responses are automatically parsed.
           if (response.status == 200) {
-            this.commentData.createdTime = new Date().toLocaleString("en-GB");
-            this.commentData.hasLiked = false;
-            this.commentData.likedNum = 0;
-            this.comments.push(this.commentData);
+            // this.commentData.createdTime = new Date().toLocaleString("en-GB");
+            // this.commentData.hasLiked = false;
+            // this.commentData.likedNum = 0;
+            // this.comments.push(this.commentData);
 
             this.commentData = {
               rating: 5,
               content: ""
             };
 
+            this.$axios
+              .get("/api/comments/file/" + this.file._id)
+              .then(response => {
+                // JSON responses are automatically parsed.
+                if (response.status == 200) {
+                  this.comments = response.data;
+                  this.$forceUpdate();
+                }
+              })
+              .catch(err => {
+                window.console.log(err.response);
+              });
+
             this.$swal({
               title: "Success",
               text: "You have post a review!",
               type: "success"
             });
-
-            // get updated comments
-            // window.console.log("Requesting updated comments...");
-            // this.$axios
-            //   .get("/api/comments/file/" + this.file["_id"], {
-            //     params: { user_id: this.$store.getter.getUserId }
-            //   })
-            //   .then(response => {
-            //     // JSON responses are automatically parsed.
-            //     if (response.status == 200) {
-            //       window.console.log(
-            //         "Received updated comments...",
-            //         response.data
-            //       );
-            //       this.comments = response.data;
-            //     }
-            //   })
-            //   .catch(err => {
-            //     window.console.log(err.response);
-            //   });
           }
         })
         .catch(err => {
