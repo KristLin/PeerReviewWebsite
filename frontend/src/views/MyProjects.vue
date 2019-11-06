@@ -12,7 +12,11 @@
       <!-- Loading -->
       <div class="col-lg-7 col-md-12 my-4" style="padding-top: 100px" v-if="!hasFetchedData">
         <h4 class="my-4">Loading ...</h4>
-        <b-spinner variant="secondary" style="width: 5rem; height: 5rem; font-size:2rem;" label="Loading..."></b-spinner>
+        <b-spinner
+          variant="secondary"
+          style="width: 5rem; height: 5rem; font-size:2rem;"
+          label="Loading..."
+        ></b-spinner>
       </div>
 
       <!-- project list -->
@@ -22,22 +26,35 @@
       <!-- project list end -->
 
       <!-- top up button & project info -->
-      <div class="col-lg-5 col-md-12 my-4" style="height:500px">
+      <div class="col-lg-5 col-md-12 my-4">
         <div style="height:50px">
           <button
             class="form-control btn btn-warning"
             v-if="chosenProject.title && !chosenProject.isOnTop"
             @click="topUpProject"
           >Top Up!</button>
+
           <button
             class="form-control btn btn-danger"
             v-if="chosenProject.title && chosenProject.isOnTop"
             @click="cancelTopUp"
           >Cancel Top Up</button>
+
           <p class="form-control" v-if="!chosenProject.title">Top Up!</p>
         </div>
-        <div style="height:450px">
+
+        <div style="height:400px">
           <ProjectInfo :project="chosenProject" />
+        </div>
+
+        <div style="margin-top:12px">
+          <button
+            class="form-control btn btn-danger m-0 p-0"
+            v-if="chosenProject.title"
+            @click="deleteProject"
+          >Delete Project</button>
+
+          <p class="form-control" v-if="!chosenProject.title">Delete Project</p>
         </div>
       </div>
       <!-- top up button & project info end -->
@@ -139,6 +156,35 @@ export default {
           this.$swal("Error", err.response.data, "error");
           window.console.log(err.response);
         });
+    },
+    deleteProject() {
+      this.$swal({
+        title: "Confirm",
+        text: "Are you sure to delete this project?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Delete"
+      }).then(result => {
+        if (result.value) {
+          this.$axios
+            .delete("/api/projects/" + this.chosenProject._id)
+            .then(res => {
+              if (res.status == 200) {
+                // delete project in frontend (so no need to request backend)
+                this.projects = this.projects.filter(
+                  item => item._id !== this.chosenProject._id
+                );
+                this.chosenProject = {};
+
+                window.console.log("project is deleted");
+                this.$swal("Success", "Project is deleted!", "success");
+              }
+            })
+            .catch(err => window.console.log(err));
+        }
+      });
     }
   },
   created() {
@@ -149,7 +195,7 @@ export default {
           // JSON responses are automatically parsed.
           if (response.status == 200) {
             this.projects = response.data;
-            this.hasFetchedData = true
+            this.hasFetchedData = true;
           }
         })
         .catch(err => {

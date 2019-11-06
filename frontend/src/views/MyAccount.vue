@@ -2,7 +2,7 @@
   <div class="container" style="padding-top:50px">
     <div class="row">
       <!-- user data display -->
-      <div class="col-lg-6 col-md-12 col-sm-12 mx-auto">
+      <div class="my-info mx-auto">
         <div class="card">
           <div class="card-header my-info-header">My Info</div>
           <div class="card-body">
@@ -46,12 +46,12 @@
               <li class="list-group-item list-group-item-action">
                 <div class="row">
                   <div class="col-6">Top up Number</div>
-                  <div class="col-1"></div>
-                  <div class="col-4">{{ userData.topNum }}</div>
-                  <div class="col-1">
+                  <div class="col-2"></div>
+                  <div class="col-2">{{ userData.topNum }}</div>
+                  <div class="col-2">
                     <i
                       class="fas fa-plus-circle float-right"
-                      style="color:#f45905; margin-top:2px"
+                      style="color:#f45905; margin-top:3px"
                       data-toggle="collapse"
                       data-target="#collapseExample"
                       aria-expanded="false"
@@ -60,6 +60,9 @@
                   </div>
                 </div>
               </li>
+              <button class="form-control w-50 btn btn-danger mx-auto mt-4" @click="deleteAccount">
+                <i class="fas fa-trash-alt mr-2" style="color:white"></i>Delete Account
+              </button>
             </ul>
           </div>
           <div class="card-footer">
@@ -88,17 +91,7 @@ export default {
   components: {},
   data() {
     return {
-      userData: {
-        id: "1",
-        name: "Krist",
-        email: "krist@mail.com",
-        major: "CSE",
-        points: 1020,
-        likedNum: 56,
-        commentNum: 22,
-        topNum: 9,
-        registeredTime: new Date().toLocaleString("en-GB")
-      },
+      userData: {},
       buyTopNumStr: ""
     };
   },
@@ -127,9 +120,35 @@ export default {
         .catch(err => {
           this.$swal("Oops", err.response.data, "error");
         });
+    },
+    deleteAccount() {
+      this.$swal({
+        title: "Confirm",
+        text: "Are you sure to delete account?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Delete"
+      }).then(result => {
+        if (result.value) {
+          this.$axios
+            .delete("/api/users/" + this.$store.getters.getUserId)
+            .then(res => {
+              if (res.status == 200) {
+                this.$store.commit("logout");
+                window.console.log("user account is deleted");
+                this.$swal("Success", "Your account is deleted!", "success");
+                this.$router.push({ name: "home" });
+              }
+            })
+            .catch(err => window.console.log(err));
+        }
+      });
     }
   },
   created() {
+    window.console.log(this.$store.getters.getUserId, this.$store.getters.getUserName)
     if (this.$store.getters.isLoggedIn) {
       this.$axios
         .get("/api/users/" + this.$store.getters.getUserId)
@@ -152,6 +171,17 @@ export default {
 </script>
 
 <style scoped>
+.my-info {
+  width: 500px;
+}
+
+@media screen and (max-width: 550px) {
+  .my-info {
+    width: 100%;
+  }
+}
+
+
 .my-info-header {
   background-color: #6fc4b4;
   color: white;

@@ -24,11 +24,15 @@
         </div>
       </div>
       <!-- file info display end -->
-      
+
       <!-- Loading -->
       <div class="col-lg-6 col-md-12 mb-4" style="padding-top: 100px" v-if="!hasFetchedData">
         <h4 class="my-4">Loading ...</h4>
-        <b-spinner variant="secondary" style="width: 5rem; height: 5rem; font-size:2rem;" label="Loading..."></b-spinner>
+        <b-spinner
+          variant="secondary"
+          style="width: 5rem; height: 5rem; font-size:2rem;"
+          label="Loading..."
+        ></b-spinner>
       </div>
       <!-- Loading end -->
 
@@ -104,7 +108,8 @@ export default {
           return "plaintext";
       }
     },
-    leaveReview() {
+    leaveReview(e) {
+      e.preventDefault();
       if (!this.$store.getters.isLoggedIn) {
         this.$swal("Warning", "Log in required!", "warning");
         this.$router.push({ name: "login" });
@@ -141,23 +146,23 @@ export default {
             };
 
             this.$axios
-              .get("/api/comments/file/" + this.file._id)
+              .get("/api/comments/file/" + this.file._id, {
+                params: { user_id: this.$store.getters.getUserId }
+              })
               .then(response => {
                 // JSON responses are automatically parsed.
                 if (response.status == 200) {
                   this.comments = response.data;
-                  this.$forceUpdate();
+                  this.$swal({
+                    title: "Success",
+                    text: "You have post a review!",
+                    type: "success"
+                  });
                 }
               })
               .catch(err => {
                 window.console.log(err.response);
               });
-
-            this.$swal({
-              title: "Success",
-              text: "You have post a review!",
-              type: "success"
-            });
           }
         })
         .catch(err => {
@@ -168,7 +173,10 @@ export default {
       window.console.log("like comment event:", comment);
       this.$axios
         .get("/api/likes/", {
-          params: { user_id: comment.user, comment_id: comment._id }
+          params: {
+            user_id: this.$store.getters.getUserId,
+            comment_id: comment._id
+          }
         })
         .then(response => {
           // JSON responses are automatically parsed.
@@ -202,7 +210,7 @@ export default {
                 // JSON responses are automatically parsed.
                 if (response.status == 200) {
                   this.comments = response.data;
-                  this.hasFetchedData = true
+                  this.hasFetchedData = true;
                 }
               })
               .catch(err => {
@@ -223,7 +231,7 @@ export default {
           // JSON responses are automatically parsed.
           if (response.status == 200) {
             this.comments = response.data;
-            this.hasFetchedData = true
+            this.hasFetchedData = true;
           }
         })
         .catch(err => {
