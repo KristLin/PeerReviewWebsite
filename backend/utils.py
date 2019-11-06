@@ -51,7 +51,7 @@ def get_news(major):
         for item in soup.select('a.js-teaser-heading-link')[:5]:
             news_list.append({
                 "heading": item.getText().strip(),
-                "href": "https://www.ft.com/" + item['href']
+                "href": "https://www.ft.com" + item['href']
             })
         return news_list
 
