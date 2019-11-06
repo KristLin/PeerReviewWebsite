@@ -9,8 +9,14 @@
     <hr />
 
     <div class="row">
+      <!-- Loading -->
+      <div class="col-lg-7 col-md-12 my-4" style="padding-top: 100px" v-if="!hasFetchedData">
+        <h4 class="my-4">Loading ...</h4>
+        <b-spinner variant="secondary" style="width: 5rem; height: 5rem; font-size:2rem;" label="Loading..."></b-spinner>
+      </div>
+
       <!-- project list -->
-      <div class="col-lg-7 col-md-12 my-4" style="height:500px">
+      <div class="col-lg-7 col-md-12 my-4" style="height:500px" v-if="hasFetchedData">
         <ProjectList :projects="projects" @clickProject="clickProject" />
       </div>
       <!-- project list end -->
@@ -56,7 +62,8 @@ export default {
         orderType: ""
       },
       projects: [],
-      chosenProject: {}
+      chosenProject: {},
+      hasFetchedData: false
     };
   },
   methods: {
@@ -142,6 +149,7 @@ export default {
           // JSON responses are automatically parsed.
           if (response.status == 200) {
             this.projects = response.data;
+            this.hasFetchedData = true
           }
         })
         .catch(err => {

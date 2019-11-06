@@ -5,6 +5,9 @@ import router from './router'
 
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { BSpinner } from 'bootstrap-vue'
+
+Vue.component('b-spinner', BSpinner)
 
 import axios from 'axios'
 import VueHighlightJS from 'vue-highlight.js';

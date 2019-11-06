@@ -4,29 +4,61 @@
       <!-- user data display -->
       <div class="col-lg-6 col-md-12 col-sm-12 mx-auto">
         <div class="card">
-          <div class="card-header my-bg">My Info</div>
+          <div class="card-header my-info-header">My Info</div>
           <div class="card-body">
             <ul class="list-group">
-              <li class="list-group-item list-group-item-action">Name: {{ userData.name }}</li>
-              <li class="list-group-item list-group-item-action">Email: {{ userData.email }}</li>
-              <li class="list-group-item list-group-item-action">Major: {{ userData.major }}</li>
-              <li class="list-group-item list-group-item-action">Points: {{ userData.points }}</li>
-              <li
-                class="list-group-item list-group-item-action"
-              >Liked Number: {{ userData.likedNum }}</li>
-              <li
-                class="list-group-item list-group-item-action"
-              >Comment Number: {{ userData.commentNum }}</li>
               <li class="list-group-item list-group-item-action">
-                Rest Top up Number: {{ userData.topNum }}
-                <i
-                  class="fas fa-plus-circle float-right mt-1"
-                  style="color:#f45905"
-                  data-toggle="collapse"
-                  data-target="#collapseExample"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                ></i>
+                <div class="row">
+                  <div class="col-6">Name</div>
+                  <div class="col-6">{{ userData.name }}</div>
+                </div>
+              </li>
+              <li class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col-6">Email</div>
+                  <div class="col-6">{{ userData.email }}</div>
+                </div>
+              </li>
+              <li class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col-6">Major</div>
+                  <div class="col-6">{{ userData.major }}</div>
+                </div>
+              </li>
+              <li class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col-6">Points</div>
+                  <div class="col-6">{{ userData.points }}</div>
+                </div>
+              </li>
+              <li class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col-6">Liked Times</div>
+                  <div class="col-6">{{ userData.likedNum }}</div>
+                </div>
+              </li>
+              <li class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col-6">Comment Times</div>
+                  <div class="col-6">{{ userData.commentNum }}</div>
+                </div>
+              </li>
+              <li class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col-6">Top up Number</div>
+                  <div class="col-1"></div>
+                  <div class="col-4">{{ userData.topNum }}</div>
+                  <div class="col-1">
+                    <i
+                      class="fas fa-plus-circle float-right"
+                      style="color:#f45905; margin-top:2px"
+                      data-toggle="collapse"
+                      data-target="#collapseExample"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    ></i>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
@@ -120,4 +152,12 @@ export default {
 </script>
 
 <style scoped>
+.my-info-header {
+  background-color: #6fc4b4;
+  color: white;
+}
+
+.my-info-header:hover {
+  background-color: #6bafa3;
+}
 </style>

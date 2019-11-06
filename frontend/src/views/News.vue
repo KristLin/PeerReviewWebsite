@@ -12,13 +12,24 @@
     <div v-if="this.$store.getters.isLoggedIn">
       <i class="fas fa-laptop-code major-icon" v-if="$store.getters.getUserMajor === 'CSE'"></i>
       <i class="fas fa-user-tie major-icon" v-if="$store.getters.getUserMajor === 'Business'"></i>
-      <i class="fas fa-user-md major-icon" v-if="$store.getters.getUserMajor === 'Medical'"></i>
+      <i class="fas fa-stethoscope major-icon" v-if="$store.getters.getUserMajor === 'Medical'"></i>
       <i class="fas fa-book major-icon" v-if="$store.getters.getUserMajor === 'Literature'"></i>
     </div>
 
-    <div>
-      <h4 class="mt-4 mb-0 text-muted my-4">Click an article to see more</h4>
+    <!-- Loading -->
+    <div v-if="!hasFetchedData" style="margin-top: 80px; margin-bottom:100px">
+      <h4 class="my-4">Loading ...</h4>
+      <b-spinner variant="secondary" style="width: 5rem; height: 5rem; font-size:2rem;"  label="Loading..."></b-spinner>
+    </div>
+    
+
+    <div v-if="hasFetchedData" style="margin-top: 50px">
+      <h4 class="mt-4 mb-0 text-muted my-4"></h4>
       <ul class="list-group mx-auto news-list">
+        <li class="list-group-item active my-bg">
+          <h4>News</h4>
+          <small style="color:white">Click an article to see more</small>
+        </li>
         <li
           class="list-group-item list-group-item-action"
           :key="idx"
@@ -36,19 +47,21 @@ export default {
   name: "news",
   data() {
     return {
-      news: []
+      news: [],
+      hasFetchedData: false
     };
   },
   components: {},
   created() {
-    var major = ""
+    var major = "";
     if (this.$store.getters.isLoggedIn) {
-      major = this.$store.getters.getUserMajor
+      major = this.$store.getters.getUserMajor;
     }
     this.$axios
-      .get("/api/news", {params: {major: major}})
+      .get("/api/news", { params: { major: major } })
       .then(res => {
         this.news = res.data;
+        this.hasFetchedData = true;
       })
       .catch(err => {
         window.console.log(err.response.data);
@@ -69,18 +82,34 @@ export default {
 }
 
 .news-list a {
-  color: #4e9184;
+  color: #366b60;
 }
 
 .major-icon {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  color: #7ecfc0;
+  color: #6fc4b4;
   line-height: 100px;
   text-align: center;
   background: rgba(180, 175, 175, 0.25);
   font-weight: bold;
   font-size: 2.5rem;
+}
+
+.major-icon:hover {
+  color: #6bafa3;
+}
+
+.my-bg.list-group-item.active {
+  border: none;
+  background-color: #6fc4b4;
+  color: white;
+}
+
+.my-bg:hover.list-group-item.active {
+  border: none;
+  background-color: #6bafa3;
+  color: white;
 }
 </style>

@@ -1,6 +1,12 @@
 <template>
   <div class="container" style="padding-top:50px">
-    <ul class="list-group mx-auto border rank-list">
+    <!-- Loading -->
+    <div v-if="!hasFetchedData" style="margin-top: 120px; margin-bottom:200px">
+      <h4 class="my-4">Loading ...</h4>
+      <b-spinner variant="secondary" style="width: 5rem; height: 5rem; font-size:2rem;" label="Loading..."></b-spinner>
+    </div>
+
+    <ul class="list-group mx-auto border rank-list" v-if="hasFetchedData">
       <li class="list-group-item active my-bg">
         <h4 class="my-4">User Points Ranking</h4>
         <div class="row">
@@ -9,13 +15,14 @@
           <p class="col-4 m-0">Points</p>
         </div>
       </li>
+
       <li class="list-group-item list-group-item-action" :key="idx" v-for="(user, idx) in top10">
         <div class="row">
           <div class="col-4">{{ user.name }}</div>
           <div class="col-4">
             <i class="fas fa-laptop-code user-major-icon" v-if="user.major === 'CSE'"></i>
             <i class="fas fa-user-tie user-major-icon" v-if="user.major === 'Business'"></i>
-            <i class="fas fa-user-md user-major-icon" v-if="user.major === 'Medical'"></i>
+            <i class="fas fa-stethoscope user-major-icon" v-if="user.major === 'Medical'"></i>
             <i class="fas fa-book user-major-icon" v-if="user.major === 'Literature'"></i>
           </div>
           <div class="col-4">{{ user.points }}</div>
@@ -30,7 +37,8 @@ export default {
   name: "rank",
   data() {
     return {
-      top10: []
+      top10: [],
+      hasFetchedData: false,
     };
   },
   created() {
@@ -39,6 +47,7 @@ export default {
       .then(response => {
         if (response.status == 200) {
           this.top10 = response.data;
+          this.hasFetchedData = true;
         }
       })
       .catch(err => {
@@ -62,7 +71,7 @@ export default {
 
 .my-bg.list-group-item.active {
   border: none;
-  background-color: #7ecfc0;
+  background-color: #6fc4b4;
   color: white;
 }
 

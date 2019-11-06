@@ -37,7 +37,7 @@ export default {
 
 .form-control.my-btn {
   border: none;
-  background-color: #7ecfc0;
+  background-color: #6fc4b4;
   color: white;
 }
 
@@ -48,7 +48,7 @@ export default {
 }
 
 .my-bg.card-header {
-  background-color: #7ecfc0;
+  background-color: #6fc4b4;
   color: white;
 }
 

@@ -11,7 +11,7 @@
     <div v-if="this.$store.getters.isLoggedIn">
       <i class="fas fa-laptop-code major-icon" v-if="$store.getters.getUserMajor === 'CSE'"></i>
       <i class="fas fa-user-tie major-icon" v-if="$store.getters.getUserMajor === 'Business'"></i>
-      <i class="fas fa-user-md major-icon" v-if="$store.getters.getUserMajor === 'Medical'"></i>
+      <i class="fas fa-stethoscope major-icon" v-if="$store.getters.getUserMajor === 'Medical'"></i>
       <i class="fas fa-book major-icon" v-if="$store.getters.getUserMajor === 'Literature'"></i>
     </div>
 
@@ -20,12 +20,19 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-7 col-md-12 my-4" style="height:500px">
+      <!-- Loading -->
+      <div class="col-lg-7 col-md-12 my-4" style="padding-top: 100px" v-if="!hasFetchedData">
+        <h4 class="my-4">Loading ...</h4>
+        <b-spinner variant="secondary" style="width: 5rem; height: 5rem; font-size:2rem;" label="Loading..."></b-spinner>
+      </div>
+
+      <div class="col-lg-7 col-md-12 my-4" style="height:500px" v-if="hasFetchedData">
         <ProjectList
           :projects="projects.length>0 ? filterProjects(projects) : []"
           @clickProject="clickProject"
         />
       </div>
+
       <div class="col-lg-5 col-md-12 my-4" style="height:500px">
         <ProjectInfo :project="chosenProject" />
       </div>
@@ -50,7 +57,8 @@ export default {
         orderType: ""
       },
       projects: [],
-      chosenProject: {}
+      chosenProject: {},
+      hasFetchedData: false
     };
   },
   methods: {
@@ -79,6 +87,7 @@ export default {
       .get("/api/projects/", { params: { major: major } })
       .then(response => {
         this.projects = response.data;
+        this.hasFetchedData = true
       })
       .catch(err => {
         window.console.log(err.response);
@@ -92,7 +101,7 @@ export default {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  color: #7ecfc0;
+  color: #6fc4b4;
   line-height: 100px;
   text-align: center;
   background: rgba(180, 175, 175, 0.25);

@@ -155,7 +155,7 @@ export default {
 
 .carousel-btn {
   color: white;
-  background-color: #7ecfc0;
+  background-color: #6fc4b4;
 }
 .carousel-btn:hover {
   color: white;

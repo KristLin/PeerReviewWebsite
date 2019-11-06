@@ -60,7 +60,7 @@ export default {
 footer {
   padding-top: 2rem;
   padding-bottom: 2rem;
-  background-color: #70c4b4;
+  background-color: #69beaf;
   color: white;
 }
 .social-icon {
