@@ -139,7 +139,7 @@ class UsersAPI(Resource):
         user_data["createdTime"] = utils.datetime_to_str(datetime.now())
         user_data["likedNum"] = 0
         user_data["commentNum"] = 0
-        user_data["topNum"] = 1
+        user_data["topNum"] = 2
         user_data["points"] = 0
 
         if db.find_user_by_email(user_data["email"]):
