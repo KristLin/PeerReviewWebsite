@@ -186,11 +186,15 @@ class LogoutAPI(Resource):
     @api.doc(description="Log out an user account")
     def get(self, user_id):
         user_data = db.find_user_by_id(user_id)
-        if user_data["email"] in active_users:
-            del active_users[user_data["email"]]
+        if user_data:
+            if user_data["email"] in active_users:
+                del active_users[user_data["email"]]
+            else:
+                print("User is not in the active list, maybe the server has restarted.")
+            return "Log out successfully", 200
         else:
-            print("User is not in the active list, maybe the server has restarted.")
-        return "Log out successfully", 200
+            print("Received unknown user logout request, still send back success")
+            return "OK", 200
 
 
 @users.route("/<string:user_id>")
@@ -201,6 +205,16 @@ class UserAPI(Resource):
         if userData:
             del userData["password"]
             return userData, 200
+        else:
+            return f"User with id {user_id} is not in the database!", 400
+    
+    @api.doc(description="Delete a user by its ID")
+    def delete(self, user_id):
+        delete_user = db.find_user_by_id(user_id)
+        if delete_user:
+            db.delete_user(user_id)
+            msg = {"message": f"User = {user_id} is removed from the database!"}
+            return msg, 200
         else:
             return f"User with id {user_id} is not in the database!", 400
 
@@ -307,6 +321,16 @@ class ProjectAPI(Resource):
         else:
             return f"Project with id {project_id} is not in the database!", 400
     
+    @api.doc(description="Delete a project by its ID")
+    def delete(self, project_id):
+        delete_project = db.find_project_by_id(project_id)
+        if delete_project:
+            db.delete_project(project_id)
+            msg = {"message": f"Project = {project_id} is removed from the database!"}
+            return msg, 200
+        else:
+            return f"Project with id {project_id} is not in the database!", 400
+
     # @api.doc(description="Update a project")
     # def patch(self, project_id):
     #     project_data = request.json

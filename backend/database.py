@@ -45,6 +45,18 @@ class DB(object):
         return self.users.update_one(query, {"$set": update_info})
 
     def delete_user(self, user_id):
+        # delte user's projects and related comments & likes
+        cursor = self.projects.find({"user": user_id})
+        for project in cursor:
+            self.delete_project(str(project["_id"]))
+        
+        # delete likes
+        self.likes.delete_many({"user": user_id})
+        # delete comments
+        self.comments.delete_many({"user": user_id})
+        # delete files
+        self.files.delete_many({"user": user_id})
+        
         self.users.delete_one({"_id": ObjectId(user_id)})
 
     # =========== project data manipulation ===========
@@ -56,26 +68,24 @@ class DB(object):
         return found_project
 
     def find_all_projects(self, major=""):
-        cursor = self.projects.find()
         all_projects = []
         if major:
-            for project in cursor:
-                if project["major"] == major:
-                    project["_id"] = str(project["_id"])
-                    all_projects.append(project)
+            unjson_projects = self.projects.find({"major": major})
+            for project in unjson_projects:
+                project["_id"] = str(project["_id"])
+                all_projects.append(project)
         else:
-            for project in cursor:
+            for project in self.projects.find():
                 project["_id"] = str(project["_id"])
                 all_projects.append(project)
         return all_projects
 
     def find_user_projects(self, user_id):
-        cursor = self.projects.find()
+        cursor = self.projects.find({"user": user_id})
         user_projects = []
         for project in cursor:
-            if project["user"] == user_id:
-                project["_id"] = str(project["_id"])
-                user_projects.append(project)
+            project["_id"] = str(project["_id"])
+            user_projects.append(project)
         return user_projects
 
     def add_project(self, project):
@@ -87,28 +97,29 @@ class DB(object):
         return self.projects.update_one(query, {"$set": update_info})
 
     def delete_project(self, project_id):
+        # delete comments
+        project_files = self.files.find({"project": project_id})
+        for file in project_files:
+            file["_id"] = str(file["_id"])
+            file_comments = self.comments.find({"file": file["_id"]})
+            for comment in file_comments:
+                self.likes.delete_many({"comment": str(comment["_id"])})
+            self.comments.delete_many({"file": file["_id"]})
+        # delete files
+        self.files.delete_many({"project": project_id})
+        # delete projects
         self.projects.delete_one({"_id": ObjectId(project_id)})
-    
-    def delete_projects_of_user(self, user_id):
-        cursor = self.projects.find()
-        user_projects = []
-        for project in cursor:
-            if project["user"] == user_id:
-                user_projects.append(str(project["_id"]))
-        for project_id in user_projects:
-            self.delete_project(project_id)
 
     # =========== file data manipulation ===========
     def add_file(self, file):
         self.files.insert_one(file)
 
     def find_project_files(self, project_id):
-        cursor = self.files.find()
+        cursor = self.files.find({"project": project_id})
         project_files = []
         for file in cursor:
-            if file["project"] == project_id:
-                file["_id"] = str(file["_id"])
-                project_files.append(file)
+            file["_id"] = str(file["_id"])
+            project_files.append(file)
         return project_files
     
     def find_file_by_id(self, file_id):
@@ -145,12 +156,11 @@ class DB(object):
         return found_comment
 
     def find_file_comments(self, file_id):
-        cursor = self.comments.find()
+        cursor = self.comments.find({"file": file_id})
         file_comments = []
         for comment in cursor:
-            if comment["file"] == file_id:
-                comment["_id"] = str(comment["_id"])
-                file_comments.append(comment)
+            comment["_id"] = str(comment["_id"])
+            file_comments.append(comment)
         return file_comments
             
     # =========== like data manipulation ===========
@@ -164,8 +174,9 @@ class DB(object):
         self.comments.update_one(query, {"$set": {"likedNum": found_comment["likedNum"] + 1}})
 
         # update user likedNum & points
-        found_user = self.users.find_one({"_id": ObjectId(user_id)})
-        query = {"_id": ObjectId(user_id)}
+        comment_provider = self.comments.find_one({"_id": ObjectId(comment_id)})["user"]
+        found_user = self.users.find_one({"_id": ObjectId(comment_provider)})
+        query = {"_id": ObjectId(comment_provider)}
         self.users.update_one(query, {"$set": {"likedNum": found_user["likedNum"] + 1, "points": found_user["points"] + 1}})
     
     def user_has_liked_comment(self, user_id, comment_id):
