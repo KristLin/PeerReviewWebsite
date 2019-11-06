@@ -1,7 +1,14 @@
 <template>
   <div class="container" style="padding-top:50px">
-    <!-- <h1>Your Major: {{ $store.getters.getUserMajor }}</h1> -->
-    <div>
+    <div v-if="!this.$store.getters.isLoggedIn">
+      <i class="fas fa-question major-icon"></i>
+      <!-- <h3 class="mt-4 mb-2">You are not logged in</h3> -->
+      <p class="my-4">
+        <router-link class="mx-1" to="/login">Log in</router-link>to see projects only in your major!
+      </p>
+    </div>
+    <!-- major icon -->
+    <div v-if="this.$store.getters.isLoggedIn">
       <i class="fas fa-laptop-code major-icon" v-if="$store.getters.getUserMajor === 'CSE'"></i>
       <i class="fas fa-user-tie major-icon" v-if="$store.getters.getUserMajor === 'Business'"></i>
       <i class="fas fa-user-md major-icon" v-if="$store.getters.getUserMajor === 'Medical'"></i>
@@ -13,13 +20,13 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-7 col-md-12 md-4" style="height:500px">
+      <div class="col-lg-7 col-md-12 my-4" style="height:500px">
         <ProjectList
           :projects="projects.length>0 ? filterProjects(projects) : []"
           @clickProject="clickProject"
         />
       </div>
-      <div class="col-lg-5 col-md-12 md-4" style="height:500px">
+      <div class="col-lg-5 col-md-12 my-4" style="height:500px">
         <ProjectInfo :project="chosenProject" />
       </div>
     </div>

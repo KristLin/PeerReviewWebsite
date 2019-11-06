@@ -1,5 +1,5 @@
 <template>
-  <div class="card overflow-auto shadow h-100 w-100">
+  <div class="card overflow-auto shadow-sm h-100 w-100">
     <!-- project info dispaly -->
     <div v-if="project.title">
       <div class="card">

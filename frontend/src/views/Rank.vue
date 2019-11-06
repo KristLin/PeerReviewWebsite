@@ -1,6 +1,6 @@
 <template>
   <div class="container" style="padding-top:50px">
-    <ul class="list-group mx-auto border" style="width:400px;min-height:500px">
+    <ul class="list-group mx-auto border rank-list">
       <li class="list-group-item active my-bg">
         <h4 class="my-4">User Points Ranking</h4>
         <div class="row">
@@ -49,6 +49,17 @@ export default {
 </script>
 
 <style scoped>
+.rank-list {
+  min-height:500px;
+  width: 500px;
+}
+
+@media screen and (max-width: 550px) {
+  .rank-list {
+    width: 100%;
+  }
+}
+
 .my-bg.list-group-item.active {
   border: none;
   background-color: #7ecfc0;

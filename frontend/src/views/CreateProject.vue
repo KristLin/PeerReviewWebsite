@@ -157,4 +157,10 @@ export default {
 .creat-project-form {
   width: 500px;
 }
+
+@media screen and (max-width: 550px) {
+  .creat-project-form {
+    width: 100%;
+  }
+}
 </style>

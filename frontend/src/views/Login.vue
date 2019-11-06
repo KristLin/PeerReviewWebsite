@@ -90,4 +90,10 @@ export default {
 .login-form {
   width: 350px;
 }
+
+@media screen and (max-width: 400px) {
+  .login-form {
+    width: 100%;
+  }
+}
 </style>

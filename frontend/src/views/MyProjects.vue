@@ -10,14 +10,14 @@
 
     <div class="row">
       <!-- project list -->
-      <div class="col-lg-7 col-md-12 md-4" style="height:500px">
+      <div class="col-lg-7 col-md-12 my-4" style="height:500px">
         <ProjectList :projects="projects" @clickProject="clickProject" />
       </div>
       <!-- project list end -->
 
       <!-- top up button & project info -->
-      <div class="col-lg-5 col-md-12 md-4">
-        <div class="row" style="height:50px">
+      <div class="col-lg-5 col-md-12 my-4" style="height:500px">
+        <div style="height:50px">
           <button
             class="form-control btn btn-warning"
             v-if="chosenProject.title && !chosenProject.isOnTop"
@@ -30,7 +30,7 @@
           >Cancel Top Up</button>
           <p class="form-control" v-if="!chosenProject.title">Top Up!</p>
         </div>
-        <div class="row" style="height:450px">
+        <div style="height:450px">
           <ProjectInfo :project="chosenProject" />
         </div>
       </div>
