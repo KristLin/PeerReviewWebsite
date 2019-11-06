@@ -35,7 +35,8 @@ projects = api.namespace("projects", description="Project APIs")
 files = api.namespace("files", description="File APIs")
 comments = api.namespace("comments", description="File APIs")
 likes = api.namespace("likes", description="Like APIs")
-# test = api.namespace("test", description="Test APIs")
+news = api.namespace("news", description="News APIs")
+test = api.namespace("test", description="Test APIs")
 # =============== app setting part end ===============
 
 # =============== data model part start ===============
@@ -421,17 +422,13 @@ class LikesAPI(Resource):
         return "liked successfully", 200
 # ============ like API part end ============
 
-# ============ test API part start ============
-# @test.route("/")
-# class TestAPI(Resource):
-#     def get(self):
-#         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-#         data = {"num": 5, "float": 3.35, "time": now}
-#         return data, 200
-#     def post(self):
-#         postData = request.json
-#         print(postData)
-#         return "OK", 200
+# ============ news API part start ============
+@news.route("/")
+class NewsAPI(Resource):
+    @api.param("major", "specify news subject/major (CSE, Business, Medical or Literature)")
+    def get(self):
+        major = request.args.get("major")
+        return utils.get_news(major), 200
 
 # run the app
 if __name__ == "__main__":
