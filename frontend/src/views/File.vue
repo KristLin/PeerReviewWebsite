@@ -24,9 +24,16 @@
         </div>
       </div>
       <!-- file info display end -->
+      
+      <!-- Loading -->
+      <div class="col-lg-6 col-md-12 mb-4" style="padding-top: 100px" v-if="!hasFetchedData">
+        <h4 class="my-4">Loading ...</h4>
+        <b-spinner variant="secondary" style="width: 5rem; height: 5rem; font-size:2rem;" label="Loading..."></b-spinner>
+      </div>
+      <!-- Loading end -->
 
       <!-- comments -->
-      <div class="col-lg-6 col-md-12 mb-4" style="height:550px">
+      <div class="col-lg-6 col-md-12 mb-4" style="height:550px" v-if="hasFetchedData">
         <Comments :comments="comments" @likeComment="likeComment" />
       </div>
       <!-- comments end -->
@@ -71,7 +78,8 @@ export default {
       commentData: {
         rating: 5,
         content: ""
-      }
+      },
+      hasFetchedData: false
     };
   },
   methods: {
@@ -194,7 +202,7 @@ export default {
                 // JSON responses are automatically parsed.
                 if (response.status == 200) {
                   this.comments = response.data;
-                  this.$forceUpdate();
+                  this.hasFetchedData = true
                 }
               })
               .catch(err => {
@@ -204,17 +212,6 @@ export default {
         })
         .catch(err => {
           window.console.log(err.response);
-          this.$axios
-            .get("/api/comments/file/" + this.file._id)
-            .then(response => {
-              // JSON responses are automatically parsed.
-              if (response.status == 200) {
-                this.comments = response.data;
-              }
-            })
-            .catch(err => {
-              window.console.log(err.response);
-            });
         });
     } else {
       // get comments data
@@ -226,7 +223,7 @@ export default {
           // JSON responses are automatically parsed.
           if (response.status == 200) {
             this.comments = response.data;
-            this.$forceUpdate();
+            this.hasFetchedData = true
           }
         })
         .catch(err => {

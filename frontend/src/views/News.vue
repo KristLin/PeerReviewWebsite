@@ -100,16 +100,4 @@ export default {
 .major-icon:hover {
   color: #6bafa3;
 }
-
-.my-bg.list-group-item.active {
-  border: none;
-  background-color: #6fc4b4;
-  color: white;
-}
-
-.my-bg:hover.list-group-item.active {
-  border: none;
-  background-color: #6bafa3;
-  color: white;
-}
 </style>

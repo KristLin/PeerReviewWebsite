@@ -8,7 +8,7 @@
         v-for="(project, idx) in projects"
       >
         <div class="card-header my-bg font-weight-bold">
-          <i class="fas fa-rocket float-left mt-1" style="color:#ffdc34" v-if="project.isOnTop"></i>
+          <i class="fas fa-rocket float-left mt-1" style="color:#ffdd67" v-if="project.isOnTop"></i>
           {{ project.title }}</div>
         <div class="card-body">
           <p>{{ handleDescription(project.description) }}</p>

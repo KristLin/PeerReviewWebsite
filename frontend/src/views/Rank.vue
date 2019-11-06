@@ -69,18 +69,6 @@ export default {
   }
 }
 
-.my-bg.list-group-item.active {
-  border: none;
-  background-color: #6fc4b4;
-  color: white;
-}
-
-.my-bg:hover.list-group-item.active {
-  border: none;
-  background-color: #6bafa3;
-  color: white;
-}
-
 .user-major-icon {
   color: #6bafa3;
   font-size: 1.3rem;
