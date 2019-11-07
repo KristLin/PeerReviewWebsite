@@ -108,7 +108,7 @@ export default {
           return "plaintext";
       }
     },
-    leaveReview(e) {
+    leaveReview() {
       if (!this.$store.getters.isLoggedIn) {
         this.$swal("Warning", "Log in required!", "warning");
         this.$router.push({ name: "login" });
