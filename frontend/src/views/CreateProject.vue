@@ -38,11 +38,11 @@
         <div class="card my-4">
           <div class="card-header">Project Files</div>
           <div class="card-body">
-            <p
-              class="card-text text-left"
+            <div
+              class="file-row text-left"
               :key="idx"
               v-for="(file, idx) in projectData.files"
-            >{{ file.name }}</p>
+            >{{ file.name }}</div>
           </div>
         </div>
         <!-- files display end -->
@@ -126,7 +126,7 @@ export default {
 
     // handle select files
     selectFiles(event) {
-      this.projectData.files = []
+      this.projectData.files = [];
 
       let fileList = Array.from(event.target.files);
       if (fileList) {
@@ -164,5 +164,9 @@ export default {
   .creat-project-form {
     width: 100%;
   }
+}
+
+.file-row:hover {
+  background-color: rgba(0, 0, 0, 0.03);
 }
 </style>
