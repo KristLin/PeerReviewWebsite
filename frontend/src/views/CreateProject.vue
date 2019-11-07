@@ -26,7 +26,7 @@
         <input
           type="file"
           style="display: none"
-          accept=".txt"
+          accept=".txt, .html, .css, .py, .js"
           ref="filesInput"
           @change="selectFiles"
           multiple
@@ -126,6 +126,8 @@ export default {
 
     // handle select files
     selectFiles(event) {
+      this.projectData.files = []
+
       let fileList = Array.from(event.target.files);
       if (fileList) {
         for (let key in fileList) {

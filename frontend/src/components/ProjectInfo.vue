@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-header my-bg font-weight-bold">{{ project.title }}</div>
         <div class="card-body">
-          <p>{{ project.description }}</p>
+          <p class="text-left p-2">{{ project.description }}</p>
         </div>
         <div class="card mx-4 my-4" style="height:300px">
           <div class="card-header">Project Files:</div>
