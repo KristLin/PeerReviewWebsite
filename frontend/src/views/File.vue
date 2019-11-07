@@ -4,7 +4,7 @@
       <!-- file info display -->
       <div class="col-lg-6 col-md-12 mb-4" style="height:550px">
         <div style="height:50px">
-          <button class="my-back-btn form-control mb-2" @click="$router.push('/search')">
+          <button class="my-back-btn form-control mb-2" @click="$router.go(-1)">
             <i class="fas fa-chevron-left"></i> Go Back
           </button>
         </div>
@@ -63,7 +63,7 @@
           ></star-rating>
         </div>
         <div class="card-body">
-          <textarea class="form-control mb-2" v-model="commentData.content" cols="30" rows="5"></textarea>
+          <textarea class="form-control mb-2" placeholder="Type your comment here." v-model="commentData.content" cols="30" rows="5"></textarea>
           <button class="my-btn form-control" @click="leaveReview">Leave a review</button>
         </div>
       </div>
