@@ -36,7 +36,7 @@ def get_news(major):
         page = requests.get(url)
         soup = BeautifulSoup(page.text, 'html.parser')
         news_list = []
-        for item in soup.select('h2[role=heading]')[:5]:
+        for item in sample(soup.select('h2[role=heading]'), 5):
             news_list.append({
                 "heading": item.getText().strip(),
                 "href": "https://www.nature.com" + item.a['href']
@@ -48,7 +48,7 @@ def get_news(major):
         page = requests.get(url)
         soup = BeautifulSoup(page.text, 'html.parser')
         news_list = []
-        for item in soup.select('a.js-teaser-heading-link')[:5]:
+        for item in sample(soup.select('a.js-teaser-heading-link'), 5):
             news_list.append({
                 "heading": item.getText().strip(),
                 "href": "https://www.ft.com" + item['href']
@@ -60,7 +60,7 @@ def get_news(major):
         page = requests.get(url)
         soup = BeautifulSoup(page.text, 'html.parser')
         news_list = []
-        for item in soup.select('h2[role=heading]')[:5]:
+        for item in sample(soup.select('h2[role=heading]'), 5):
             news_list.append({
                 "heading": item.getText().strip(),
                 "href": "https://www.nature.com" + item.a['href']
@@ -72,7 +72,7 @@ def get_news(major):
         page = requests.get(url)
         soup = BeautifulSoup(page.text, 'html.parser')
         news_list = []
-        for item in soup.findAll("h3", {"class": "views-field-title"})[:5]:
+        for item in sample(soup.findAll("h3", {"class": "views-field-title"}), 5):
             news_list.append({
                 "heading": item.getText().strip(),
                 "href": item.a['href']
