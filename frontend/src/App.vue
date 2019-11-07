@@ -2,6 +2,11 @@
   <div id="app">
     <Header />
     <div class="content-div">
+      <div class="row cloud-div">
+      <img src="../static/cloud.png" class="cloud-image-top" />
+      <img src="../static/cloud.png" class="cloud-image-mid" />
+      <img src="../static/cloud.png" class="cloud-image-bottom" />
+      </div>
       <router-view />
     </div>
     <Footer />
@@ -21,9 +26,9 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Varela+Round&display=swap");
 #app {
-  font-family: 'Varela Round', sans-serif;
+  font-family: "Varela Round", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -75,5 +80,44 @@ export default {
 
 .swal2-popup {
   font-size: 0.7rem !important;
+}
+
+.cloud-image-top {
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 70%;
+  z-index: -1;
+
+  height: 70px;
+  width: 140px;
+  object-fit: cover;
+}
+
+.cloud-image-mid {
+  position: absolute;
+  margin-top: 350px;
+  margin-left: 12%;
+  z-index: -1;
+
+  height: 90px;
+  width: 180px;
+  object-fit: cover;
+}
+
+.cloud-image-bottom {
+  position: absolute;
+  margin-top: 400px;
+  margin-left: 78%;
+  z-index: -1;
+
+  height: 80px;
+  width: 160px;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 800px) {
+  .row.cloud-div {
+    display: none;
+  }
 }
 </style>

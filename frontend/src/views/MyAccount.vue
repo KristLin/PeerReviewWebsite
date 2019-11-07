@@ -176,7 +176,7 @@ export default {
   width: 500px;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 625px) {
   .my-info {
     width: 100%;
   }

@@ -2,7 +2,7 @@
   <div class="h-100 w-100">
     <div class="project-list overflow-auto h-100 w-100 border-top border-bottom" v-if="projects.length">
       <div
-        class="card project-card mb-4 mx-auto"
+        class="card project-card  shadow-sm mb-4 mx-auto"
         @click="clickProject(project)"
         :key="idx"
         v-for="(project, idx) in projects"

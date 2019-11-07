@@ -1,5 +1,11 @@
 <template>
   <div class="container" style="padding-top:50px">
+    <!-- <div class="row cloud-div">
+      <img src="../../static/cloud.png" class="cloud-image-top" />
+      <img src="../../static/cloud.png" class="cloud-image-mid" />
+      <img src="../../static/cloud.png" class="cloud-image-bottom" />
+    </div> -->
+
     <!-- Loading -->
     <div v-if="!hasFetchedData" style="margin-top: 120px; margin-bottom:200px">
       <h4 class="my-4">Loading ...</h4>
@@ -63,7 +69,7 @@ export default {
   width: 500px;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 625px) {
   .rank-list {
     width: 100%;
   }

@@ -1,5 +1,11 @@
 <template>
   <div class="container" style="padding-top:50px">
+    <!-- <div class="row cloud-div">
+      <img src="../../static/cloud.png" class="cloud-image-top" />
+      <img src="../../static/cloud.png" class="cloud-image-mid" />
+      <img src="../../static/cloud.png" class="cloud-image-bottom" />
+    </div> -->
+
     <div v-if="!this.$store.getters.isLoggedIn">
       <i class="fas fa-question major-icon"></i>
       <!-- <h3 class="mt-4 mb-2">You are not logged in</h3> -->
@@ -19,9 +25,12 @@
     <!-- Loading -->
     <div v-if="!hasFetchedData" style="margin-top: 80px; margin-bottom:100px">
       <h4 class="my-4">Loading ...</h4>
-      <b-spinner variant="secondary" style="width: 5rem; height: 5rem; font-size:2rem;"  label="Loading..."></b-spinner>
+      <b-spinner
+        variant="secondary"
+        style="width: 5rem; height: 5rem; font-size:2rem;"
+        label="Loading..."
+      ></b-spinner>
     </div>
-    
 
     <div v-if="hasFetchedData" style="margin-top: 50px">
       <h4 class="mt-4 mb-0 text-muted my-4"></h4>
@@ -75,7 +84,7 @@ export default {
   width: 600px;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 767px) {
   .news-list {
     width: 100%;
   }

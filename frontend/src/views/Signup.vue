@@ -143,7 +143,7 @@ export default {
   width: 350px;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .singup-form {
     width: 100%;
   }
