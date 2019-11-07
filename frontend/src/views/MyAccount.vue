@@ -1,87 +1,85 @@
 <template>
   <div class="container" style="padding-top:50px">
-    <div class="row">
-      <!-- user data display -->
-      <div class="my-info mx-auto">
-        <div class="card">
-          <div class="card-header my-info-header">My Info</div>
-          <div class="card-body">
-            <ul class="list-group">
-              <li class="list-group-item list-group-item-action">
-                <div class="row">
-                  <div class="col-6">Name</div>
-                  <div class="col-6">{{ userData.name }}</div>
+    <!-- user data display -->
+    <div class="my-info mx-auto">
+      <div class="card">
+        <div class="card-header my-info-header">My Info</div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-5">Name</div>
+                <div class="col-7">{{ userData.name }}</div>
+              </div>
+            </li>
+            <li class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-5">Email</div>
+                <div class="col-7">{{ userData.email }}</div>
+              </div>
+            </li>
+            <li class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-5">Major</div>
+                <div class="col-7">{{ userData.major }}</div>
+              </div>
+            </li>
+            <li class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-5">Points</div>
+                <div class="col-7">{{ userData.points }}</div>
+              </div>
+            </li>
+            <li class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-5">Liked Times</div>
+                <div class="col-7">{{ userData.likedNum }}</div>
+              </div>
+            </li>
+            <li class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-5">Comment Times</div>
+                <div class="col-7">{{ userData.commentNum }}</div>
+              </div>
+            </li>
+            <li class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-5">Top up Number</div>
+                <div class="col-2"></div>
+                <div class="col-3">{{ userData.topNum }}</div>
+                <div class="col-2">
+                  <i
+                    class="fas fa-plus-circle float-right"
+                    style="color:#f45905; margin-top:3px"
+                    data-toggle="collapse"
+                    data-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  ></i>
                 </div>
-              </li>
-              <li class="list-group-item list-group-item-action">
-                <div class="row">
-                  <div class="col-6">Email</div>
-                  <div class="col-6">{{ userData.email }}</div>
-                </div>
-              </li>
-              <li class="list-group-item list-group-item-action">
-                <div class="row">
-                  <div class="col-6">Major</div>
-                  <div class="col-6">{{ userData.major }}</div>
-                </div>
-              </li>
-              <li class="list-group-item list-group-item-action">
-                <div class="row">
-                  <div class="col-6">Points</div>
-                  <div class="col-6">{{ userData.points }}</div>
-                </div>
-              </li>
-              <li class="list-group-item list-group-item-action">
-                <div class="row">
-                  <div class="col-6">Liked Times</div>
-                  <div class="col-6">{{ userData.likedNum }}</div>
-                </div>
-              </li>
-              <li class="list-group-item list-group-item-action">
-                <div class="row">
-                  <div class="col-6">Comment Times</div>
-                  <div class="col-6">{{ userData.commentNum }}</div>
-                </div>
-              </li>
-              <li class="list-group-item list-group-item-action">
-                <div class="row">
-                  <div class="col-6">Top up Number</div>
-                  <div class="col-2"></div>
-                  <div class="col-2">{{ userData.topNum }}</div>
-                  <div class="col-2">
-                    <i
-                      class="fas fa-plus-circle float-right"
-                      style="color:#f45905; margin-top:3px"
-                      data-toggle="collapse"
-                      data-target="#collapseExample"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    ></i>
-                  </div>
-                </div>
-              </li>
-              <button class="form-control w-50 btn btn-danger mx-auto mt-4" @click="deleteAccount">
-                <i class="fas fa-trash-alt mr-2" style="color:white"></i>Delete Account
-              </button>
-            </ul>
-          </div>
-          <div class="card-footer">
-            <small>Registered Time: {{ userData.createdTime }}</small>
-          </div>
+              </div>
+            </li>
+            <button class="form-control w-50 btn btn-danger mx-auto mt-4" @click="deleteAccount">
+              <i class="fas fa-trash-alt mr-2" style="color:white"></i>Delete Account
+            </button>
+          </ul>
         </div>
-
-        <div class="collapse mx-auto" id="collapseExample" style="width:80%">
-          <input
-            type="text"
-            class="form-control mt-4 mb-2"
-            placeholder="Number of Top Ups"
-            v-model="buyTopNumStr"
-          />
-          <button class="form-control btn btn-warning" @click="buyTopUp">Buy Top Ups</button>
+        <div class="card-footer">
+          <small>Registered Time: {{ userData.createdTime }}</small>
         </div>
       </div>
-      <!-- user data display end -->
+
+      <div class="collapse mx-auto" id="collapseExample" style="width:80%">
+        <input
+          type="text"
+          class="form-control mt-4 mb-2"
+          placeholder="Number of Top Ups"
+          v-model="buyTopNumStr"
+        />
+        <button class="form-control btn btn-warning" @click="buyTopUp">Buy Top Ups</button>
+      </div>
     </div>
+    <!-- user data display end -->
   </div>
 </template>
 
@@ -148,7 +146,10 @@ export default {
     }
   },
   created() {
-    window.console.log(this.$store.getters.getUserId, this.$store.getters.getUserName)
+    window.console.log(
+      this.$store.getters.getUserId,
+      this.$store.getters.getUserName
+    );
     if (this.$store.getters.isLoggedIn) {
       this.$axios
         .get("/api/users/" + this.$store.getters.getUserId)
@@ -180,7 +181,6 @@ export default {
     width: 100%;
   }
 }
-
 
 .my-info-header {
   background-color: #6fc4b4;
