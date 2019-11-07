@@ -14,8 +14,8 @@ def order_projects(projects):
     topped_projects = [project for project in projects if project["isOnTop"]]
     untopped_projects = [project for project in projects if not project["isOnTop"]]
     
-    topped_projects.sort(key=lambda project: str_to_datetime(project['isOnTopTime']))
-    untopped_projects.sort(key=lambda project: str_to_datetime(project['createdTime']))
+    topped_projects.sort(reverse=True, key=lambda project: str_to_datetime(project['isOnTopTime']))
+    untopped_projects.sort(reverse=True, key=lambda project: str_to_datetime(project['createdTime']))
 
     return topped_projects + untopped_projects
 
