@@ -19,6 +19,10 @@ def order_projects(projects):
 
     return topped_projects + untopped_projects
 
+def order_comments(comments):
+    comments.sort(reverse=True, key=lambda comment: str_to_datetime(comment["createdTime"]))
+    comments.sort(key=lambda comment: -comment["likedNum"])
+    return comments
 
 def get_top10_users(users):
     users.sort(key=lambda user: user["points"], reverse=True)

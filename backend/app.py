@@ -425,6 +425,7 @@ class CommentsOfFileAPI(Resource):
     def get(self, file_id):
         file_comments = db.find_file_comments(file_id)
         user_id = request.args.get("user_id")
+        file_comments = utils.order_comments(file_comments)
         if user_id:
             for comment in file_comments:
                 comment["hasLiked"] = db.user_has_liked_comment(user_id, comment["_id"])
