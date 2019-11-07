@@ -52,6 +52,18 @@ export default {
   color: white;
 }
 
+.form-control.my-back-btn {
+  border: none;
+  background-color: #2b8172;
+  color: white;
+}
+
+.form-control.my-back-btn:hover {
+  border: none;
+  background-color: #2b7568;
+  color: white;
+}
+
 .my-bg.card-header {
   background-color: #6fc4b4;
   color: white;

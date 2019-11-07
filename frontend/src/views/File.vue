@@ -3,23 +3,31 @@
     <div class="row">
       <!-- file info display -->
       <div class="col-lg-6 col-md-12 mb-4" style="height:550px">
-        <div class="card h-100 shadow" v-if="!file"></div>
-        <div class="card h-100 shadow" v-if="file">
-          <div class="card-header my-bg font-weight-bold">{{ file.name }}</div>
-          <div class="card-body overflow-auto">
-            <highlight-code class="text-left" :lang="getLang(file.name)">{{ file.content }}</highlight-code>
-          </div>
-          <div class="card-footer">
-            <star-rating
-              :inline="true"
-              :read-only="true"
-              :rating="file.rating"
-              :show-rating="true"
-              v-bind:increment="0.01"
-              v-bind:star-size="20"
-              v-if="file.rating>0"
-            ></star-rating>
-            <small v-if="file.rating===0">This file hasn't received any rating yet...</small>
+        <div style="height:50px">
+          <button class="my-back-btn form-control mb-2" @click="$router.push('/search')">
+            <i class="fas fa-chevron-left"></i> Go Back
+          </button>
+        </div>
+
+        <div style="height:500px">
+          <div class="card h-100 shadow" v-if="!file"></div>
+          <div class="card h-100 shadow" v-if="file">
+            <div class="card-header my-bg font-weight-bold">{{ file.name }}</div>
+            <div class="card-body overflow-auto">
+              <highlight-code class="text-left" :lang="getLang(file.name)">{{ file.content }}</highlight-code>
+            </div>
+            <div class="card-footer">
+              <star-rating
+                :inline="true"
+                :read-only="true"
+                :rating="file.rating"
+                :show-rating="true"
+                v-bind:increment="0.01"
+                v-bind:star-size="20"
+                v-if="file.rating>0"
+              ></star-rating>
+              <small v-if="file.rating===0">This file hasn't received any rating yet...</small>
+            </div>
           </div>
         </div>
       </div>
@@ -115,7 +123,7 @@ export default {
         return;
       }
       if (this.commentData.content === "") {
-        this.$$swal("Warnning", "You didn't input any content!", "warning");
+        this.$swal("Warnning", "You didn't input any content!", "warning");
         return;
       }
 
@@ -156,7 +164,7 @@ export default {
                     title: "Success",
                     text: "You have post a review!",
                     type: "success"
-                  });
+                  })
                 }
               })
               .catch(err => {
