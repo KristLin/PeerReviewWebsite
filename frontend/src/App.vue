@@ -115,7 +115,7 @@ export default {
   object-fit: cover;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 991px) {
   .row.cloud-div {
     display: none;
   }
