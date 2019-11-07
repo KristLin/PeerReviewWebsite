@@ -55,10 +55,10 @@
     <!-- features part -->
     <div class="features mx-auto">
       <div class="text-center">
-        <h2 class="font-weight-bold my-4">Why is it so great?</h2>
-        <p class="lead mx-auto" style="margin-bottom: 70px">We offer you best user experience.</p>
+        <h2 class="font-weight-bold my-4">Why choose us?</h2>
+        <p class="lead mx-auto" style="margin-bottom: 70px">We provide a student only peer-review community.</p>
         <div class="row">
-          <div class="col-lg-4 col-md-4 col-sm-12" :key="idx" v-for="(item, idx) in featureItems">
+          <div class="col-lg-4 col-md-4 col-sm-12 px-2" :key="idx" v-for="(item, idx) in featureItems">
             <i class="fas feature-icon mb-4" :class="item.icon"></i>
             <h4 class="font-weight-bold mb-4">{{ item.title }}</h4>
             <p class="grey-text mb-md-0" style="margin-bottom: 2rem">{{ item.description}}</p>

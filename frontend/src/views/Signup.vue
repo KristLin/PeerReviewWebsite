@@ -98,7 +98,7 @@ export default {
       // raise alert if email is not a valid @edu email
       if (this.userData.email.includes("@")) {
         if (!this.userData.email.split("@")[1].includes("edu")) {
-          this.$swal("Warning", "Email is not a edu email.", "warning");
+          this.$swal("Warning", "Email is not a student email.", "warning");
           return;
         }
       } else {
