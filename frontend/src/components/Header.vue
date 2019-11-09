@@ -20,17 +20,17 @@
             <router-link class="nav-link" to="/" active-class="active" exact>Home</router-link>
           </li>
           <li class="nav-item">
+            <router-link class="nav-link" to="/search" active-class="active" exact>Search</router-link>
+          </li>
+          <li class="nav-item">
             <router-link class="nav-link" to="/news" active-class="active" exact>News</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/rank" active-class="active" exact>Ranking</router-link>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/search" active-class="active" exact>Search</router-link>
-          </li>
           <!-- <li class="nav-item">
             <router-link class="nav-link" to="/about" active-class="active" exact>About us</router-link>
-          </li> -->
+          </li>-->
           <li class="nav-item" v-if="!$store.getters.isLoggedIn">
             <router-link class="nav-link" to="/login" active-class="active" exact>Log in</router-link>
           </li>
