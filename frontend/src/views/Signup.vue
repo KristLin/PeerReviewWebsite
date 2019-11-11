@@ -1,9 +1,9 @@
 <template>
   <div class="container" style="padding-top:50px">
-    <div class="card mx-auto shadow singup-form">
+    <div class="card mx-auto shadow signup-form">
       <i class="fas fa-user-circle fa-6x card-img-top mx-auto mt-4"></i>
       <div class="card-body">
-        <h5 class="card-title">Singup</h5>
+        <h5 class="card-title">Sign up</h5>
 
         <div class="form-group">
           <input
@@ -56,7 +56,7 @@
 
 <script>
 export default {
-  name: "singup",
+  name: "signup",
   data() {
     return {
       userData: {
@@ -139,12 +139,12 @@ export default {
 </script>
 
 <style scoped>
-.singup-form {
+.signup-form {
   width: 350px;
 }
 
 @media screen and (max-width: 450px) {
-  .singup-form {
+  .signup-form {
     width: 100%;
   }
 }
