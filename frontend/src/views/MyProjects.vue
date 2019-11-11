@@ -1,9 +1,9 @@
 <template>
   <div class="container" style="padding-top:50px">
     <h1>My Projects</h1>
-    <div class="w-50 my-2 mx-auto">
+    <!-- <div class="w-50 my-2 mx-auto">
       <input type="text" class="form-control" placeholder="Keyword" v-model="searchData.keyword" />
-    </div>
+    </div> -->
 
     <button class="my-btn w-50 mx-auto my-4 form-control" @click="createProject">Create New Project</button>
     <hr />
@@ -74,10 +74,10 @@ export default {
   },
   data() {
     return {
-      searchData: {
-        keyword: "",
-        orderType: ""
-      },
+      // searchData: {
+      //   keyword: "",
+      //   orderType: ""
+      // },
       projects: [],
       chosenProject: {},
       hasFetchedData: false
