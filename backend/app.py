@@ -218,15 +218,15 @@ class UserAPI(Resource):
         else:
             return f"User with id {user_id} is not in the database!", 400
 
-@users.route("/buy_topup")
-class BuyTopUPAPI(Resource):
-    @api.doc(description="Buy top up number using points")
+@users.route("/exchange_topup")
+class ExchangeTopUPAPI(Resource):
+    @api.doc(description="Exchange top up number using points")
     @api.param("user_id", "user's id", required=True)
-    @api.param("buyTopNum", "top up number user want to buy", required=True, type=int)
+    @api.param("exchangeTopNum", "top up number user want to exchange", required=True, type=int)
     def get(self):
-        buyTopNum = int(request.args.get("buyTopNum"))
+        exchangeTopNum = int(request.args.get("exchangeTopNum"))
         user_id = request.args.get("user_id")
-        cost = buyTopNum * 10
+        cost = exchangeTopNum * 10
         found_user = db.find_user_by_id(user_id)
         print(type(cost))
         if found_user["points"] > cost:
