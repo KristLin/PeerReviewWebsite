@@ -3,7 +3,7 @@
     <!-- user data display -->
     <div class="my-info mx-auto">
       <div class="card">
-        <div class="card-header my-info-header">My Info</div>
+        <div class="card-header my-info-header">My Information</div>
         <div class="card-body">
           <ul class="list-group">
             <li class="list-group-item list-group-item-action">
@@ -73,10 +73,10 @@
         <input
           type="text"
           class="form-control mt-4 mb-2"
-          placeholder="Number of Top Ups"
-          v-model="buyTopNumStr"
+          placeholder="10 Points = 1 Top up"
+          v-model="exchangeTopNumStr"
         />
-        <button class="form-control btn btn-warning" @click="buyTopUp">Buy Top Ups</button>
+        <button class="form-control btn btn-warning" @click="exchangeTopUp">Exchange Top Ups</button>
       </div>
     </div>
     <!-- user data display end -->
@@ -90,29 +90,29 @@ export default {
   data() {
     return {
       userData: {},
-      buyTopNumStr: ""
+      exchangeTopNumStr: ""
     };
   },
   methods: {
-    buyTopUp() {
-      window.console.log("buy top num request");
-      if (this.buyTopNumStr === "") {
+    exchangeTopUp() {
+      window.console.log("exchange top num request");
+      if (this.exchangeTopNumStr === "") {
         this.$swal("Warning", "Please input the number of Top Ups", "warning");
         return;
       }
-      var buyTopNum = parseInt(this.buyTopNumStr);
-      this.buyTopNumStr = "";
+      var exchangeTopNum = parseInt(this.exchangeTopNumStr);
+      this.exchangeTopNumStr = "";
       this.$axios
-        .get("/api/users/buy_topup", {
+        .get("/api/users/exchange_topup", {
           params: {
-            buyTopNum: buyTopNum,
+            exchangeTopNum: exchangeTopNum,
             user_id: this.$store.getters.getUserId
           }
         })
         .then(response => {
           if (response.status == 200) {
-            this.userData.points -= buyTopNum * 10;
-            this.userData.topNum += buyTopNum;
+            this.userData.points -= exchangeTopNum * 10;
+            this.userData.topNum += exchangeTopNum;
           }
         })
         .catch(err => {
