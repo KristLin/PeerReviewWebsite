@@ -9,7 +9,7 @@
             <div class="circle mx-auto">{{ comment.userName }}</div>
           </div>
           <div class="col-9">
-            <p class="text-left comment-content border p-2" style="height:100px">{{ comment.content }}</p>
+            <p class="text-left comment-content border p-2" style="min-height:100px">{{ comment.content }}</p>
           </div>
         </div>
         <!-- user name & comment content end -->
