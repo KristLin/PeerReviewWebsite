@@ -15,6 +15,7 @@
     <ul class="list-group mx-auto border rank-list" v-if="hasFetchedData">
       <li class="list-group-item active my-bg">
         <h4 class="my-4">User Points Ranking</h4>
+        <hr style="border-color:white">
         <div class="row">
           <p class="col-4 m-0">Name</p>
           <p class="col-4 m-0">Major</p>
