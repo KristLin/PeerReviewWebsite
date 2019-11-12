@@ -36,11 +36,11 @@
       <h4 class="mt-4 mb-0 text-muted my-4"></h4>
       <ul class="list-group mx-auto news-list">
         <li class="list-group-item active my-bg">
-          <h4>News</h4>
-          <small style="color:white">Click an article to see more</small>
+          <h3>News</h3>
+          <p class="m-0" style="color:white">Click an article to see more</p>
         </li>
         <li
-          class="list-group-item list-group-item-action"
+          class="list-group-item list-group-item-action news-item"
           :key="idx"
           v-for="(news_item, idx) in news"
         >
@@ -82,6 +82,11 @@ export default {
 <style scoped>
 .news-list {
   width: 600px;
+}
+
+.news-item {
+  /* font-family: 'Playfair Display', serif; */
+  line-height: 2.5rem;
 }
 
 @media screen and (max-width: 767px) {

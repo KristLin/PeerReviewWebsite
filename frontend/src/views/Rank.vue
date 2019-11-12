@@ -21,9 +21,10 @@
           <p class="col-4 m-0">Points</p>
         </div>
       </li>
-
-      <li class="list-group-item list-group-item-action" :key="idx" v-for="(user, idx) in top10">
-        <div class="row">
+      
+      <!-- only display top 5 -->
+      <li class="list-group-item list-group-item-action" :key="idx" v-for="(user, idx) in top10.slice(0,5)">
+        <div class="row rank-user-row">
           <div class="col-4">{{ user.name }}</div>
           <div class="col-4">
             <i class="fas fa-laptop-code user-major-icon" v-if="user.major === 'CSE'"></i>
@@ -65,8 +66,12 @@ export default {
 
 <style scoped>
 .rank-list {
-  min-height:500px;
+  min-height:400px;
   width: 500px;
+}
+
+.rank-user-row {
+  line-height: 2.5rem;
 }
 
 @media screen and (max-width: 625px) {
