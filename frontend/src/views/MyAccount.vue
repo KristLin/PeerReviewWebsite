@@ -136,9 +136,9 @@ export default {
               if (res.status == 200) {
                 this.$store.commit("logout");
                 window.console.log("user account is deleted");
-                window.location.reload(true);
                 this.$swal("Success", "Your account is deleted!", "success");
                 this.$router.push({ name: "home" });
+                window.location.reload(true);
               }
             })
             .catch(err => window.console.log(err));
