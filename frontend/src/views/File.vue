@@ -134,12 +134,27 @@ export default {
     },
     // post review function
     leaveReview() {
-      // if user has not logged in yet, take the user to login page
+      // if user has not logged in yet, ask if user want to login
       if (!this.$store.getters.isLoggedIn) {
-        this.$swal("Warning", "Log in required!", "warning");
-        this.$router.push({ name: "login" });
+          this.$swal({
+          title: "Confirm",
+          text: "Log in required, do you want to login now?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Log in"
+        }).then(result => {
+          if (result.value) {
+            this.$router.push({ name: "login" });
+          }
+        })
+      }
+
+      // if user is not logged in and not been taken to login page
+      // the following code block can not be executed
+      if (!this.$store.getters.isLoggedIn) {
         return;
       }
+
       // check if the review content is empty
       if (this.commentData.content === "") {
         this.$swal("Warnning", "You didn't input any content!", "warning");
@@ -193,9 +208,11 @@ export default {
           window.console.log(err.response);
         });
     },
+
     // liked comment action
     likeComment(comment) {
       window.console.log("like comment event:", comment);
+
       // post like data to backend server
       this.$axios
         .get("/api/likes/", {

@@ -55,14 +55,37 @@ export default {
   },
   methods: {
     like(comment) {
+      // if user has not logged in yet, ask if user want to login
+      if (!this.$store.getters.isLoggedIn) {
+          this.$swal({
+          title: "Confirm",
+          text: "Log in required, do you want to login now?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Log in"
+        }).then(result => {
+          if (result.value) {
+            this.$router.push({ name: "login" });
+          }
+        })
+      }
+
+      // if user is not logged in and not been taken to login page
+      // the following code block can not be executed
+      if (!this.$store.getters.isLoggedIn) {
+        return;
+      }
+
       comment.hasLiked = true;
       comment.likedNum += 1;
       this.$emit("likeComment", comment)
     },
-    unLike(comment) {
-      comment.hasLiked = false;
-      comment.likedNum -= 1;
-    }
+
+    // we decided that users are not allowed to unlike a comment
+    // unLike(comment) {
+    //   comment.hasLiked = false;
+    //   comment.likedNum -= 1;
+    // }
   }
 };
 </script>
