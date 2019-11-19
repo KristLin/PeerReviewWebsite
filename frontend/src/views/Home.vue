@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- carousel part -->
+    <!-- carousel part start -->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -14,13 +14,17 @@
           :key="idx"
           v-for="(item, idx) in carouselItems"
         >
+          <!-- carousel item image -->
           <img width="100%" height="100%" :src="item.imageSrc" />
           <div class="container">
             <div class="carousel-caption" :class="{'text-left': idx===0,'text-right':idx===2}">
+              <!-- carousel item title & description -->
               <h1>
                 <strong>{{ item.title }}</strong>
               </h1>
               <h4>{{ item.description }}</h4>
+
+              <!-- carousel item button -->
               <button
                 class="btn carousel-btn my-4"
                 type="button"
@@ -31,6 +35,7 @@
           </div>
         </div>
       </div>
+      <!-- carousel control buttons start -->
       <a
         class="carousel-control-prev"
         href="#carouselExampleIndicators"
@@ -49,14 +54,18 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
+      <!-- carousel control buttons end -->
     </div>
     <!-- carousel part end -->
 
-    <!-- features part -->
+    <!-- features part start -->
     <div class="features mx-auto">
       <div class="text-center">
+        <!-- features part heading -->
         <h2 class="font-weight-bold my-4">Why choose us?</h2>
         <p class="lead mx-auto" style="margin-bottom: 70px">We provide a student only peer-review community.</p>
+        
+        <!-- features part items -->
         <div class="row">
           <div class="col-lg-4 col-md-4 col-sm-12 px-2" :key="idx" v-for="(item, idx) in featureItems">
             <i class="fas feature-icon mb-4" :class="item.icon"></i>
@@ -71,17 +80,14 @@
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
   name: "home",
   components: {
-    // SearchInput,
-    // HouseCards
   },
   props: {},
   data() {
     return {
+      // carousel items data
       carouselItems: [
         {
           title: "Explore with us.",
@@ -117,6 +123,8 @@ export default {
           }
         }
       ],
+
+      // features items data
       featureItems: [
         {
           title: "Search Engine",

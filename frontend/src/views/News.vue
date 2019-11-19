@@ -1,20 +1,15 @@
 <template>
   <div class="container" style="padding-top:50px">
-    <!-- <div class="row cloud-div">
-      <img src="../../static/cloud.png" class="cloud-image-top" />
-      <img src="../../static/cloud.png" class="cloud-image-mid" />
-      <img src="../../static/cloud.png" class="cloud-image-bottom" />
-    </div> -->
-
+    <!-- when user is not logged in, show the following info -->
     <div v-if="!this.$store.getters.isLoggedIn">
       <i class="fas fa-question major-icon"></i>
-      <!-- <h3 class="mt-4 mb-2">You are not logged in</h3> -->
       <p class="my-4">
         News subject is randomly picked.
         <router-link class="mx-1" to="/login">Log in</router-link>to see news in your major!
       </p>
     </div>
-    <!-- major icon -->
+
+    <!-- when user is logged in, show major icon -->
     <div v-if="this.$store.getters.isLoggedIn">
       <i class="fas fa-laptop-code major-icon" v-if="$store.getters.getUserMajor === 'CSE'"></i>
       <i class="fas fa-user-tie major-icon" v-if="$store.getters.getUserMajor === 'Business'"></i>
@@ -22,7 +17,7 @@
       <i class="fas fa-book major-icon" v-if="$store.getters.getUserMajor === 'Literature'"></i>
     </div>
 
-    <!-- Loading -->
+    <!-- Loading animation -->
     <div v-if="!hasFetchedData" style="margin-top: 80px; margin-bottom:100px">
       <h4 class="my-4">Loading ...</h4>
       <b-spinner
@@ -31,7 +26,8 @@
         label="Loading..."
       ></b-spinner>
     </div>
-
+    
+    <!-- News list -->
     <div v-if="hasFetchedData" style="margin-top: 50px">
       <h4 class="mt-4 mb-0 text-muted my-4"></h4>
       <ul class="list-group mx-auto news-list">
@@ -57,15 +53,19 @@ export default {
   data() {
     return {
       news: [],
+      // all required data has fetched or not
+      // to decide when to show loading animation
       hasFetchedData: false
     };
   },
   components: {},
   created() {
     var major = "";
+    // get user major if logged in
     if (this.$store.getters.isLoggedIn) {
       major = this.$store.getters.getUserMajor;
     }
+    // send request to backend to get news list
     this.$axios
       .get("/api/news", { params: { major: major } })
       .then(res => {

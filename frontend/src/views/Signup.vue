@@ -4,7 +4,7 @@
       <i class="fas fa-user-circle fa-6x card-img-top mx-auto mt-4"></i>
       <div class="card-body">
         <h5 class="card-title">Sign up</h5>
-
+        <!-- user email input -->
         <div class="form-group">
           <input
             type="email"
@@ -14,10 +14,12 @@
           />
         </div>
 
+        <!-- user name input -->
         <div class="form-group">
           <input type="text" class="form-control" v-model="userData.name" placeholder="Your Name" />
         </div>
 
+        <!-- user major input -->
         <div class="form-group">
           <select v-model="userData.major" class="form-control">
             <option value="Your Major">Your Major</option>
@@ -27,7 +29,8 @@
             <option value="Literature">Literature</option>
           </select>
         </div>
-
+        
+        <!-- user password input -->
         <div class="form-group">
           <input
             type="password"
@@ -37,6 +40,7 @@
           />
         </div>
 
+        <!-- user confirm password input -->
         <div class="form-group">
           <input
             type="password"
@@ -46,6 +50,7 @@
           />
         </div>
 
+        <!-- signup button -->
         <div class="form-group">
           <button class="my-btn form-control" @click="signup">Sign up</button>
         </div>
@@ -84,6 +89,7 @@ export default {
         }
       }
 
+      // raise alert if user hasn't chosen a major
       if (this.userData.major === "Your Major") {
         this.$swal("Warning", "You didn't choose a major!", "warning");
         return;
@@ -106,24 +112,30 @@ export default {
         return;
       }
 
+      // send signup request to backend
       this.$axios
         .post("/api/users/", this.userData)
         .then(response => {
-          // JSON responses are automatically parsed.
           if (response.status == 200) {
+            // parse user's data from response
             let [userId, userMajor, userName] = response.data.split(" ");
+            
+            // form the authUserData
             let authUserData = {
               userId: userId,
               userMajor: userMajor,
               userName: userName
             };
-            this.$store.commit("login", authUserData);
 
+            // commit login action in frontend
+            this.$store.commit("login", authUserData);
             this.$swal({
               title: "Success",
               text: "You are registered!",
               type: "success"
             });
+
+            // take the user to myProjects page
             this.$router.push({
               name: "myProjects"
             });

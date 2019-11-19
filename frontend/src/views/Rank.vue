@@ -1,17 +1,12 @@
 <template>
   <div class="container" style="padding-top:50px">
-    <!-- <div class="row cloud-div">
-      <img src="../../static/cloud.png" class="cloud-image-top" />
-      <img src="../../static/cloud.png" class="cloud-image-mid" />
-      <img src="../../static/cloud.png" class="cloud-image-bottom" />
-    </div> -->
-
-    <!-- Loading -->
+    <!-- Loading animation -->
     <div v-if="!hasFetchedData" style="margin-top: 120px; margin-bottom:200px">
       <h4 class="my-4">Loading ...</h4>
       <b-spinner variant="secondary" style="width: 5rem; height: 5rem; font-size:2rem;" label="Loading..."></b-spinner>
     </div>
 
+    <!-- Rank Header -->
     <ul class="list-group mx-auto border rank-list" v-if="hasFetchedData">
       <li class="list-group-item active my-bg">
         <h4 class="my-4">User Points Ranking</h4>
@@ -23,16 +18,20 @@
         </div>
       </li>
       
-      <!-- only display top 5 -->
+      <!-- Rank List -->
+      <!-- we designed to request top10 users, but here we only display top 5 users -->
       <li class="list-group-item list-group-item-action" :key="idx" v-for="(user, idx) in top10.slice(0,5)">
         <div class="row rank-user-row">
+          <!-- user name -->
           <div class="col-4">{{ user.name }}</div>
+          <!-- user major icon -->
           <div class="col-4">
             <i class="fas fa-laptop-code user-major-icon" v-if="user.major === 'CSE'"></i>
             <i class="fas fa-user-tie user-major-icon" v-if="user.major === 'Business'"></i>
             <i class="fas fa-stethoscope user-major-icon" v-if="user.major === 'Medical'"></i>
             <i class="fas fa-book user-major-icon" v-if="user.major === 'Literature'"></i>
           </div>
+          <!-- user points -->
           <div class="col-4">{{ user.points }}</div>
         </div>
       </li>
@@ -50,6 +49,7 @@ export default {
     };
   },
   created() {
+    // get top10 users with highest points
     this.$axios
       .get("/api/users/top10")
       .then(response => {

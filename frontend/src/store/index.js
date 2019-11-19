@@ -4,11 +4,13 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  // user states
   state: {
     userId: null,
     userMajor: null,
     userName: null,
   },
+  // user state getters
   getters: {
     isLoggedIn: state => {
       if (state.userId || localStorage.getItem("userId")) {
@@ -27,6 +29,7 @@ export default new Vuex.Store({
       return state.userName ? state.userName : localStorage.getItem("userName")
     }
   },
+  // mutations for user states
   mutations: {
     login(state, userData) {
       state.userId = userData.userId;

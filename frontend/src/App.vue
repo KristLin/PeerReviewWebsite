@@ -1,14 +1,22 @@
 <template>
   <div id="app">
+    <!-- page header -->
     <Header />
+
+    <!-- page body content -->
     <div class="content-div">
+      <!-- backgroud clouds -->
       <div class="row cloud-div">
-      <img src="../static/cloud.png" class="cloud-image-top" />
-      <img src="../static/cloud.png" class="cloud-image-mid" />
-      <img src="../static/cloud.png" class="cloud-image-bottom" />
+        <img src="../static/cloud.png" class="cloud-image-top" />
+        <img src="../static/cloud.png" class="cloud-image-mid" />
+        <img src="../static/cloud.png" class="cloud-image-bottom" />
       </div>
+
+      <!-- router view -->
       <router-view />
     </div>
+
+    <!-- page footer -->
     <Footer />
   </div>
 </template>

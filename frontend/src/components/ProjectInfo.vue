@@ -7,6 +7,7 @@
         <div class="card-body">
           <p class="text-left p-2">{{ project.description }}</p>
         </div>
+        <!-- project files display start -->
         <div class="card mx-4 my-4" style="height:300px">
           <div class="card-header">Project Files:</div>
           <div class="card-body text-left overflow-auto">
@@ -15,6 +16,7 @@
                 <div class="col-6">
                   <span class="file-name mr">{{ handleFileName(file.name) }}</span>
                 </div>
+                <!-- project rating start -->
                 <div class="col-6">
                   <div v-if="file.rating">
                     <star-rating
@@ -27,14 +29,18 @@
                     ></star-rating>
                     <small class="ml-2">{{file.rating}}</small>
                   </div>
+
+                  <!-- display text content when no rating data -->
                   <div v-if="!file.rating">
                     <small>No rating yet...</small>
                   </div>
                 </div>
+                <!-- project rating end -->
               </div>
             </div>
           </div>
         </div>
+        <!-- project files display end -->
         <div class="card-footer p-1">
           <small>{{ project.createdTime }}</small>
         </div>
@@ -66,6 +72,7 @@ export default {
   methods: {
     clickFile(file) {
       window.console.log("clicked file in ProjectInfo", file);
+      // take user to the file page when user clicked a file
       this.$router.push({
         name: "file",
         query: { fileId: file._id },
@@ -73,6 +80,7 @@ export default {
       });
     },
     handleFileName(fileName) {
+      // return only first 18 characters of the file's name
       return fileName.substring(0, 18) + (fileName.length > 18 ? "..." : "")
     }
   },

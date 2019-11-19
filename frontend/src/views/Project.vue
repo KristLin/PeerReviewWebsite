@@ -1,5 +1,6 @@
 <template>
   <div class="container" style="padding-top:50px">
+    <!-- project info component -->
     <div class="mx-auto w-50" style="height:500px; min-width:450px">
       <ProjectInfo :project="project" />
     </div>
@@ -24,8 +25,12 @@ export default {
       this.projectId,
       this.project
     );
+    // when the project data (in route params) is lost
+    // send request to backend to get the project data
     if (Object.keys(this.$route.params).length === 0) {
       window.console.log("lost route params");
+      // this page is not used in the website
+      // just for early stage testing
       this.project = {
         id: "1",
         name: "Peer Review Frontend",

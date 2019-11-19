@@ -1,7 +1,10 @@
 <template>
   <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <!-- navbar brand name & icon -->
       <router-link class="navbar-brand" to="/">Peer Review 📚</router-link>
+      
+      <!-- navbar collapse button icon -->
       <button
         class="navbar-toggler"
         type="button"
@@ -14,26 +17,34 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
+      <!-- collapse navbar items -->
       <div class="collapse navbar-collapse" id="navbar-collapse">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <router-link class="nav-link" to="/" active-class="active" exact>Home</router-link>
           </li>
+
           <li class="nav-item">
             <router-link class="nav-link" to="/search" active-class="active" exact>Search</router-link>
           </li>
+
           <li class="nav-item">
             <router-link class="nav-link" to="/news" active-class="active" exact>News</router-link>
           </li>
+
           <li class="nav-item">
             <router-link class="nav-link" to="/rank" active-class="active" exact>Ranking</router-link>
           </li>
+
           <!-- <li class="nav-item">
             <router-link class="nav-link" to="/about" active-class="active" exact>About us</router-link>
           </li>-->
+
           <li class="nav-item" v-if="!$store.getters.isLoggedIn">
             <router-link class="nav-link" to="/login" active-class="active" exact>Log in</router-link>
           </li>
+
+          <!-- My Account dropdown menu start -->
           <li class="nav-item dropdown" v-if="$store.getters.isLoggedIn">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown">
               <i class="fas fa-user mr-2"></i>
@@ -46,6 +57,7 @@
               <span class="dropdown-item" @click="logout">Log out</span>
             </div>
           </li>
+          <!-- My Account dropdown menu end -->
         </ul>
       </div>
     </nav>
@@ -58,8 +70,10 @@ import $ from "jquery";
 export default {
   name: "Header",
   methods: {
+    // user logout
     logout() {
       if (this.$store.getters.isLoggedIn) {
+        // confirm dialog
         this.$swal({
           title: "Confirm",
           text: "Are you sure you want to log out?",
@@ -70,12 +84,15 @@ export default {
           confirmButtonText: "Log out"
         }).then(result => {
           if (result.value) {
+            // send logout request to backend
             this.$axios
               .get("/api/users/logout/" + this.$store.getters.getUserId)
               .then(res => {
                 if (res.status == 200) {
+                  // commit logout action in frontend side
                   this.$store.commit("logout");
                   window.console.log("user logged out");
+                  // take user to the home page after logged out
                   if (this.$router.currentRoute.name !== "home") {
                     this.$router.push({ name: "home" });
                   }
@@ -93,11 +110,13 @@ export default {
         window.console.log("User is already logged in!");
       }
     },
+    // take user to my account page
     goToMyAccount() {
       if (this.$router.currentRoute.name !== "myAccount") {
         this.$router.push({ name: "myAccount" });
       }
     },
+    // take user to my projects page
     goToMyProjects() {
       if (this.$router.currentRoute.name !== "myProjects") {
         this.$router.push({ name: "myProjects" });
@@ -105,6 +124,7 @@ export default {
     }
   },
   watch: {
+    // hide collapsed navbar everytime after click
     $route() {
       $("#navbar-collapse").collapse("hide");
     }
