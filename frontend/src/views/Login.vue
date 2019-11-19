@@ -86,8 +86,8 @@ export default {
               text: "You are logged in!",
               type: "success"
             });
-            
-            // send the user to myProjects page
+
+            // take the user to myProjects page
             this.$router.push({
               name: "myProjects"
             });
