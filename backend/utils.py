@@ -3,13 +3,15 @@ import requests
 from bs4 import BeautifulSoup
 from random import sample
 
-
+# datetime format date to string format date
 def datetime_to_str(datetime_object):
     return datetime_object.strftime('%d/%m/%Y, %H:%M:%S')
 
+# string format date to datetime format date
 def str_to_datetime(time_str):
     return datetime.strptime(time_str, '%d/%m/%Y, %H:%M:%S')
 
+# order projects by top up time and created time
 def order_projects(projects):
     topped_projects = [project for project in projects if project["isOnTop"]]
     untopped_projects = [project for project in projects if not project["isOnTop"]]
@@ -19,19 +21,22 @@ def order_projects(projects):
 
     return topped_projects + untopped_projects
 
+# order comments by liked number
 def order_comments(comments):
     comments.sort(reverse=True, key=lambda comment: str_to_datetime(comment["createdTime"]))
     comments.sort(key=lambda comment: -comment["likedNum"])
     return comments
 
+# get top 10 users with highest points
 def get_top10_users(users):
     users.sort(key=lambda user: user["points"], reverse=True)
     return users[:10]
 
-
+# get news data from other websites using beautiful soup
 def get_news(major):
     major_list = ["CSE", "Business", "Medical", "Literature"]
-
+    
+    # if no major is specified, choose one randomly
     if major not in major_list:
         major = sample(major_list, 1)[0]
     

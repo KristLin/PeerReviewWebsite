@@ -2,11 +2,68 @@ from pymongo import MongoClient
 from bson import ObjectId
 from random import sample
 
+# ======= data models start =======
+# user: {
+#     "_id": ObjectId,
+#     "email": String,
+#     "name": String,
+#     "password": String,
+#     "major": String,
+#     "createdTime": String,
+#     "commentNum": Integer,
+#     "likedNum": Integer,
+#     "topNum": Integer,
+#     "points": Integer,
+# }
+# 
+# project: {
+#     "_id": ObjectId,
+#     "user": String,
+#     "major": String,
+#     "title": String,
+#     "description": String,
+#     "createdTime": String,
+#     "isOnTop": Boolean,
+#     "isOnTopTime": String,
+# }
+# 
+# file: {
+#     "_id": ObjectId,
+#     "project": String,
+#     "user": String,
+#     "title": String,
+#     "content": String,
+#     "createdTime": String,
+#     "rating": Float,
+#     "ratingNum": Integer
+# }
+# 
+# comment: {
+#     "_id": ObjectId,
+#     "file": String,
+#     "user": String,
+#     "userName": String,
+#     "content": String,
+#     "rating": Integer,
+#     "createdTime": String,
+#     "likedNum": Integer
+# }
+# 
+# like: {
+#     "_id": ObjectId,
+#     "comment": String,
+#     # user who liked the comment
+#     "user": String,
+# }
+# ======= data models end =======
+
+
 # Database to manipulate user & house data
 class DB(object):
     def __init__(self):
         # connect to mongoDB mlab
         self.dbclient = MongoClient(f"mongodb://krist123:krist123@ds141188.mlab.com:41188/9323-project", 123456,).get_default_database()
+        # declare collections
         self.users = self.dbclient["users"]
         self.projects = self.dbclient["projects"]
         self.files = self.dbclient["files"]
@@ -15,18 +72,21 @@ class DB(object):
         super().__init__()
 
     # =========== user data manipulation ===========
+    # return the user info with specified user id
     def find_user_by_id(self, user_id):
         found_user = self.users.find_one({"_id": ObjectId(user_id)})
         if found_user:
             found_user["_id"] = str(found_user["_id"])
         return found_user
 
+    # return the user info with specified user id
     def find_user_by_email(self, email):
         found_user = self.users.find_one({"email": email})
         if found_user:
             found_user["_id"] = str(found_user["_id"])
         return found_user
 
+    # return all user accounts (can only be used in debug)
     def find_all_users(self):
         cursor = self.users.find()
         all_users = []
@@ -35,15 +95,17 @@ class DB(object):
             all_users.append(user)
         return all_users
 
+    # add an new user account to database
     def add_user(self, user):
         _id = str(self.users.insert_one(user).inserted_id)
         return _id
 
-    # update & delete need to return a flag
+    # update the user account
     def update_user(self, user_id, update_info):
         query = {"_id": ObjectId(user_id)}
         return self.users.update_one(query, {"$set": update_info})
 
+    # delete the user account
     def delete_user(self, user_id):
         # delte user's projects and related comments & likes
         cursor = self.projects.find({"user": user_id})
@@ -60,6 +122,7 @@ class DB(object):
         self.users.delete_one({"_id": ObjectId(user_id)})
 
     # =========== project data manipulation ===========
+    # return the project with specified project id
     def find_project_by_id(self, project_id):
         found_project = self.projects.find_one({"_id": ObjectId(project_id)})
         if found_project:
@@ -67,6 +130,8 @@ class DB(object):
             found_project["_id"] = str(found_project["_id"])
         return found_project
 
+    # return all projects
+    # if a major is specified, will only return projects in that major
     def find_all_projects(self, major=""):
         all_projects = []
         if major:
@@ -80,6 +145,7 @@ class DB(object):
                 all_projects.append(project)
         return all_projects
 
+    # find all projects owned by the user
     def find_user_projects(self, user_id):
         cursor = self.projects.find({"user": user_id})
         user_projects = []
@@ -88,14 +154,17 @@ class DB(object):
             user_projects.append(project)
         return user_projects
 
+    # add project to database
     def add_project(self, project):
         _id = str(self.projects.insert_one(project).inserted_id)
         return _id
     
+    # update the project
     def update_project(self, project_id, update_info):
         query = {"_id": ObjectId(project_id)}
         return self.projects.update_one(query, {"$set": update_info})
 
+    # delete the project
     def delete_project(self, project_id):
         # delete comments
         project_files = self.files.find({"project": project_id})
@@ -111,9 +180,11 @@ class DB(object):
         self.projects.delete_one({"_id": ObjectId(project_id)})
 
     # =========== file data manipulation ===========
+    # add file to database
     def add_file(self, file):
         self.files.insert_one(file)
-
+    
+    # return all files of the project
     def find_project_files(self, project_id):
         cursor = self.files.find({"project": project_id})
         project_files = []
@@ -122,6 +193,7 @@ class DB(object):
             project_files.append(file)
         return project_files
     
+    # return the file with specified file id
     def find_file_by_id(self, file_id):
         found_file = self.files.find_one({"_id": ObjectId(file_id)})
         if found_file:
@@ -130,6 +202,7 @@ class DB(object):
         return found_file
 
     # =========== comments data manipulation ===========
+    # add comment to database
     def add_comment(self, comment):
         self.comments.insert_one(comment)
         found_user = self.users.find_one({"_id": ObjectId(comment["user"])})
@@ -147,14 +220,15 @@ class DB(object):
         query = {"_id": ObjectId(comment["file"])}
         return self.files.update_one(query, {"$set": {"ratingNum": new_rating_num, "rating": new_rating}})
         
-
+    # return the comment with specified comment id
     def find_comment_by_id(self, comment_id):
         found_comment = self.files.find_one({"_id": ObjectId(comment_id)})
         if found_comment:
             # change the ObjectId to string format
             found_comment["_id"] = str(found_comment["_id"])
         return found_comment
-
+    
+    # return all comments of the file
     def find_file_comments(self, file_id):
         cursor = self.comments.find({"file": file_id})
         file_comments = []
@@ -179,6 +253,7 @@ class DB(object):
         query = {"_id": ObjectId(comment_provider)}
         self.users.update_one(query, {"$set": {"likedNum": found_user["likedNum"] + 1, "points": found_user["points"] + 1}})
     
+    # check if user has liked the comment
     def user_has_liked_comment(self, user_id, comment_id):
         found_like = self.likes.find_one({"user": user_id, "comment": comment_id})
         if found_like:

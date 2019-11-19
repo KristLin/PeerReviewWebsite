@@ -125,7 +125,6 @@ like_model = api.model(
         "user": fields.String,
     },
 )
-
 # =============== data model part end ===============
 
 # ============ user API part start ============
@@ -147,6 +146,7 @@ class UsersAPI(Resource):
         else:
             if db.add_user(user_data):
                 user_data = db.find_user_by_email(user_data["email"])
+                # add the user data in the active user list
                 active_users[user_data["email"]] = user_data
                 return user_data["_id"] + " " + user_data["major"] + " " + user_data["name"], 200
             else:
@@ -164,11 +164,13 @@ class LoginAPI(Resource):
     @api.expect(login_model, validate=True)
     def post(self):
         user_login_data = request.json
+        # return user's info directly if user is already in the active user list
         if user_login_data["email"] in active_users:
             user_data = active_users[user_login_data["email"]]
             print(user_data["email"] + " has Already logged in")
             return user_data["_id"] + " " + user_data["major"] + " " + user_data["name"], 200
         
+        # find user data using email input
         login_user = db.find_user_by_email(user_login_data["email"])
         if login_user == None:
             return "The user email does not exist", 400
@@ -188,6 +190,7 @@ class LogoutAPI(Resource):
         user_data = db.find_user_by_id(user_id)
         if user_data:
             if user_data["email"] in active_users:
+                # remove the user from active user list
                 del active_users[user_data["email"]]
             else:
                 print("User is not in the active list, maybe the server has restarted.")
@@ -203,6 +206,7 @@ class UserAPI(Resource):
     def get(self, user_id):
         userData = db.find_user_by_id(user_id)
         if userData:
+            # will nor return user password data
             del userData["password"]
             return userData, 200
         else:
@@ -224,11 +228,15 @@ class ExchangeTopUPAPI(Resource):
     @api.param("user_id", "user's id", required=True)
     @api.param("exchangeTopNum", "top up number user want to exchange", required=True, type=int)
     def get(self):
+        # extract data from request
         exchangeTopNum = int(request.args.get("exchangeTopNum"))
         user_id = request.args.get("user_id")
         cost = exchangeTopNum * 10
+
+        # find user data using user_id from request
         found_user = db.find_user_by_id(user_id)
-        print(type(cost))
+
+        # check if user has sufficient points
         if found_user["points"] > cost:
             db.update_user(user_id, {"points": found_user["points"]-cost})
             return "Purchase is successful", 200
@@ -241,37 +249,6 @@ class Top10UsersAPI(Resource):
     def get(self):
         all_users = db.find_all_users()
         return utils.get_top10_users(all_users), 200
-
-    # @api.doc(description="Delete a user by its ID")
-    # def delete(self, user_id):
-    #     delete_user = db.find_user_by_id(user_id)
-    #     if delete_user:
-    #         if user_id == delete_user["_id"]:
-    #             db.delete_houses_of_user(user_id)
-    #             db.delete_user(user_id)
-    #             if user_id in active_users:
-    #                 del active_users[user_id]
-    #             msg = {"message": f"User = {user_id} is removed from the database!"}
-    #             return msg, 200
-    #         else:
-    #             return "Unauthorized delete request", 401
-    #     else:
-    #         return f"User with id {user_id} is not in the database!", 400
-
-
-    # @api.doc(description="Update user info")
-    # def patch(self, user_id):
-    #     update_info = request.json
-    #     # remove empty property in update info
-    #     update_info = utils.get_valid_update_info(update_info)
-
-    #     update_user = db.find_user_by_id(user_id)
-    #     if update_user:
-    #         db.update_user(user_id, update_info)
-    #         msg = {"message": "The user info is updated!"}
-    #         return msg, 200
-    #     else:
-    #         return f"User with id {user_id} is not in the database!", 400
 # ============ user API part end ============
 
 # ============ project API part start ============
@@ -281,14 +258,17 @@ class ProjectsAPI(Resource):
     @api.expect(project_model, validate=True)
     def post(self):
         project_data = request.json
+        # add default properties to the project data
         project_data["createdTime"] = utils.datetime_to_str(datetime.now())
         project_data["isOnTop"] = False
         project_data["isOnTopTime"] = ""
-
-        project_files = project_data["files"]
+        
+        # project files should be stored in file data model
+        project_files = project_data["files"] 
         del project_data["files"]
         project_id = db.add_project(project_data)
         if project_id:
+            # store project file independently
             for file in project_files:
                 file["project"] = project_id
                 file["user"] = project_data["user"]
@@ -304,7 +284,6 @@ class ProjectsAPI(Resource):
     @api.param("major", "Get all projects of chosen major")
     def get(self):
         major = request.args.get("major")
-        # all_projects = db.find_all_projects(user_major)
         all_projects = db.find_all_projects(major)
         # attach files to project
         for project in all_projects:
@@ -331,23 +310,20 @@ class ProjectAPI(Resource):
         else:
             return f"Project with id {project_id} is not in the database!", 400
 
-    # @api.doc(description="Update a project")
-    # def patch(self, project_id):
-    #     project_data = request.json
-    #     if "_id" in project_data:
-    #         del project_data["_id"]
-    #     db.update_project(project_id, project_data)
-    #     return "Project is updated", 200
-
 @projects.route("/topup")
 class TopUpAPI(Resource):
     @api.doc(description="Top up a project", required=True)
     @api.param("user_id", "user's id", required=True)
     @api.param("project_id", "project's id")
     def get(self):
+        # extract data from request
         user_id = request.args.get("user_id")
         project_id = request.args.get("project_id")
+
+        # find user data using user_id from request
         found_user = db.find_user_by_id(user_id)
+
+        # check if user has sufficient top up number
         if found_user["topNum"] >= 1:
             db.update_user(user_id, {"topNum": found_user["topNum"]-1})
             db.update_project(project_id, {"isOnTop": True, "isOnTopTime": utils.datetime_to_str(datetime.now())})
@@ -363,7 +339,6 @@ class CancelTopUpAPI(Resource):
     def get(self):
         user_id = request.args.get("user_id")
         project_id = request.args.get("project_id")
-
         db.update_project(project_id, {"isOnTop": False, "isOnTopTime": ""})
         return "Project is not topped up now", 200
 
@@ -412,6 +387,7 @@ class CommentsAPI(Resource):
     @api.doc(description="Upload a comment")
     def post(self):
         comment = request.json
+        # add default properties to comment data
         comment["createdTime"] = utils.datetime_to_str(datetime.now())
         comment["likedNum"] = 0
 
@@ -425,8 +401,11 @@ class CommentsOfFileAPI(Resource):
     def get(self, file_id):
         file_comments = db.find_file_comments(file_id)
         user_id = request.args.get("user_id")
+        # order the comments by liked number
         file_comments = utils.order_comments(file_comments)
+        # need to check if user has liked comment when logged in
         if user_id:
+            # add "hasLiked" property to all comment objects
             for comment in file_comments:
                 comment["hasLiked"] = db.user_has_liked_comment(user_id, comment["_id"])
             return file_comments, 200
