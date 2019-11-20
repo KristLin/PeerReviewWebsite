@@ -1,6 +1,12 @@
 from pymongo import MongoClient
 from bson import ObjectId
 from random import sample
+from dotenv import load_dotenv
+import os
+
+# load database admin password from .env
+load_dotenv()
+DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 # ======= data models start =======
 # user: {
@@ -62,7 +68,7 @@ from random import sample
 class DB(object):
     def __init__(self):
         # connect to mongoDB mlab
-        self.dbclient = MongoClient(f"mongodb://krist123:krist123@ds141188.mlab.com:41188/9323-project", 123456,).get_default_database()
+        self.dbclient = MongoClient(f"mongodb://krist123:{DB_PASSWORD}@ds141188.mlab.com:41188/9323-project", 123456,).get_default_database()
         # declare collections
         self.users = self.dbclient["users"]
         self.projects = self.dbclient["projects"]
