@@ -176,7 +176,7 @@ export default {
             this.file.rating =
               (total_rating + this.commentData.rating) /
               (this.file.ratingNum + 1);
-            this.file.rating = parseFloat(this.file.rating.toFixed(2));
+            this.file.rating = parseFloat(this.file.rating.toFixed(1));
             this.file.ratingNum += 1;
 
             this.commentData = {
