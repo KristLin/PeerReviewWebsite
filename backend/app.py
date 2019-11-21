@@ -236,9 +236,11 @@ class ExchangeTopUPAPI(Resource):
         # find user data using user_id from request
         found_user = db.find_user_by_id(user_id)
 
-        # check if user has sufficient points
-        if found_user["points"] > cost:
-            db.update_user(user_id, {"points": found_user["points"]-cost})
+        if found_user["points"] >= cost:
+            db.update_user(user_id, {
+                "points": found_user["points"]-cost, 
+                "topNum": found_user["topNum"]+exchangeTopNum
+            })
             return "Purchase is successful", 200
         else:
             return "Insufficent points!", 400
