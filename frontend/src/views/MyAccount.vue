@@ -136,6 +136,7 @@ export default {
         .then(response => {
           // update the top up number and points locally in frontend
           if (response.status == 200) {
+            this.$swal("Success", "Exchanged successfully!", "success");
             this.userData.points -= exchangeTopNum * 10;
             this.userData.topNum += exchangeTopNum;
           }
