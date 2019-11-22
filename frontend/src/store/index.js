@@ -10,8 +10,10 @@ export default new Vuex.Store({
     userMajor: null,
     userName: null,
   },
-  // user state getters
+
+  // getters of user states
   getters: {
+    // check if user is logged in
     isLoggedIn: state => {
       if (state.userId || localStorage.getItem("userId")) {
         return true
@@ -19,30 +21,43 @@ export default new Vuex.Store({
         return false
       }
     },
+
+    // get user id
     getUserId: state => {
       return state.userId ? state.userId : localStorage.getItem("userId")
     },
+    // get user major
     getUserMajor: state => {
       return state.userMajor ? state.userMajor : localStorage.getItem("userMajor")
     },
+    // get user name
     getUserName: state => {
       return state.userName ? state.userName : localStorage.getItem("userName")
     }
   },
-  // mutations for user states
+
   mutations: {
+    // handle login
     login(state, userData) {
+      // store user states in memory
       state.userId = userData.userId;
       state.userMajor = userData.userMajor;
       state.userName = userData.userName;
+
+      // store user states in local storage (cookies)
       localStorage.setItem("userId", userData.userId);
       localStorage.setItem("userMajor", userData.userMajor);
       localStorage.setItem("userName", userData.userName)
     },
+
+    // handle logout
     logout(state) {
+      // remove user states from memory
       state.userId = null;
       state.userMajor = null;
       state.userName = null;
+      
+      // remove user states from local storage (cookies)
       localStorage.removeItem("userId");
       localStorage.removeItem("userMajor");
       localStorage.removeItem("userName")
