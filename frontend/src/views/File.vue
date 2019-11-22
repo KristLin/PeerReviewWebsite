@@ -179,6 +179,7 @@ export default {
             this.file.rating = parseFloat(this.file.rating.toFixed(1));
             this.file.ratingNum += 1;
 
+            // reset commentData
             this.commentData = {
               rating: 5,
               content: ""
