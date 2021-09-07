@@ -45,10 +45,10 @@ def get_news(major):
         page = requests.get(url)
         soup = BeautifulSoup(page.text, 'html.parser')
         news_list = []
-        for item in sample(soup.select('h2[role=heading]'), 5):
+        for item in sample(soup.select('a.js-teaser-heading-link'), 5):
             news_list.append({
                 "heading": item.getText().strip(),
-                "href": "https://www.nature.com" + item.a['href']
+                "href": "https://www.nature.com" + item['href']
             })
         return news_list
 
@@ -69,10 +69,10 @@ def get_news(major):
         page = requests.get(url)
         soup = BeautifulSoup(page.text, 'html.parser')
         news_list = []
-        for item in sample(soup.select('h2[role=heading]'), 5):
+        for item in sample(soup.select('a.js-teaser-heading-link'), 5):
             news_list.append({
                 "heading": item.getText().strip(),
-                "href": "https://www.nature.com" + item.a['href']
+                "href": "https://www.nature.com" + item['href']
             })
         return news_list
 
