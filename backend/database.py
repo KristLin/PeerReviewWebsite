@@ -68,7 +68,7 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 class DB(object):
     def __init__(self):
         # connect to mongoDB mlab
-        self.dbclient = MongoClient(f"mongodb://krist123:{DB_PASSWORD}@ds141188.mlab.com:41188/9323-project", 123456,).get_default_database()
+        self.dbclient = MongoClient(f"mongodb+srv://krist123:{DB_PASSWORD}@9323-project.pyejn.mongodb.net/9323-project?retryWrites=true&w=majority").get_default_database()
         # declare collections
         self.users = self.dbclient["users"]
         self.projects = self.dbclient["projects"]
